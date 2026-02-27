@@ -250,19 +250,13 @@ Sets `is_deleted = true`. Does NOT physically remove the record.
 
 ## 4. Cases
 
-### 4.1 List Cases for a Client
+> **Implementation status:** ✅ Implemented — flat endpoints at `/api/cases/`
+
+### 4.1 List Cases
 
 ```
-GET /api/clients/:clientId/cases/?ordering=-created_at&page=1
+GET /api/cases/?page=1&page_size=20
 ```
-
-**Query Params:**
-
-| Param | Type | Description |
-|---|---|---|
-| status | string | `active`, `closed`, `archived` |
-| ordering | string | `title`, `-title`, `created_at`, `-created_at` |
-| page | int | Page number |
 
 **Response: 200**
 
@@ -273,13 +267,14 @@ GET /api/clients/:clientId/cases/?ordering=-created_at&page=1
   "previous": null,
   "results": [
     {
-      "id": "uuid",
-      "client_id": "uuid",
+      "id": 1,
+      "client": 1,
+      "client_name": "Client Name",
+      "advocate": 1,
       "title": "Property Dispute",
       "case_number": "PD-2026-001",
       "description": "Dispute over 5 acres in Pune",
       "status": "active",
-      "documents_count": 4,
       "created_at": "2026-01-12T09:00:00Z",
       "updated_at": "2026-01-12T09:00:00Z"
     }
@@ -287,16 +282,19 @@ GET /api/clients/:clientId/cases/?ordering=-created_at&page=1
 }
 ```
 
+**Scope:** Filtered by `advocate = request.user`.
+
 ### 4.2 Create Case
 
 ```
-POST /api/clients/:clientId/cases/
+POST /api/cases/
 ```
 
 **Request:**
 
 ```json
 {
+  "client": 1,
   "title": "Property Dispute",
   "case_number": "PD-2026-001",
   "description": "Dispute over 5 acres in Pune",
@@ -304,57 +302,36 @@ POST /api/clients/:clientId/cases/
 }
 ```
 
-**Response: 201** — Created case object
+**Response: 201** — Created case object (same shape as list item, with `client_name`)
 
-**Errors:** `400 Bad Request` (validation, duplicate case_number), `404 Not Found` (client)
+**Side effect:** `advocate` auto-assigned to `request.user`. `case_number` must be unique per advocate.
+
+**Errors:** `400 Bad Request` (validation, duplicate case_number), `403 Forbidden` (not authenticated)
 
 ### 4.3 Get Case Detail
 
 ```
-GET /api/clients/:clientId/cases/:caseId/
+GET /api/cases/:id/
 ```
 
-**Response: 200**
+**Response: 200** — Case object (same shape as list item)
 
-```json
-{
-  "id": "uuid",
-  "client_id": "uuid",
-  "client_name": "Client Name",
-  "title": "Property Dispute",
-  "case_number": "PD-2026-001",
-  "description": "Dispute over 5 acres in Pune",
-  "status": "active",
-  "documents": [
-    {
-      "id": "uuid",
-      "name": "agreement_scan.jpg",
-      "file_type": "image",
-      "status": "uploaded",
-      "file_size_bytes": 2048576,
-      "created_at": "2026-01-13T11:00:00Z"
-    }
-  ],
-  "documents_count": 4,
-  "created_at": "2026-01-12T09:00:00Z",
-  "updated_at": "2026-01-12T09:00:00Z"
-}
-```
+**Errors:** `404 Not Found` (not found or belongs to another advocate)
 
 ### 4.4 Update Case
 
 ```
-PATCH /api/clients/:clientId/cases/:caseId/
+PATCH /api/cases/:id/
 ```
 
-**Request:** Partial update of title, description, status.
+**Request:** Partial update of `title`, `description`, `status`, `case_number`.
 
 **Response: 200** — Updated case object
 
 ### 4.5 Delete Case
 
 ```
-DELETE /api/clients/:clientId/cases/:caseId/
+DELETE /api/cases/:id/
 ```
 
 **Response: 204 No Content**
@@ -408,46 +385,33 @@ GET /api/documents/?status=&file_type=&search=&case_id=&client_id=&ordering=-cre
 }
 ```
 
-### 5.2 Upload Document
+### 5.2 Create Document
 
 ```
-POST /api/documents/upload/
-Content-Type: multipart/form-data
+POST /api/documents/
 ```
 
-**Request (form data):**
-
-| Field | Type | Required |
-|---|---|---|
-| file | File (JPG/PNG/PDF, max 20MB) | Yes |
-| name | string | Yes |
-| case_id | UUID | Yes |
-| notes | string | No |
-
-**Behavior:**
-1. Validates file type and size
-2. Uploads to Supabase Storage at `{advocate_id}/{case_id}/{document_id}.{ext}`
-3. Creates document record with status `uploaded`
-4. Creates initial `document_status_history` entry
-
-**Response: 201**
+**Request:**
 
 ```json
 {
-  "id": "uuid",
+  "case": 1,
   "name": "agreement_scan.jpg",
+  "file_path": "advocate-1/case-1/doc-1.jpg",
   "file_type": "image",
-  "mime_type": "image/jpeg",
   "file_size_bytes": 2048576,
-  "file_path": "advocate-uuid/case-uuid/doc-uuid.jpg",
-  "status": "uploaded",
-  "case_id": "uuid",
-  "notes": null,
-  "created_at": "2026-01-13T11:00:00Z"
+  "mime_type": "image/jpeg",
+  "notes": "Scanned agreement"
 }
 ```
 
-**Errors:** `400 Bad Request` (invalid file type/size, missing fields), `404 Not Found` (case)
+**Response: 201** — Full document object (same shape as list item, with `case_title`, `client_name`, `client_id`)
+
+**Side effect:** `advocate` auto-assigned. Default status is `uploaded`.
+
+**Errors:** `400 Bad Request` (validation), `403 Forbidden` (not authenticated)
+
+> **Note:** File upload via `multipart/form-data` is planned for production. MVP creates document records with a `file_path` string.
 
 ### 5.3 Get Document Detail
 
@@ -455,39 +419,9 @@ Content-Type: multipart/form-data
 GET /api/documents/:id/
 ```
 
-**Response: 200**
+**Response: 200** — Document object (same shape as list item, includes `case_title`, `client_name`, `client_id`, `file_path`, `processed_output_path`)
 
-```json
-{
-  "id": "uuid",
-  "name": "agreement_scan.jpg",
-  "file_type": "image",
-  "mime_type": "image/jpeg",
-  "file_size_bytes": 2048576,
-  "file_path": "advocate-uuid/case-uuid/doc-uuid.jpg",
-  "file_url": "https://supabase-storage-signed-url...",
-  "status": "uploaded",
-  "case_id": "uuid",
-  "case_title": "Property Dispute",
-  "client_id": "uuid",
-  "client_name": "Client Name",
-  "notes": null,
-  "processed_output_path": null,
-  "processed_output_url": null,
-  "status_history": [
-    {
-      "from_status": null,
-      "to_status": "uploaded",
-      "changed_by": "uuid",
-      "changed_by_name": "Advocate Name",
-      "changed_at": "2026-01-13T11:00:00Z",
-      "notes": "Initial upload"
-    }
-  ],
-  "created_at": "2026-01-13T11:00:00Z",
-  "updated_at": "2026-01-13T11:00:00Z"
-}
-```
+**Errors:** `404 Not Found`
 
 ### 5.4 Update Document Status
 
@@ -512,30 +446,13 @@ PATCH /api/documents/:id/status/
 
 **Errors:** `400 Bad Request` (invalid transition), `404 Not Found`
 
-### 5.5 Get Document Download URL
-
-```
-GET /api/documents/:id/download/
-```
-
-**Response: 200**
-
-```json
-{
-  "url": "https://supabase-storage-signed-url...",
-  "expires_in": 3600
-}
-```
-
-### 5.6 Delete Document
+### 5.5 Delete Document
 
 ```
 DELETE /api/documents/:id/
 ```
 
 **Response: 204 No Content**
-
-Deletes the file from Supabase Storage and removes the DB record.
 
 ---
 
@@ -667,7 +584,7 @@ All errors follow this shape:
 |---|---|---|
 | 400 | `VALIDATION_ERROR` | Request body validation failed |
 | 400 | `INVALID_TRANSITION` | Document status transition not allowed |
-| 401 | `UNAUTHORIZED` | Missing or invalid JWT |
+| 401 | `UNAUTHORIZED` | Missing or invalid session |
 | 403 | `FORBIDDEN` | User lacks permission for this resource |
 | 404 | `NOT_FOUND` | Resource does not exist or not accessible |
 | 413 | `FILE_TOO_LARGE` | Uploaded file exceeds 20MB limit |
