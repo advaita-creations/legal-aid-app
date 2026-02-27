@@ -1,20 +1,10 @@
-import { useNavigate, Link } from 'react-router-dom';
-import { Scale, Users, Briefcase, FileText, LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Users, Briefcase, FileText } from 'lucide-react';
 
 import { useAuth } from '@/features/auth';
 
 export function DashboardPage() {
-  const { profile, signOut } = useAuth();
-  const navigate = useNavigate();
-
-  async function handleSignOut() {
-    try {
-      await signOut();
-      navigate('/login');
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  }
+  const { profile } = useAuth();
 
   const stats = [
     { label: 'Active Clients', value: '0', icon: Users, color: 'text-blue-600' },
@@ -23,30 +13,7 @@ export function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#1754cf] rounded-lg flex items-center justify-center">
-                <Scale className="w-6 h-6 text-white" />
-              </div>
-              <h1 className="text-xl font-bold text-gray-900">Legal Aid</h1>
-            </div>
-            <button
-              onClick={handleSignOut}
-              className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              Sign out
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div>
         {/* Welcome Section */}
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900">
@@ -104,7 +71,6 @@ export function DashboardPage() {
             </Link>
           </div>
         </div>
-      </main>
     </div>
   );
 }

@@ -3,8 +3,8 @@ import type { Client, ClientFormData } from '../types';
 
 export const clientsApi = {
   getAll: async (): Promise<Client[]> => {
-    const response = await djangoApi.get<Client[]>('/clients/');
-    return response.data;
+    const response = await djangoApi.get<{ results: Client[] }>('/clients/');
+    return response.data.results;
   },
 
   getById: async (id: string): Promise<Client> => {

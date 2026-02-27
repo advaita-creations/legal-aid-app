@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, Suspense } from 'react';
 
 import { AuthProvider, ProtectedRoute } from '@/features/auth';
+import { AppLayout } from '@/components/layout/AppLayout';
 
 const LoginPage = lazy(() =>
   import('./routes/LoginPage').then((m) => ({ default: m.LoginPage })),
@@ -16,11 +17,17 @@ const ClientsPage = lazy(() =>
 const ClientNewPage = lazy(() =>
   import('./routes/ClientNewPage').then((m) => ({ default: m.ClientNewPage })),
 );
+const ClientDetailPage = lazy(() =>
+  import('./routes/ClientDetailPage').then((m) => ({ default: m.ClientDetailPage })),
+);
 const CasesPage = lazy(() =>
   import('./routes/CasesPage').then((m) => ({ default: m.CasesPage })),
 );
 const CaseNewPage = lazy(() =>
   import('./routes/CaseNewPage').then((m) => ({ default: m.CaseNewPage })),
+);
+const CaseDetailPage = lazy(() =>
+  import('./routes/CaseDetailPage').then((m) => ({ default: m.CaseDetailPage })),
 );
 const DocumentsPage = lazy(() =>
   import('./routes/DocumentsPage').then((m) => ({ default: m.DocumentsPage })),
@@ -60,53 +67,21 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/unauthorized" element={<UnauthorizedPage />} />
               <Route
-                path="/dashboard"
                 element={
                   <ProtectedRoute>
-                    <DashboardPage />
+                    <AppLayout />
                   </ProtectedRoute>
                 }
-              />
-              <Route
-                path="/clients"
-                element={
-                  <ProtectedRoute>
-                    <ClientsPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/clients/new"
-                element={
-                  <ProtectedRoute>
-                    <ClientNewPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/cases"
-                element={
-                  <ProtectedRoute>
-                    <CasesPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/cases/new"
-                element={
-                  <ProtectedRoute>
-                    <CaseNewPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/documents"
-                element={
-                  <ProtectedRoute>
-                    <DocumentsPage />
-                  </ProtectedRoute>
-                }
-              />
+              >
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/clients" element={<ClientsPage />} />
+                <Route path="/clients/new" element={<ClientNewPage />} />
+                <Route path="/clients/:id" element={<ClientDetailPage />} />
+                <Route path="/cases" element={<CasesPage />} />
+                <Route path="/cases/new" element={<CaseNewPage />} />
+                <Route path="/cases/:id" element={<CaseDetailPage />} />
+                <Route path="/documents" element={<DocumentsPage />} />
+              </Route>
             </Routes>
           </Suspense>
         </AuthProvider>
