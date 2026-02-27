@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Legal AID Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "status-green": "#07883b",
+                        "status-orange": "#e73908",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0e121b] dark:text-white transition-colors duration-200">
+<!-- Navigation Drawer (Overlay State for Mobile) -->
+<!-- Hidden by default in a real app, but shown here for the UI design task context -->
+<div class="fixed inset-0 z-50 hidden">
+<div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+<div class="absolute left-0 top-0 h-full w-4/5 max-w-xs bg-white dark:bg-[#1a1f2e] shadow-2xl flex flex-col">
+<div class="p-6 border-b border-gray-100 dark:border-gray-800 flex items-center gap-3">
+<div class="bg-primary text-white p-2 rounded-lg">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-primary">Legal AID</h1>
+</div>
+<nav class="flex-1 p-4">
+<ul class="space-y-2">
+<li class="flex items-center gap-4 rounded-lg px-4 py-3 bg-primary/10 text-primary">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-bold">Dashboard</span>
+</li>
+<li class="flex items-center gap-4 rounded-lg px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-medium">Clients</span>
+</li>
+<li class="flex items-center gap-4 rounded-lg px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-medium">Assets</span>
+</li>
+<li class="flex items-center gap-4 rounded-lg px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-medium">Payments</span>
+</li>
+<li class="flex items-center gap-4 rounded-lg px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</li>
+</ul>
+</nav>
+<div class="p-4 border-t border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-3 p-2">
+<div class="size-10 rounded-full bg-gray-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a professional lawyer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEra2alZGN0BkDCA-pIcAOH3F6kdUbwdsDf1ehV2uoZPSyU6Xt8OCcr5g41CfqPxHRFEi42jdrnI_yH2zexcnNsPGQ6LtJxgDMealwfeBglzsmseT1RUsvDVJKT-m0B_DviGFAvu7DzXv9etV2jByFGf-wn7Wxf2b3SUKIlV4M5nLJfEw_R6EXN0QUPq0c_AYgcgMo7BbXaSquK3pCp3PAf2yooETknTsOk4nBqsCLsAwct5sVXT1Ue1Y4dvvFXNdUeBbTNAhslWmD"/>
+</div>
+<div>
+<p class="text-sm font-bold">Adv. Rajesh Kumar</p>
+<p class="text-xs text-gray-500">Senior Counsel</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="relative flex h-screen flex-col overflow-hidden">
+<!-- TopAppBar -->
+<header class="flex items-center bg-white dark:bg-[#1a1f2e] px-4 py-3 shadow-sm z-30">
+<button class="text-gray-600 dark:text-gray-300 p-1">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="ml-4 text-lg font-bold leading-tight tracking-tight flex-1">Dashboard</h2>
+<div class="flex items-center gap-2">
+<button class="text-gray-600 dark:text-gray-300 p-1">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="size-8 rounded-full bg-gray-200 overflow-hidden border border-gray-100">
+<img class="w-full h-full object-cover" data-alt="Small profile picture of user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM_QF-2tgkZkqTGIwRPHFovxSsqayYej83bkmu93nvBRGA6kd1TKqbBUrtYHia9lyuyl8WLqZoBl2rESmWQYvmyXKnk7UVsuXykC2QSy5p1qIbjrdCG9iLzamY-_ZiCgX8s7u5QPx8R8TtC2z6Ac9O8KOkyM7T73e44Q82DGyhloq807Ogn97DTicZxhPRobGROl0Rbd9t3iZe7-QsxC2c_ukaAFY2gg2EGnUIuy1Jsyi5eDCiK6FqZWM45TWpmbVmz4werg7D9jWM"/>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark pb-10">
+<!-- Quick Action Button -->
+<div class="px-4 py-6">
+<button class="w-full bg-primary hover:bg-primary/90 text-white flex items-center justify-center gap-2 h-14 rounded-xl shadow-lg shadow-primary/20 transition-all font-bold text-base">
+<span class="material-symbols-outlined">upload_file</span>
+<span>Quick Upload</span>
+</button>
+</div>
+<!-- Stats Grid -->
+<div class="px-4 mb-8">
+<h3 class="text-gray-900 dark:text-white text-sm font-bold uppercase tracking-wider mb-4 px-1 opacity-60">Overview</h3>
+<div class="grid grid-cols-2 gap-3">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-[#1a1f2e] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col gap-1 col-span-2">
+<div class="flex justify-between items-start mb-2">
+<div class="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-primary">
+<span class="material-symbols-outlined text-xl">groups</span>
+</div>
+<span class="text-status-green text-sm font-bold flex items-center">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>+5%
+                            </span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Total Clients</p>
+<p class="text-3xl font-bold tracking-tight">124</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-[#1a1f2e] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col gap-1">
+<div class="flex justify-between items-start mb-2">
+<div class="p-2 bg-green-50 dark:bg-green-900/30 rounded-lg text-status-green">
+<span class="material-symbols-outlined text-xl">description</span>
+</div>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase">Processed</p>
+<p class="text-2xl font-bold tracking-tight">852</p>
+<p class="text-status-green text-xs font-medium">+12% vs last month</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-[#1a1f2e] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col gap-1">
+<div class="flex justify-between items-start mb-2">
+<div class="p-2 bg-orange-50 dark:bg-orange-900/30 rounded-lg text-status-orange">
+<span class="material-symbols-outlined text-xl">document_scanner</span>
+</div>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase">Pending OCR</p>
+<p class="text-2xl font-bold tracking-tight">12</p>
+<p class="text-status-orange text-xs font-medium">Action Required</p>
+</div>
+</div>
+</div>
+<!-- Recent Activity Section -->
+<div class="px-4">
+<div class="flex justify-between items-end mb-4 px-1">
+<h3 class="text-gray-900 dark:text-white text-sm font-bold uppercase tracking-wider opacity-60">Recent Activity</h3>
+<button class="text-primary text-xs font-bold hover:underline">View All</button>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm">
+<!-- Activity Item 1 -->
+<div class="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-3">
+<div class="size-10 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg">
+<span class="material-symbols-outlined text-gray-400">article</span>
+</div>
+<div>
+<h4 class="text-sm font-bold truncate max-w-[150px]">Property_Deed_v2.pdf</h4>
+<p class="text-xs text-gray-500">Mukesh Sharma • 2h ago</p>
+</div>
+</div>
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide bg-status-green/10 text-status-green">Processed</span>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-3">
+<div class="size-10 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg">
+<span class="material-symbols-outlined text-gray-400">description</span>
+</div>
+<div>
+<h4 class="text-sm font-bold truncate max-w-[150px]">Bail_Application_Draft.docx</h4>
+<p class="text-xs text-gray-500">Priya Verma • 5h ago</p>
+</div>
+</div>
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide bg-primary/10 text-primary">Processing</span>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-3">
+<div class="size-10 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg">
+<span class="material-symbols-outlined text-gray-400">history_edu</span>
+</div>
+<div>
+<h4 class="text-sm font-bold truncate max-w-[150px]">Contract_Scan_098.jpg</h4>
+<p class="text-xs text-gray-500">Anil Kapoor • 8h ago</p>
+</div>
+</div>
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide bg-status-orange/10 text-status-orange text-center leading-tight">Action<br/>Required</span>
+</div>
+<!-- Activity Item 4 -->
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg">
+<span class="material-symbols-outlined text-gray-400">gavel</span>
+</div>
+<div>
+<h4 class="text-sm font-bold truncate max-w-[150px]">Affidavit_Final_Sign.pdf</h4>
+<p class="text-xs text-gray-500">Sanjay Gupta • Yesterday</p>
+</div>
+</div>
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide bg-status-green/10 text-status-green">Processed</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Tab Bar (iOS Style) -->
+<nav class="bg-white dark:bg-[#1a1f2e] border-t border-gray-200 dark:border-gray-800 flex justify-around items-center py-2 pb-6 px-2 z-30">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-medium">Clients</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span class="text-[10px] font-medium">Assets</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="text-[10px] font-medium">Search</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</a>
+</nav>
+</div>
+</body></html>

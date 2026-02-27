@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Settings - Legal AID</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .ios-toggle:checked + .ios-toggle-label {
+            background-color: #1754cf;
+        }
+        .ios-toggle:checked + .ios-toggle-label::after {
+            transform: translateX(100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0e121b] dark:text-white transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col max-w-[480px] mx-auto bg-background-light dark:bg-background-dark overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="text-primary flex size-10 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-[#0e121b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">User Settings</h2>
+</div>
+<div class="flex flex-col gap-2 pb-24">
+<!-- SectionHeader: Profile Information -->
+<div class="flex flex-col">
+<h3 class="text-[#0e121b] dark:text-white text-sm font-semibold uppercase tracking-wider px-4 pb-2 pt-6 opacity-60">Profile Information</h3>
+<div class="bg-white dark:bg-[#1c2230] mx-4 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm">
+<!-- TextField: Full Name -->
+<div class="flex flex-col px-4 py-3 border-b border-gray-50 dark:border-gray-800">
+<label class="flex flex-col w-full">
+<p class="text-[#4e6797] dark:text-gray-400 text-xs font-medium leading-normal pb-1">Full Name</p>
+<input class="form-input flex w-full border-none bg-transparent p-0 text-[#0e121b] dark:text-white focus:ring-0 text-base font-normal leading-normal placeholder:text-[#4e6797]/50" type="text" value="Adv. Rajesh Kumar"/>
+</label>
+</div>
+<!-- TextField: Bar Council ID -->
+<div class="flex flex-col px-4 py-3">
+<label class="flex flex-col w-full">
+<p class="text-[#4e6797] dark:text-gray-400 text-xs font-medium leading-normal pb-1">Bar Council ID</p>
+<input class="form-input flex w-full border-none bg-transparent p-0 text-[#0e121b] dark:text-white focus:ring-0 text-base font-normal leading-normal placeholder:text-[#4e6797]/50" type="text" value="BCI/DL/1234/2023"/>
+</label>
+</div>
+</div>
+</div>
+<!-- SectionHeader: Language -->
+<div class="flex flex-col">
+<h3 class="text-[#0e121b] dark:text-white text-sm font-semibold uppercase tracking-wider px-4 pb-2 pt-6 opacity-60">Language</h3>
+<div class="bg-white dark:bg-[#1c2230] mx-4 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">language</span>
+<span class="text-base font-medium">App Language</span>
+</div>
+<div class="flex items-center gap-1 text-[#4e6797] dark:text-gray-400">
+<span class="text-base">English</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SectionHeader: Notifications -->
+<div class="flex flex-col">
+<h3 class="text-[#0e121b] dark:text-white text-sm font-semibold uppercase tracking-wider px-4 pb-2 pt-6 opacity-60">Notification Settings</h3>
+<div class="bg-white dark:bg-[#1c2230] mx-4 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm divide-y divide-gray-50 dark:divide-gray-800">
+<!-- Notification Row: Email -->
+<div class="flex items-center justify-between px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-xl">mail</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-medium">Email Alerts</span>
+<span class="text-xs text-[#4e6797] dark:text-gray-400">Case updates &amp; reminders</span>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 align-middle select-none">
+<input checked="" class="ios-toggle sr-only outline-none focus:outline-none" id="toggle_email" name="toggle_email" type="checkbox"/>
+<label class="ios-toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer transition-colors duration-200 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:w-5 after:h-5 after:rounded-full after:shadow-md after:transition-transform after:duration-200" for="toggle_email"></label>
+</div>
+</div>
+<!-- Notification Row: WhatsApp -->
+<div class="flex items-center justify-between px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="bg-green-500/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-green-500 text-xl">chat</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-medium">WhatsApp Notifications</span>
+<span class="text-xs text-[#4e6797] dark:text-gray-400">Direct instant messaging</span>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 align-middle select-none">
+<input class="ios-toggle sr-only outline-none focus:outline-none" id="toggle_whatsapp" name="toggle_whatsapp" type="checkbox"/>
+<label class="ios-toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer transition-colors duration-200 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:w-5 after:h-5 after:rounded-full after:shadow-md after:transition-transform after:duration-200" for="toggle_whatsapp"></label>
+</div>
+</div>
+</div>
+</div>
+<!-- SectionHeader: Account -->
+<div class="flex flex-col">
+<h3 class="text-[#0e121b] dark:text-white text-sm font-semibold uppercase tracking-wider px-4 pb-2 pt-6 opacity-60">Account</h3>
+<div class="bg-white dark:bg-[#1c2230] mx-4 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm">
+<button class="flex items-center w-full px-4 py-4 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span class="text-base font-medium">Log Out</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Action -->
+<div class="fixed bottom-0 left-0 right-0 max-w-[480px] mx-auto p-4 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md">
+<button class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg shadow-lg active:scale-[0.98] transition-transform">
+                Save Changes
+            </button>
+</div>
+</div>
+</body></html>

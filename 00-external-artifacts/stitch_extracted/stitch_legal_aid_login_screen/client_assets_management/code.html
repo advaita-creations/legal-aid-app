@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Assets Management - Legal AID</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#0e121b] dark:text-white">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-light dark:bg-background-dark border-b border-[#d0d7e7] dark:border-gray-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="flex items-center gap-3">
+<span aria-label="Back" class="material-symbols-outlined cursor-pointer">arrow_back</span>
+<h1 class="text-lg font-bold leading-tight tracking-tight">Rajesh Kumar</h1>
+</div>
+<div class="flex items-center gap-4">
+<span aria-label="Search" class="material-symbols-outlined cursor-pointer">search</span>
+<span aria-label="More Options" class="material-symbols-outlined cursor-pointer">more_vert</span>
+</div>
+</div>
+</header>
+<main class="max-w-md mx-auto pb-24">
+<!-- Breadcrumb Navigation -->
+<div class="px-4 py-2">
+<p class="text-[#4e6797] dark:text-[#a0aec0] text-sm font-normal leading-normal">
+<span class="underline">Clients</span>
+<span class="mx-1">&gt;</span>
+<span class="font-medium text-primary">Rajesh Kumar Assets</span>
+</p>
+</div>
+<!-- Category Tabs -->
+<div class="sticky top-[61px] bg-background-light dark:bg-background-dark z-40">
+<div class="flex border-b border-[#d0d7e7] dark:border-gray-800 px-4 gap-6 overflow-x-auto no-scrollbar">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-primary pb-[13px] pt-4 shrink-0" href="#">
+<p class="text-sm font-bold leading-normal tracking-wide">Sale Deeds</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#4e6797] dark:text-[#a0aec0] pb-[13px] pt-4 shrink-0" href="#">
+<p class="text-sm font-bold leading-normal tracking-wide">Agreements</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#4e6797] dark:text-[#a0aec0] pb-[13px] pt-4 shrink-0" href="#">
+<p class="text-sm font-bold leading-normal tracking-wide">Court Orders</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#4e6797] dark:text-[#a0aec0] pb-[13px] pt-4 shrink-0" href="#">
+<p class="text-sm font-bold leading-normal tracking-wide">Others</p>
+</a>
+</div>
+</div>
+<!-- Document List -->
+<div class="flex flex-col mt-2">
+<!-- Document Item 1: High Confidence -->
+<div class="flex gap-4 bg-background-light dark:bg-background-dark px-4 py-4 justify-between border-b border-[#d0d7e7]/50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[72px] shadow-sm" data-alt="Digital scan of a legal property sale deed document" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAynPx6P53oSwy32A6zvYlFR4szAMxQf529CVPEehDb2AD6CnmDkz1gZxP_FYuMrSWSjM35wKHW09pjGyBQ94eC09Dg30xUY7NdgvSH72uJJI_-5B098qp0viOKAq2W9YM6_w1EigkLMauURE4P7NkhzOUp2pLoM2Nn3XtBCmTRSF62XPkcqTh8EQlCoUX0-4eCeEXBB2XziyrMkPIChbL6CoNG6F_gavCxGWxB2smBXsiONrYw25JFNyq_2_YL_NUOOroX9V9259H");'>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#0e121b] dark:text-gray-100 text-base font-semibold leading-normal">Sale Deed - Plot 42-A</p>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="size-2 rounded-full bg-green-500"></span>
+<p class="text-[#4e6797] dark:text-gray-400 text-xs font-medium uppercase tracking-wider">High Confidence</p>
+</div>
+<p class="text-[#4e6797] dark:text-gray-500 text-xs font-normal leading-normal mt-1">Oct 12, 2023 • 2.4 MB</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center">
+<button class="flex min-w-[72px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-[#e7ebf3] dark:bg-gray-800 text-[#0e121b] dark:text-white text-sm font-bold leading-normal">
+<span class="truncate">View</span>
+</button>
+</div>
+</div>
+<!-- Document Item 2: Low Confidence (Review Required) -->
+<div class="flex gap-4 bg-background-light dark:bg-background-dark px-4 py-4 justify-between border-b border-[#d0d7e7]/50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[72px] shadow-sm relative overflow-hidden" data-alt="Official stamp and signature on an old legal document" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA36V1c3c2hVqB8TAF7FaKEgd90T2e4yZfVbObCFxE1cTF_7uN5fHdSft6WU4s7wpmkMmQ15W0EBgAPj_lb0BvRNUk_cEh5x9CUTR_Hdz1HGKPeUGKVPANkPZilhOpqbQhRy0SZQKnREQ0diGYoESgPDQBOoqHOA1VKHEr45_OjhSbMOgQo4DFFDJriPm8TSgfgB-7deuH7qTOJzgiIUXv1Y2JO3ixlqXToC2oj3ekF7v5u1JyW4_NNyj3g3fZIa2t8Xnuip-q2mrKT");'>
+<div class="absolute inset-0 bg-yellow-500/10"></div>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#0e121b] dark:text-gray-100 text-base font-semibold leading-normal">Agreement for Sale</p>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="size-2 rounded-full bg-yellow-500"></span>
+<p class="text-yellow-600 dark:text-yellow-400 text-xs font-medium uppercase tracking-wider">Low Confidence</p>
+</div>
+<p class="text-[#4e6797] dark:text-gray-500 text-xs font-normal leading-normal mt-1">Oct 10, 2023 • 1.8 MB</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center">
+<button class="flex min-w-[72px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold leading-normal shadow-md shadow-primary/20">
+<span class="truncate">Review</span>
+</button>
+</div>
+</div>
+<!-- Document Item 3: Medium Confidence -->
+<div class="flex gap-4 bg-background-light dark:bg-background-dark px-4 py-4 justify-between border-b border-[#d0d7e7]/50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[72px] shadow-sm" data-alt="Digital scan of typed legal text and signatures" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA551wOXGqN5oLoC_wv7dgtmHISWhXpMeERZN4Z8H_leqwEAtk-8zRbPgY5O8TESVfoR4VNEAj08-P6grqPs-3uXE45rk1TW1kUBUqbNH8_Q8m_cIrm293ImVobVGrg9l5gf0iCTANtcij03b2bg4kOTTTiTix_ndHeKTaY9DFMpFTVtdVlpHXbiUs_2VTs90KyuGNtCg55l8fC7bK_tkWia4T4XFuHBCLCrQKLdBL3-10FTRoeTjU1OrAddkf-ZqYRu8vCMCZ_cP95");'>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#0e121b] dark:text-gray-100 text-base font-semibold leading-normal">Relinquishment Deed</p>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="size-2 rounded-full bg-green-500"></span>
+<p class="text-[#4e6797] dark:text-gray-400 text-xs font-medium uppercase tracking-wider">High Confidence</p>
+</div>
+<p class="text-[#4e6797] dark:text-gray-500 text-xs font-normal leading-normal mt-1">Sep 28, 2023 • 3.1 MB</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center">
+<button class="flex min-w-[72px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-[#e7ebf3] dark:bg-gray-800 text-[#0e121b] dark:text-white text-sm font-bold leading-normal">
+<span class="truncate">View</span>
+</button>
+</div>
+</div>
+<!-- Document Item 4: Low Confidence -->
+<div class="flex gap-4 bg-background-light dark:bg-background-dark px-4 py-4 justify-between border-b border-[#d0d7e7]/50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[72px] shadow-sm" data-alt="Yellowed vintage paper with handwritten legal script" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApz8ny0lp66U3536qQ7V2qDgeG1oAEGBcsWBDs1CCJMTPEkRsAx95UVCcRHu8GRTg45ctiC_dnM-S1CdBcHJ5CzRK18r8zGUX6KL6XgrOc0HYsAB67S8xQflFWdf432Y7jlipcnfefcWWwJDA99ba1lLZcbWbl3uH6T3IiSytcEvuD26MZR7_wvQ-RsqpVnryHqsJ4k4z5HTsqUda-PSDjjeyYrKxa0GfY1fW7VzZIemlaIGpTvJ_zgnS4RsWTIR8CXNpVodKtpXlc");'>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#0e121b] dark:text-gray-100 text-base font-semibold leading-normal">Inheritance Map 1982</p>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="size-2 rounded-full bg-yellow-500"></span>
+<p class="text-yellow-600 dark:text-yellow-400 text-xs font-medium uppercase tracking-wider">Low Confidence</p>
+</div>
+<p class="text-[#4e6797] dark:text-gray-500 text-xs font-normal leading-normal mt-1">Sep 15, 2023 • 5.7 MB</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center">
+<button class="flex min-w-[72px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold leading-normal shadow-md shadow-primary/20">
+<span class="truncate">Review</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden, for context) -->
+<!-- 
+        <div class="flex flex-col items-center justify-center py-12 px-8 text-center">
+            <span class="material-symbols-outlined text-6xl text-[#d0d7e7] dark:text-gray-700">folder_open</span>
+            <p class="mt-4 text-[#0e121b] dark:text-white font-bold">No documents yet</p>
+            <p class="text-[#4e6797] dark:text-gray-400 text-sm">Upload your first legal asset to start the digitization process.</p>
+        </div> 
+        -->
+</main>
+<!-- Floating Action Button: Upload New Asset -->
+<div class="fixed bottom-6 left-0 right-0 flex justify-center px-4 pointer-events-none">
+<button class="pointer-events-auto flex items-center justify-center gap-2 bg-primary text-white font-bold px-6 py-4 rounded-full shadow-xl active:scale-95 transition-transform max-w-xs w-full">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Upload New Asset</span>
+</button>
+</div>
+<!-- Bottom Safe Area Spacer -->
+<div class="h-8 bg-background-light dark:bg-background-dark"></div>
+</body></html>

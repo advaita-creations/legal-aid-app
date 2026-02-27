@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Legal AID - Client Directory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="text-primary flex items-center justify-center bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">Client Profiles</h1>
+</div>
+<button class="flex items-center justify-center bg-primary text-white p-2.5 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">person_add</span>
+</button>
+</div>
+<!-- Search Bar Section -->
+<div class="px-4 pb-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="block w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-900 border-none rounded-xl text-sm ring-1 ring-slate-200 dark:ring-slate-800 focus:ring-2 focus:ring-primary transition-all placeholder:text-slate-400" placeholder="Search name or file number..." type="text"/>
+</div>
+</div>
+</header>
+<!-- Client Statistics / Quick Filter -->
+<div class="px-4 py-4 flex gap-3 overflow-x-auto no-scrollbar">
+<button class="flex-shrink-0 px-4 py-2 bg-primary text-white rounded-full text-xs font-semibold">All Clients</button>
+<button class="flex-shrink-0 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-400">Recent</button>
+<button class="flex-shrink-0 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-400">High Assets</button>
+<button class="flex-shrink-0 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-400">Archived</button>
+</div>
+<!-- Client List -->
+<main class="px-4 pb-20 space-y-3">
+<!-- List Item 1 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between group active:scale-[0.98] transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-14 h-14 rounded-full bg-cover bg-center ring-2 ring-primary/10" data-alt="Professional headshot of Rajesh Kumar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA4LAFpLOxyLvg6-qKxzBUDRgN05HOM0zepShRbOfskVuapkKX8NDEPKLjgOLpczRf4pspM-JayWVa3wlDglEMFv7gXn7SmpNAry9erosUDcRY1tV7ViVqD9c9cRk1Zo7vYrcCpT7LyTsNjHTjSNRTzVdclw7HxejynH5F-NFeC8by46dlBcuN3zx5Tt_JCN99SYCOBuUworrqHIj0AaMrMj1ESoO7veSxWUFtoZcJcutjkkLtuJNAJg6bU1HKiX2MlgGMkwq_P3SDp');">
+</div>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white dark:border-slate-900 rounded-full"></div>
+</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Rajesh Kumar</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">File: #LA-2023-089</p>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded uppercase font-bold tracking-wider">₹12.5L</span>
+<span class="text-[10px] text-slate-400 italic">Active Oct 24</span>
+</div>
+</div>
+</div>
+<div class="text-slate-300 dark:text-slate-700">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between group active:scale-[0.98] transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-14 h-14 rounded-full bg-cover bg-center ring-2 ring-primary/10" data-alt="Professional headshot of Priya Sharma" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKjPRqFTKRHMqVg3cF1uPJsVPyD52Vw4kYUOWtmJey5Kw1KMJGOS8gTTv71hmWZXQqprf-MeM-WejeIU0fsjbKGqtluZdLERNjIoNBEY4DKr2DNxrPqudi3J77-oh2cUzyoARz_T--c_1MkkRzA7e_3__Vfm7QwRmf08TwtoBaKMgjt0DY9HfDU_L_8FkdFNcQsOVwgm9tKMvAq3c94GBnOxiDR4HfFr0zX-JTCPizEClPod2_xDhmviashHO7lTt7sakWMEyrx44X');">
+</div>
+</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Priya Sharma</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">File: #LA-2023-042</p>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded uppercase font-bold tracking-wider">₹8.2L</span>
+<span class="text-[10px] text-slate-400 italic">Active Oct 20</span>
+</div>
+</div>
+</div>
+<div class="text-slate-300 dark:text-slate-700">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between group active:scale-[0.98] transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-14 h-14 rounded-full bg-cover bg-center ring-2 ring-primary/10" data-alt="Professional headshot of Amit Patel" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYHAWCNvWPyZ0rRyjk6jEiN2JROBt0md-1OiqaLhNUJ-oMau66DMBb0Doev2lNellVmQ-RVOshvdzkcZH0DfXbgvTx4aiWbZO6FBE-ZyKkIk6WEu0IBs6slj2DqYlkZjLyJexHaGFYdhVo4Om4_MwBKQ_2ygHyRmTXXO7MTuxzdsdiQYpjWToHbNW0qHk1vK65VcNbfxPGNRecbFp3WZkrawA4kLwMT3mTEPfkaIUcRBFoxJaoNf6f5ZoIABM9ROSNcXx9hkdVc2Z0');">
+</div>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-orange-500 border-2 border-white dark:border-slate-900 rounded-full"></div>
+</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Amit Patel</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">File: #LA-2023-112</p>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded uppercase font-bold tracking-wider">₹25.0L</span>
+<span class="text-[10px] text-slate-400 italic">Active Oct 15</span>
+</div>
+</div>
+</div>
+<div class="text-slate-300 dark:text-slate-700">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- List Item 4 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between group active:scale-[0.98] transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-14 h-14 rounded-full bg-cover bg-center ring-2 ring-primary/10" data-alt="Professional headshot of Sunita Devi" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBj39Iy1yYPRmA9SBMuzso_4o3qQsYRn1S9Gr-CdKDXobWhgB3Ji3XgdaMJboZwkwclwddRUbZlO6zFVRef4jPPzVtq3SuXqltYnmXABUhP3lXbwtdnpbSVrcctXLP_p5EEjFRfJqpbu90DXewnwulMU_v25ZYP5MVNWi7iDHqfSNpUBeeFf-CeFjMIs4m6FDI_Ah7ZT7VLubnkuynIv5BJP_m2dsXiQcayI50zI4zzHh6whp5khbckp9p6Z6kvcq7PHMnG01OOZOY');">
+</div>
+</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Sunita Devi</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">File: #LA-2023-015</p>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded uppercase font-bold tracking-wider">₹4.8L</span>
+<span class="text-[10px] text-slate-400 italic">Active Oct 08</span>
+</div>
+</div>
+</div>
+<div class="text-slate-300 dark:text-slate-700">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- List Item 5 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between group active:scale-[0.98] transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-14 h-14 rounded-full bg-cover bg-center ring-2 ring-primary/10" data-alt="Professional headshot of Vikram Singh" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBY5-PvC0RpSdIRTyxz4ayD8jUy25oFe5BretLIS8cAFFs_IV_HB9j3cUGcEWmGm_RguNWPHubxTD3yXyfHpHk-p7uFZDLlRZkd9oMSYk-RhJfiD-OzbWbxrKZSpXlsC95D3TV5l7xnRW8JD5Dj2oWDYXQmwzYzApyKJ7u2apg4FGG2qW38kh09N0S__3joIqugiEChvLUPgy_3HmukoXhnKx72cpoaT_W97ZbsIu0UweW3t-JLl06NZWWtGIRvgcE6ew-LYsf-TjR0');">
+</div>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white dark:border-slate-900 rounded-full"></div>
+</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Vikram Singh</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">File: #LA-2023-145</p>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded uppercase font-bold tracking-wider">₹18.9L</span>
+<span class="text-[10px] text-slate-400 italic">Active Sep 30</span>
+</div>
+</div>
+</div>
+<div class="text-slate-300 dark:text-slate-700">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 px-6 py-2 pb-6 flex justify-between items-center z-50">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold">Clients</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined">description</span>
+<span class="text-[10px] font-medium">Cases</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-medium">Agenda</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</div>
+</nav>
+<!-- Custom Scrollbar Hide -->
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>
