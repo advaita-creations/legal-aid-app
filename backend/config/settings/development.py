@@ -25,7 +25,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Session settings
 SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SECURE = False  # False for local development (HTTP)
+SESSION_COOKIE_SECURE = False
 
 REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [  # noqa: F405
     "rest_framework.renderers.JSONRenderer",

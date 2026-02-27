@@ -7,6 +7,7 @@ import { ArrowLeft } from 'lucide-react';
 
 import { casesApi } from '../api/casesApi';
 import { clientsApi } from '@/features/clients/api/clientsApi';
+import { useToast } from '@/components/ui/toast';
 
 const caseSchema = z.object({
   client: z.string().min(1, 'Please select a client'),
@@ -21,6 +22,7 @@ type CaseFormValues = z.infer<typeof caseSchema>;
 export function CaseForm() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const { data: clients, isLoading: clientsLoading } = useQuery({
     queryKey: ['clients'],
@@ -46,6 +48,7 @@ export function CaseForm() {
     mutationFn: casesApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cases'] });
+      toast('Case created successfully');
       navigate('/cases');
     },
   });

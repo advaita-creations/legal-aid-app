@@ -1,15 +1,22 @@
 import { Link } from 'react-router-dom';
 import { Users, Briefcase, FileText } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 
 import { useAuth } from '@/features/auth';
+import { dashboardApi } from '@/features/dashboard/api/dashboardApi';
 
 export function DashboardPage() {
   const { profile } = useAuth();
 
+  const { data: statsData } = useQuery({
+    queryKey: ['dashboard-stats'],
+    queryFn: dashboardApi.getStats,
+  });
+
   const stats = [
-    { label: 'Active Clients', value: '0', icon: Users, color: 'text-blue-600' },
-    { label: 'Open Cases', value: '0', icon: Briefcase, color: 'text-green-600' },
-    { label: 'Documents', value: '0', icon: FileText, color: 'text-orange-600' },
+    { label: 'Active Clients', value: String(statsData?.total_clients ?? '–'), icon: Users, color: 'text-blue-600' },
+    { label: 'Open Cases', value: String(statsData?.total_cases ?? '–'), icon: Briefcase, color: 'text-green-600' },
+    { label: 'Documents', value: String(statsData?.total_documents ?? '–'), icon: FileText, color: 'text-orange-600' },
   ];
 
   return (

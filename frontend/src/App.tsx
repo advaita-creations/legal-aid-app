@@ -4,6 +4,7 @@ import { lazy, Suspense } from 'react';
 
 import { AuthProvider, ProtectedRoute } from '@/features/auth';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { ToastProvider } from '@/components/ui/toast';
 
 const LoginPage = lazy(() =>
   import('./routes/LoginPage').then((m) => ({ default: m.LoginPage })),
@@ -31,6 +32,9 @@ const CaseDetailPage = lazy(() =>
 );
 const DocumentsPage = lazy(() =>
   import('./routes/DocumentsPage').then((m) => ({ default: m.DocumentsPage })),
+);
+const DocumentNewPage = lazy(() =>
+  import('./routes/DocumentNewPage').then((m) => ({ default: m.DocumentNewPage })),
 );
 const UnauthorizedPage = lazy(() =>
   import('./routes/UnauthorizedPage').then((m) => ({ default: m.UnauthorizedPage })),
@@ -60,6 +64,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <ToastProvider>
         <AuthProvider>
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
@@ -81,10 +86,12 @@ function App() {
                 <Route path="/cases/new" element={<CaseNewPage />} />
                 <Route path="/cases/:id" element={<CaseDetailPage />} />
                 <Route path="/documents" element={<DocumentsPage />} />
+                <Route path="/documents/new" element={<DocumentNewPage />} />
               </Route>
             </Routes>
           </Suspense>
         </AuthProvider>
+        </ToastProvider>
       </BrowserRouter>
     </QueryClientProvider>
   );

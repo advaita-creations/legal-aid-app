@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 import { casesApi } from '../api/casesApi';
 import { documentsApi } from '@/features/documents/api/documentsApi';
+import { useToast } from '@/components/ui/toast';
 import type { CaseStatus } from '../types';
 import type { DocumentStatus } from '@/features/documents/types';
 
@@ -33,6 +34,7 @@ export function CaseDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const { data: caseItem, isLoading, error } = useQuery({
     queryKey: ['cases', id],
@@ -51,6 +53,7 @@ export function CaseDetail() {
     mutationFn: () => casesApi.delete(id!),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cases'] });
+      toast('Case deleted');
       navigate('/cases');
     },
   });
@@ -59,6 +62,7 @@ export function CaseDetail() {
     mutationFn: () => casesApi.update(id!, { status: 'closed' }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cases', id] });
+      toast('Case closed');
     },
   });
 

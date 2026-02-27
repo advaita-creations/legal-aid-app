@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Briefcase, Plus, Tag } from 'lucide-react';
+import { Briefcase, Plus, Tag, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
@@ -14,6 +15,8 @@ const statusColors: Record<CaseStatus, string> = {
 };
 
 export function CaseList() {
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
   const { data: cases, isLoading, error } = useQuery({
     queryKey: ['cases'],
     queryFn: casesApi.getAll,
@@ -53,6 +56,31 @@ export function CaseList() {
         </Link>
       </div>
 
+      {!isLoading && cases && cases.length > 0 && (
+        <div className="flex gap-3 mb-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search cases..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-[#1754cf] focus:outline-none focus:ring-1 focus:ring-[#1754cf]"
+            />
+          </div>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#1754cf] focus:outline-none focus:ring-1 focus:ring-[#1754cf]"
+          >
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="closed">Closed</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+      )}
+
       {cases && cases.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
           <Briefcase className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -68,7 +96,11 @@ export function CaseList() {
         </div>
       ) : (
         <div className="space-y-3">
-          {cases?.map((caseItem) => (
+          {cases?.filter((c) => {
+            const matchesSearch = !search || c.title.toLowerCase().includes(search.toLowerCase()) || c.case_number.toLowerCase().includes(search.toLowerCase());
+            const matchesStatus = statusFilter === 'all' || c.status === statusFilter;
+            return matchesSearch && matchesStatus;
+          }).map((caseItem) => (
             <Link
               key={caseItem.id}
               to={`/cases/${caseItem.id}`}

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 
 import { clientsApi } from '../api/clientsApi';
+import { useToast } from '@/components/ui/toast';
 
 const clientSchema = z.object({
   full_name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -20,6 +21,7 @@ type ClientFormValues = z.infer<typeof clientSchema>;
 export function ClientForm() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const {
     register,
@@ -40,6 +42,7 @@ export function ClientForm() {
     mutationFn: clientsApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
+      toast('Client created successfully');
       navigate('/clients');
     },
   });

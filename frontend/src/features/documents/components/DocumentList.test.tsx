@@ -65,7 +65,7 @@ describe('DocumentList', () => {
     expect(screen.getByText('Property Dispute')).toBeInTheDocument();
     expect(screen.getByText('Test Client')).toBeInTheDocument();
     expect(screen.getByText('2.0 MB')).toBeInTheDocument();
-    expect(screen.getByText('Uploaded')).toBeInTheDocument();
+    expect(screen.getAllByText('Uploaded').length).toBeGreaterThanOrEqual(1);
   });
 
   it('shows error state on fetch failure', async () => {

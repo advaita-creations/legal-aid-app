@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Client
-from .serializers import ClientSerializer, ClientCreateSerializer
+from .serializers import ClientSerializer, ClientDetailSerializer, ClientCreateSerializer
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -20,6 +20,8 @@ class ClientViewSet(viewsets.ModelViewSet):
         """Return appropriate serializer based on action."""
         if self.action == 'create':
             return ClientCreateSerializer
+        if self.action == 'retrieve':
+            return ClientDetailSerializer
         return ClientSerializer
     
     def perform_create(self, serializer):

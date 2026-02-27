@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 import { clientsApi } from '../api/clientsApi';
 import { casesApi } from '@/features/cases/api/casesApi';
+import { useToast } from '@/components/ui/toast';
 import type { CaseStatus } from '@/features/cases/types';
 
 const statusColors: Record<CaseStatus, string> = {
@@ -18,6 +19,7 @@ export function ClientDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const { data: client, isLoading, error } = useQuery({
     queryKey: ['clients', id],
@@ -36,6 +38,7 @@ export function ClientDetail() {
     mutationFn: () => clientsApi.delete(id!),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
+      toast('Client deleted');
       navigate('/clients');
     },
   });

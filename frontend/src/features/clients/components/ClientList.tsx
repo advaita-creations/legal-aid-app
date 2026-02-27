@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Users, Mail, Phone, Plus } from 'lucide-react';
+import { Users, Mail, Phone, Plus, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { clientsApi } from '../api/clientsApi';
 
 export function ClientList() {
+  const [search, setSearch] = useState('');
   const { data: clients, isLoading, error } = useQuery({
     queryKey: ['clients'],
     queryFn: clientsApi.getAll,
@@ -44,6 +46,21 @@ export function ClientList() {
         </Link>
       </div>
 
+      {!isLoading && clients && clients.length > 0 && (
+        <div className="mb-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search clients..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-[#1754cf] focus:outline-none focus:ring-1 focus:ring-[#1754cf]"
+            />
+          </div>
+        </div>
+      )}
+
       {clients && clients.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
           <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -59,7 +76,11 @@ export function ClientList() {
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {clients?.map((client) => (
+          {clients?.filter((c) => {
+            if (!search) return true;
+            const q = search.toLowerCase();
+            return c.full_name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
+          }).map((client) => (
             <Link
               key={client.id}
               to={`/clients/${client.id}`}

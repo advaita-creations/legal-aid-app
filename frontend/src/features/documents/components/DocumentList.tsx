@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { FileText, Plus, Image, File } from 'lucide-react';
+import { FileText, Plus, Image, File, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
@@ -28,6 +29,8 @@ function formatFileSize(bytes: number): string {
 }
 
 export function DocumentList() {
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
   const { data: documents, isLoading, error } = useQuery({
     queryKey: ['documents'],
     queryFn: documentsApi.getAll,
@@ -67,6 +70,32 @@ export function DocumentList() {
         </Link>
       </div>
 
+      {!isLoading && documents && documents.length > 0 && (
+        <div className="flex gap-3 mb-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search documents..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-[#1754cf] focus:outline-none focus:ring-1 focus:ring-[#1754cf]"
+            />
+          </div>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#1754cf] focus:outline-none focus:ring-1 focus:ring-[#1754cf]"
+          >
+            <option value="all">All Status</option>
+            <option value="uploaded">Uploaded</option>
+            <option value="ready_to_process">Ready</option>
+            <option value="in_progress">In Progress</option>
+            <option value="processed">Processed</option>
+          </select>
+        </div>
+      )}
+
       {documents && documents.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
           <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -94,7 +123,11 @@ export function DocumentList() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {documents?.map((doc) => (
+              {documents?.filter((d) => {
+                const matchesSearch = !search || d.name.toLowerCase().includes(search.toLowerCase()) || d.case_title.toLowerCase().includes(search.toLowerCase());
+                const matchesStatus = statusFilter === 'all' || d.status === statusFilter;
+                return matchesSearch && matchesStatus;
+              }).map((doc) => (
                 <tr
                   key={doc.id}
                   className="hover:bg-gray-50 transition-colors cursor-pointer"
