@@ -1,4 +1,11 @@
-"""Case URL routing."""
-from django.urls import path
+"""Case app URLs."""
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
 
-urlpatterns: list = []
+router = DefaultRouter()
+router.register(r'cases', views.CaseViewSet, basename='case')
+
+urlpatterns = [
+    path('', include(router.urls)),
+]

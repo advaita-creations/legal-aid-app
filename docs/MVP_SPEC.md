@@ -1,9 +1,16 @@
 # Legal Aid App — MVP Specification
 
-> **Version:** 1.0  
-> **Status:** Draft — Pending Team Review  
+> **Version:** 1.1  
+> **Status:** In Development  
 > **Last Updated:** 2026-02-27  
 > **Approach:** SDD (Spec Driven Development) + TDD (Test Driven Development)
+
+### Implementation Notes (MVP)
+
+- **Auth:** Django session-based authentication (local SQLite DB), NOT Supabase Auth
+- **Database:** SQLite for local development; Supabase Postgres planned for production
+- **Storage:** Local filesystem for MVP; Supabase Storage planned for production
+- **Design System:** Stitch — Primary color `#1754cf`, font `Public Sans`
 
 ---
 
@@ -23,7 +30,7 @@ The lawyer or legal professional who owns and manages client files.
 
 | Capability | Description |
 |---|---|
-| Login / Logout | Email + password via Supabase Auth |
+| Login / Logout | Email + password via Django session auth |
 | Dashboard | View document stats, file list, quick actions |
 | Client Management | Create, view, edit client profiles |
 | Case Management | Create, view, edit cases linked to clients |
@@ -37,7 +44,7 @@ Internal administrator who oversees the platform.
 
 | Capability | Description |
 |---|---|
-| Login / Logout | Email + password via Supabase Auth |
+| Login / Logout | Email + password via Django session auth |
 | Admin Dashboard | System-wide stats, all advocates overview |
 | User Management | List advocates, activate/deactivate accounts |
 | All Advocate Capabilities | Can access any advocate's data for support |
@@ -66,15 +73,15 @@ Internal administrator who oversees the platform.
 - **Fields:** Email (text input), Password (password input)
 - **Actions:** Submit (login), "Forgot Password" link (placeholder for MVP)
 - **Behavior:**
-  - Calls Supabase Auth `signInWithPassword`
-  - On success: store session, redirect to Dashboard (Advocate) or Admin Dashboard (Admin)
+  - Calls Django `/api/auth/login/` endpoint
+  - On success: session cookie set, redirect to Dashboard (Advocate) or Admin Dashboard (Admin)
   - On failure: show inline error message
   - If already authenticated: redirect to appropriate dashboard
-- **Design:** Full-page centered card, legal-themed branding, professional and warm
+- **Design:** Split layout — branded left panel (desktop), clean form card on right, Stitch blue gradient
 
 #### Flow: Logout
 
-- Clear Supabase session
+- Calls Django `/api/auth/logout/` endpoint, clears session
 - Redirect to `/login`
 - Available from user menu in topbar (all pages)
 
@@ -417,32 +424,35 @@ Audit trail for document state transitions.
 
 ---
 
-## 6. Supabase Configuration
+## 6. Authentication & Data Access
 
-### 6.1 Auth
+### 6.1 Auth (MVP — Local Django)
 
-- **Provider:** Email + Password only
-- **Email confirmation:** Disabled for MVP (auto-confirm)
-- **Session:** JWT, 1-hour expiry, refresh token enabled
+- **Provider:** Django built-in auth (email + password)
+- **Session:** Django session cookies (`SESSION_COOKIE_SAMESITE = 'Lax'`)
+- **CSRF:** Exempted for API login endpoint; enforced elsewhere via session middleware
+- **CORS:** Configured for `localhost:5173` (frontend dev server)
 
-### 6.2 Storage
+### 6.2 Storage (MVP — Local)
 
-- **Bucket:** `documents` (private)
+- **Location:** Local filesystem via Django media files
 - **Max file size:** 20MB
 - **Allowed MIME types:** `image/jpeg`, `image/png`, `application/pdf`
-- **Path convention:** `{advocate_id}/{case_id}/{document_id}.{ext}`
+- **Path convention:** `media/{advocate_id}/{case_id}/{document_id}.{ext}`
 
-### 6.3 Row-Level Security (RLS)
+### 6.3 Data Access Control
 
-| Table | Policy | Rule |
-|---|---|---|
-| profiles | Advocate reads own | `auth.uid() = id` |
-| profiles | Admin reads all | `role = 'admin'` (via join) |
-| clients | Advocate CRUD own | `advocate_id = auth.uid()` |
-| clients | Admin reads all | profile role = 'admin' |
-| cases | Advocate CRUD own | `advocate_id = auth.uid()` |
-| documents | Advocate CRUD own | `advocate_id = auth.uid()` |
-| Storage: documents | Advocate access own folder | path starts with `{auth.uid()}/` |
+| Resource | Rule |
+|---|---|
+| Clients | Filtered by `advocate = request.user` in ViewSet queryset |
+| Cases | Filtered by `advocate = request.user` in ViewSet queryset |
+| Documents | Filtered by `advocate = request.user` in ViewSet queryset |
+
+### 6.4 Supabase (Production — Planned)
+
+- Supabase Postgres via `DATABASE_URL` in production settings
+- Supabase Storage for file uploads
+- RLS policies to be configured when migrating to production
 
 ---
 

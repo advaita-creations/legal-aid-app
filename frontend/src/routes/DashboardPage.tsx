@@ -88,14 +88,20 @@ export function DashboardPage() {
               <Users className="w-5 h-5 text-[#1754cf]" />
               <span className="font-medium text-gray-900">View Clients</span>
             </Link>
-            <button className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-[#1754cf] hover:bg-blue-50/50 transition-colors">
+            <Link
+              to="/cases"
+              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-[#1754cf] hover:bg-blue-50/50 transition-colors"
+            >
               <Briefcase className="w-5 h-5 text-[#1754cf]" />
-              <span className="font-medium text-gray-900">Create Case</span>
-            </button>
-            <button className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-[#1754cf] hover:bg-blue-50/50 transition-colors">
+              <span className="font-medium text-gray-900">View Cases</span>
+            </Link>
+            <Link
+              to="/documents"
+              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-[#1754cf] hover:bg-blue-50/50 transition-colors"
+            >
               <FileText className="w-5 h-5 text-[#1754cf]" />
-              <span className="font-medium text-gray-900">Upload Document</span>
-            </button>
+              <span className="font-medium text-gray-900">View Documents</span>
+            </Link>
           </div>
         </div>
       </main>

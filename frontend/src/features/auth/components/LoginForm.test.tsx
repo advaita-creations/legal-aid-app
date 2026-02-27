@@ -6,10 +6,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { LoginForm } from './LoginForm';
 import { AuthProvider } from '../context/AuthContext';
 
+const mockSignIn = vi.fn().mockResolvedValue(undefined);
+
 vi.mock('../context/AuthContext', () => ({
   AuthProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   useAuth: () => ({
-    signIn: vi.fn(),
+    signIn: mockSignIn,
     signOut: vi.fn(),
     user: null,
     profile: null,
@@ -51,6 +53,7 @@ describe('LoginForm', () => {
   });
 
   it('submits form with valid credentials', async () => {
+    mockSignIn.mockClear();
     const user = userEvent.setup();
 
     render(
@@ -69,6 +72,6 @@ describe('LoginForm', () => {
     await user.type(passwordInput, 'password123');
     await user.click(submitButton);
 
-    expect(submitButton).toBeDisabled();
+    expect(mockSignIn).toHaveBeenCalledWith('test@example.com', 'password123');
   });
 });

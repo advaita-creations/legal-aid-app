@@ -43,7 +43,7 @@ trigger: always_on
 
 ## Backend (Django + Django REST Framework)
 
-- **Python 3.11+** required.
+- **Python 3.9+** required (3.9.6 on dev machine; Django 4.2 LTS).
 - **Type hints** on all function signatures and return types.
 - **Docstrings** on all views, serializers, and utility functions (Google style).
 - **snake_case** for variables, functions, files. **PascalCase** for classes.
@@ -52,7 +52,7 @@ trigger: always_on
 - **DRF ViewSets + Routers** for standard CRUD. Custom `@action` for non-CRUD endpoints.
 - **Permissions:** Custom permission classes (`IsAdvocate`, `IsAdmin`, `IsOwner`) — never check roles inline in views.
 - **django-environ** for all configuration. Settings split: `base.py`, `development.py`, `production.py`.
-- **Supabase client** initialized once in a utility module (`utils/supabase_client.py`), imported where needed.
+- **Auth:** Django session-based auth for MVP. Supabase client reserved for production storage/DB.
 - **Migrations:** Always create migrations for model changes. Never modify migration files manually after creation.
 - **Tests:** Use `pytest-django` with fixtures. Test files in `tests/` directory per app.
 - **API versioning:** URL prefix `/api/` (no version prefix for MVP; add `/api/v1/` post-MVP).

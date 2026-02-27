@@ -1,4 +1,11 @@
-"""Document URL routing."""
-from django.urls import path
+"""Document app URLs."""
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
 
-urlpatterns: list = []
+router = DefaultRouter()
+router.register(r'documents', views.DocumentViewSet, basename='document')
+
+urlpatterns = [
+    path('', include(router.urls)),
+]

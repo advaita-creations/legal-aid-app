@@ -13,6 +13,18 @@ const DashboardPage = lazy(() =>
 const ClientsPage = lazy(() =>
   import('./routes/ClientsPage').then((m) => ({ default: m.ClientsPage })),
 );
+const ClientNewPage = lazy(() =>
+  import('./routes/ClientNewPage').then((m) => ({ default: m.ClientNewPage })),
+);
+const CasesPage = lazy(() =>
+  import('./routes/CasesPage').then((m) => ({ default: m.CasesPage })),
+);
+const CaseNewPage = lazy(() =>
+  import('./routes/CaseNewPage').then((m) => ({ default: m.CaseNewPage })),
+);
+const DocumentsPage = lazy(() =>
+  import('./routes/DocumentsPage').then((m) => ({ default: m.DocumentsPage })),
+);
 const UnauthorizedPage = lazy(() =>
   import('./routes/UnauthorizedPage').then((m) => ({ default: m.UnauthorizedPage })),
 );
@@ -60,6 +72,38 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <ClientsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/clients/new"
+                element={
+                  <ProtectedRoute>
+                    <ClientNewPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/cases"
+                element={
+                  <ProtectedRoute>
+                    <CasesPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/cases/new"
+                element={
+                  <ProtectedRoute>
+                    <CaseNewPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/documents"
+                element={
+                  <ProtectedRoute>
+                    <DocumentsPage />
                   </ProtectedRoute>
                 }
               />

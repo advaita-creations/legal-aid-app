@@ -2,18 +2,17 @@ export type CaseStatus = 'active' | 'closed' | 'archived';
 
 export interface Case {
   id: string;
-  client_id: string;
+  client: string;
+  client_name: string;
   title: string;
   case_number: string;
   description: string | null;
   status: CaseStatus;
-  documents_count: number;
   created_at: string;
   updated_at: string;
 }
 
 export interface CaseDetail extends Case {
-  client_name: string;
   documents: CaseDocument[];
 }
 

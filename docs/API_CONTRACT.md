@@ -1,10 +1,11 @@
 # Legal Aid App — API Contract
 
-> **Version:** 1.0  
+> **Version:** 1.1  
 > **Base URL:** `/api`  
-> **Auth:** All endpoints (except login) require `Authorization: Bearer <supabase_jwt>` header  
+> **Auth:** Django session-based authentication. All endpoints (except login) require an active session cookie.  
 > **Content-Type:** `application/json` (unless file upload)  
-> **Pagination:** `?page=1&page_size=20` (default 20, max 100)
+> **Pagination:** `?page=1&page_size=20` (default 20, max 100)  
+> **CORS:** Credentials included (`withCredentials: true`)
 
 ---
 
@@ -12,13 +13,55 @@
 
 ### 1.1 Login
 
-> Handled client-side via Supabase JS SDK (`signInWithPassword`).  
-> No Django endpoint needed — the frontend gets a JWT directly from Supabase Auth.
+```
+POST /api/auth/login/
+```
 
-### 1.2 Get Current User
+**Request:**
+
+```json
+{
+  "email": "advocate@example.com",
+  "password": "password123"
+}
+```
+
+**Response: 200**
+
+```json
+{
+  "user": {
+    "id": 1,
+    "email": "advocate@example.com",
+    "full_name": "Advocate Name",
+    "role": "advocate"
+  },
+  "message": "Login successful"
+}
+```
+
+**Side effect:** Sets Django session cookie.
+
+**Errors:** `400 Bad Request` (invalid credentials)
+
+### 1.2 Logout
 
 ```
-GET /api/me/
+POST /api/auth/logout/
+```
+
+**Response: 200**
+
+```json
+{
+  "message": "Logout successful"
+}
+```
+
+### 1.3 Get Current User
+
+```
+GET /api/auth/me/
 ```
 
 **Response: 200**

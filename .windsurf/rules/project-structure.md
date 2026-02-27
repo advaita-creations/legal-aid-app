@@ -24,7 +24,8 @@ legal-aid-app/
 │   │   ├── hooks/               # Shared custom hooks
 │   │   ├── lib/                 # Utilities and config
 │   │   │   ├── api/             # Axios instance, API helpers
-│   │   │   ├── supabase.ts      # Supabase client init
+│   │   │   ├── django-api.ts    # Django backend API client (auth, CRUD)
+│   │   │   ├── supabase.ts      # Supabase client init (production)
 │   │   │   └── utils.ts         # cn(), formatDate(), etc.
 │   │   ├── types/               # Shared TypeScript types
 │   │   ├── routes/              # Route definitions and guards
@@ -78,7 +79,8 @@ legal-aid-app/
 ├── .env.example                 # Root env template
 ├── .gitignore
 ├── README.md
-└── Makefile                     # Common dev commands
+├── Makefile                     # Common dev commands
+└── dev.sh                       # Service manager (start/stop/status)
 ```
 
 ## Rules
