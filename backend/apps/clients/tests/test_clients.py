@@ -180,10 +180,13 @@ class TestClientDetail:
         assert response.json()['full_name'] == 'Updated Name'
 
     def test_delete_client(self, authenticated_client, sample_client):
-        """Deletes client."""
+        """Soft deletes client (sets is_deleted=True)."""
         response = authenticated_client.delete(f'/api/clients/{sample_client.id}/')
         assert response.status_code == 204
-        assert Client.objects.count() == 0
+        sample_client.refresh_from_db()
+        assert sample_client.is_deleted is True
+        response = authenticated_client.get('/api/clients/')
+        assert len(response.json()['results']) == 0
 
     def test_cannot_access_other_advocates_client(self, api_client, other_advocate, sample_client):
         """Advocate cannot access another advocate's client."""

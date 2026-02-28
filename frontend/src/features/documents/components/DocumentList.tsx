@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { FileText, Plus, Image, File, Search } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
 
@@ -29,6 +29,7 @@ function formatFileSize(bytes: number): string {
 }
 
 export function DocumentList() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const { data: documents, isLoading, error } = useQuery({
@@ -130,6 +131,7 @@ export function DocumentList() {
               }).map((doc) => (
                 <tr
                   key={doc.id}
+                  onClick={() => navigate(`/documents/${doc.id}`)}
                   className="hover:bg-gray-50 transition-colors cursor-pointer"
                 >
                   <td className="px-4 py-3">

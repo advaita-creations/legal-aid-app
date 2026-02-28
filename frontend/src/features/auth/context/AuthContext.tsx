@@ -10,6 +10,7 @@ interface AuthContextType {
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -53,10 +54,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       id: response.user.id,
       full_name: response.user.full_name,
       email: response.user.email,
-      phone: undefined,
+      phone: null,
       role: response.user.role,
       is_active: true,
-      avatar_url: undefined,
+      avatar_url: null,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     });
@@ -68,6 +69,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setProfile(null);
   }
 
+  async function refreshProfile() {
+    await checkAuth();
+  }
+
   const value = {
     user,
     profile,
@@ -75,6 +80,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isLoading,
     signIn,
     signOut,
+    refreshProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Tag, User, FileText, Trash2, Image, File } from 'lucide-react';
+import { ArrowLeft, Tag, User, FileText, Trash2, Image, File, Pencil } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -119,6 +119,13 @@ export function CaseDetail() {
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <Link
+            to={`/cases/${id}/edit`}
+            className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            <Pencil className="w-4 h-4" />
+            Edit
+          </Link>
           {caseItem.status === 'active' && (
             <button
               onClick={() => closeMutation.mutate()}

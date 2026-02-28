@@ -13,8 +13,8 @@ class ClientViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
-        """Return clients for the authenticated user."""
-        return Client.objects.filter(advocate=self.request.user)
+        """Return non-deleted clients for the authenticated user."""
+        return Client.objects.filter(advocate=self.request.user, is_deleted=False)
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -27,3 +27,10 @@ class ClientViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Set the advocate to the current user when creating."""
         serializer.save(advocate=self.request.user)
+
+    def destroy(self, request, *args, **kwargs):
+        """Soft delete: set is_deleted=True instead of removing the record."""
+        instance = self.get_object()
+        instance.is_deleted = True
+        instance.save(update_fields=['is_deleted'])
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -46,3 +46,32 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_role(self, obj):
         return 'admin' if obj.is_superuser else 'advocate'
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    """Serializer for updating the current user's profile."""
+
+    full_name = serializers.CharField(required=False, max_length=255)
+
+    class Meta:
+        model = User
+        fields = ['full_name', 'first_name', 'last_name', 'email']
+        read_only_fields = ['email']
+
+    def validate_full_name(self, value: str) -> str:
+        """Split full_name into first_name and last_name."""
+        if len(value.strip()) < 2:
+            raise serializers.ValidationError('Name must be at least 2 characters.')
+        return value
+
+    def update(self, instance, validated_data):
+        """Handle full_name split into first/last."""
+        full_name = validated_data.pop('full_name', None)
+        if full_name:
+            parts = full_name.strip().split(' ', 1)
+            instance.first_name = parts[0]
+            instance.last_name = parts[1] if len(parts) > 1 else ''
+        for attr, val in validated_data.items():
+            setattr(instance, attr, val)
+        instance.save()
+        return instance

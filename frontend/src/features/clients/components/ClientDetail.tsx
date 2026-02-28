@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Mail, Phone, MapPin, FileText, Briefcase, Trash2 } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, MapPin, FileText, Briefcase, Trash2, Pencil } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -76,17 +76,26 @@ export function ClientDetail() {
             Added on {new Date(client.created_at).toLocaleDateString()}
           </p>
         </div>
-        <button
-          onClick={() => {
-            if (window.confirm('Are you sure you want to delete this client?')) {
-              deleteMutation.mutate();
-            }
-          }}
-          className="flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-        >
-          <Trash2 className="w-4 h-4" />
-          Delete
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            to={`/clients/${id}/edit`}
+            className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            <Pencil className="w-4 h-4" />
+            Edit
+          </Link>
+          <button
+            onClick={() => {
+              if (window.confirm('Are you sure you want to delete this client?')) {
+                deleteMutation.mutate();
+              }
+            }}
+            className="flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+          >
+            <Trash2 className="w-4 h-4" />
+            Delete
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">

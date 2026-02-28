@@ -36,6 +36,18 @@ const DocumentsPage = lazy(() =>
 const DocumentNewPage = lazy(() =>
   import('./routes/DocumentNewPage').then((m) => ({ default: m.DocumentNewPage })),
 );
+const DocumentDetailPage = lazy(() =>
+  import('./routes/DocumentDetailPage').then((m) => ({ default: m.DocumentDetailPage })),
+);
+const ClientEditPage = lazy(() =>
+  import('./routes/ClientEditPage').then((m) => ({ default: m.ClientEditPage })),
+);
+const CaseEditPage = lazy(() =>
+  import('./routes/CaseEditPage').then((m) => ({ default: m.CaseEditPage })),
+);
+const ProfilePage = lazy(() =>
+  import('./routes/ProfilePage').then((m) => ({ default: m.ProfilePage })),
+);
 const UnauthorizedPage = lazy(() =>
   import('./routes/UnauthorizedPage').then((m) => ({ default: m.UnauthorizedPage })),
 );
@@ -82,11 +94,15 @@ function App() {
                 <Route path="/clients" element={<ClientsPage />} />
                 <Route path="/clients/new" element={<ClientNewPage />} />
                 <Route path="/clients/:id" element={<ClientDetailPage />} />
+                <Route path="/clients/:id/edit" element={<ClientEditPage />} />
                 <Route path="/cases" element={<CasesPage />} />
                 <Route path="/cases/new" element={<CaseNewPage />} />
                 <Route path="/cases/:id" element={<CaseDetailPage />} />
+                <Route path="/cases/:id/edit" element={<CaseEditPage />} />
                 <Route path="/documents" element={<DocumentsPage />} />
                 <Route path="/documents/new" element={<DocumentNewPage />} />
+                <Route path="/documents/:id" element={<DocumentDetailPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
               </Route>
             </Routes>
           </Suspense>

@@ -36,4 +36,9 @@ export const authApi = {
     const response = await djangoApi.get<User>('/auth/me/');
     return response.data;
   },
+
+  updateProfile: async (data: { full_name?: string }): Promise<User> => {
+    const response = await djangoApi.patch<User>('/me/', data);
+    return response.data;
+  },
 };

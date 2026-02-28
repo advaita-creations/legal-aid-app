@@ -19,7 +19,13 @@ const caseSchema = z.object({
 
 type CaseFormValues = z.infer<typeof caseSchema>;
 
-export function CaseForm() {
+interface CaseFormProps {
+  caseId?: string;
+  initialData?: CaseFormValues;
+}
+
+export function CaseForm({ caseId, initialData }: CaseFormProps = {}) {
+  const isEdit = !!caseId;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -35,7 +41,7 @@ export function CaseForm() {
     formState: { errors, isSubmitting },
   } = useForm<CaseFormValues>({
     resolver: zodResolver(caseSchema),
-    defaultValues: {
+    defaultValues: initialData ?? {
       client: '',
       title: '',
       case_number: '',
@@ -45,11 +51,12 @@ export function CaseForm() {
   });
 
   const mutation = useMutation({
-    mutationFn: casesApi.create,
+    mutationFn: (data: CaseFormValues) =>
+      isEdit ? casesApi.update(caseId, data) : casesApi.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cases'] });
-      toast('Case created successfully');
-      navigate('/cases');
+      toast(isEdit ? 'Case updated successfully' : 'Case created successfully');
+      navigate(isEdit ? `/cases/${caseId}` : '/cases');
     },
   });
 
@@ -68,11 +75,11 @@ export function CaseForm() {
       </button>
 
       <div className="bg-white rounded-xl border border-gray-200 p-6 max-w-2xl">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Add New Case</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-6">{isEdit ? 'Edit Case' : 'Add New Case'}</h2>
 
         {mutation.error && (
           <div className="rounded-lg bg-red-50 border border-red-200 p-3 mb-4">
-            <p className="text-sm text-red-800">Failed to create case. Please try again.</p>
+            <p className="text-sm text-red-800">Failed to {isEdit ? 'update' : 'create'} case. Please try again.</p>
           </div>
         )}
 
@@ -171,7 +178,7 @@ export function CaseForm() {
               disabled={isSubmitting}
               className="rounded-lg bg-[#1754cf] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#1d3db4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {isSubmitting ? 'Creating...' : 'Create Case'}
+              {isSubmitting ? (isEdit ? 'Saving...' : 'Creating...') : (isEdit ? 'Save Changes' : 'Create Case')}
             </button>
             <button
               type="button"
