@@ -27,7 +27,8 @@ function renderWithProviders(ui: React.ReactElement) {
 describe('CaseList', () => {
   it('shows loading state initially', () => {
     renderWithProviders(<CaseList />);
-    expect(screen.getByText('Loading cases...')).toBeInTheDocument();
+    expect(screen.getByText('Cases')).toBeInTheDocument();
+    expect(screen.getByText('Manage your legal cases')).toBeInTheDocument();
   });
 
   it('renders heading and add button after loading', async () => {
@@ -36,7 +37,7 @@ describe('CaseList', () => {
 
     renderWithProviders(<CaseList />);
 
-    expect(await screen.findByText('Cases')).toBeInTheDocument();
+    expect(await screen.findByText('No cases yet')).toBeInTheDocument();
     expect(screen.getAllByText('Add Case').length).toBeGreaterThanOrEqual(1);
   });
 

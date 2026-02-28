@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { casesApi } from '../api/casesApi';
 import { documentsApi } from '@/features/documents/api/documentsApi';
 import { useToast } from '@/components/ui/toast';
+import { useConfirm } from '@/components/ui/confirm-dialog';
 import type { CaseStatus } from '../types';
 import type { DocumentStatus } from '@/features/documents/types';
 
@@ -35,6 +36,7 @@ export function CaseDetail() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { confirm } = useConfirm();
 
   const { data: caseItem, isLoading, error } = useQuery({
     queryKey: ['cases', id],
@@ -44,7 +46,7 @@ export function CaseDetail() {
 
   const { data: documents } = useQuery({
     queryKey: ['documents'],
-    queryFn: documentsApi.getAll,
+    queryFn: () => documentsApi.getAll(),
     select: (allDocs) => allDocs.filter((d) => String(d.case_id) === id),
     enabled: !!id,
   });
@@ -128,17 +130,29 @@ export function CaseDetail() {
           </Link>
           {caseItem.status === 'active' && (
             <button
-              onClick={() => closeMutation.mutate()}
+              onClick={async () => {
+                const ok = await confirm({
+                  title: 'Close Case',
+                  description: 'Are you sure you want to close this case?',
+                  confirmLabel: 'Close',
+                  variant: 'warning',
+                });
+                if (ok) closeMutation.mutate();
+              }}
               className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
             >
               Close Case
             </button>
           )}
           <button
-            onClick={() => {
-              if (window.confirm('Are you sure you want to delete this case?')) {
-                deleteMutation.mutate();
-              }
+            onClick={async () => {
+              const ok = await confirm({
+                title: 'Delete Case',
+                description: 'Are you sure you want to delete this case? This action cannot be undone.',
+                confirmLabel: 'Delete',
+                variant: 'danger',
+              });
+              if (ok) deleteMutation.mutate();
             }}
             className="flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
           >
@@ -160,7 +174,7 @@ export function CaseDetail() {
           <h3 className="text-sm font-semibold text-gray-900">Documents</h3>
           <Link
             to="/documents/new"
-            className="text-sm text-[#1754cf] hover:underline font-medium"
+            className="text-sm text-green-600 hover:underline font-medium"
           >
             + Upload Document
           </Link>
@@ -174,9 +188,10 @@ export function CaseDetail() {
         ) : (
           <div className="space-y-2">
             {documents.map((doc) => (
-              <div
+              <Link
                 key={doc.id}
-                className="flex items-center justify-between rounded-lg border border-gray-100 p-3"
+                to={`/documents/${doc.id}`}
+                className="flex items-center justify-between rounded-lg border border-gray-100 p-3 hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   {doc.file_type === 'image' ? (
@@ -194,7 +209,7 @@ export function CaseDetail() {
                 >
                   {docStatusLabels[doc.status]}
                 </span>
-              </div>
+              </Link>
             ))}
           </div>
         )}

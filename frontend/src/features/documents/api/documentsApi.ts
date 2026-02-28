@@ -2,8 +2,8 @@ import { djangoApi } from '@/lib/django-api';
 import type { Document, DocumentStatusUpdateRequest } from '../types';
 
 export const documentsApi = {
-  getAll: async (): Promise<Document[]> => {
-    const response = await djangoApi.get<{ results: Document[] }>('/documents/');
+  getAll: async (params?: Record<string, string>): Promise<Document[]> => {
+    const response = await djangoApi.get<{ results: Document[] }>('/documents/', { params });
     return response.data.results;
   },
 
@@ -12,16 +12,20 @@ export const documentsApi = {
     return response.data;
   },
 
-  create: async (data: {
-    case: string;
+  upload: async (data: {
+    file: File;
+    case_id: string;
     name: string;
-    file_path: string;
-    file_type: string;
-    file_size_bytes: number;
-    mime_type: string;
     notes?: string;
   }): Promise<Document> => {
-    const response = await djangoApi.post<Document>('/documents/', data);
+    const formData = new FormData();
+    formData.append('file', data.file);
+    formData.append('case', data.case_id);
+    formData.append('name', data.name);
+    if (data.notes) formData.append('notes', data.notes);
+    const response = await djangoApi.post<Document>('/documents/', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return response.data;
   },
 

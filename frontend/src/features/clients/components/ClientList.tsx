@@ -4,9 +4,14 @@ import { Users, Mail, Phone, Plus, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { clientsApi } from '../api/clientsApi';
+import { Pagination } from '@/components/ui/pagination';
+import { CardSkeleton } from '@/components/ui/table-skeleton';
+
+const PAGE_SIZE = 12;
 
 export function ClientList() {
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
   const { data: clients, isLoading, error } = useQuery({
     queryKey: ['clients'],
     queryFn: clientsApi.getAll,
@@ -14,8 +19,14 @@ export function ClientList() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-gray-500">Loading clients...</div>
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Clients</h2>
+            <p className="text-sm text-gray-600 mt-1">Manage your client information</p>
+          </div>
+        </div>
+        <CardSkeleton count={6} />
       </div>
     );
   }
@@ -28,6 +39,14 @@ export function ClientList() {
     );
   }
 
+  const filtered = clients?.filter((c) => {
+    if (!search) return true;
+    const q = search.toLowerCase();
+    return c.full_name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
+  }) ?? [];
+
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -39,14 +58,14 @@ export function ClientList() {
         </div>
         <Link
           to="/clients/new"
-          className="flex items-center gap-2 rounded-lg bg-[#1754cf] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1d3db4] transition-colors"
+          className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Client
         </Link>
       </div>
 
-      {!isLoading && clients && clients.length > 0 && (
+      {clients && clients.length > 0 && (
         <div className="mb-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -54,8 +73,8 @@ export function ClientList() {
               type="text"
               placeholder="Search clients..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-[#1754cf] focus:outline-none focus:ring-1 focus:ring-[#1754cf]"
+              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
             />
           </div>
         </div>
@@ -68,45 +87,51 @@ export function ClientList() {
           <p className="text-gray-600 mb-4">Get started by adding your first client.</p>
           <Link
             to="/clients/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-[#1754cf] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1d3db4] transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Add Client
           </Link>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {clients?.filter((c) => {
-            if (!search) return true;
-            const q = search.toLowerCase();
-            return c.full_name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
-          }).map((client) => (
-            <Link
-              key={client.id}
-              to={`/clients/${client.id}`}
-              className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-[#1754cf] transition-all"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center">
-                  <Users className="w-6 h-6 text-[#1754cf]" />
-                </div>
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">{client.full_name}</h3>
-              <div className="space-y-1.5 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  <span className="truncate">{client.email}</span>
-                </div>
-                {client.phone && (
-                  <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4" />
-                    <span>{client.phone}</span>
+        <>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {paginated.map((client) => (
+              <Link
+                key={client.id}
+                to={`/clients/${client.id}`}
+                className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-green-600 transition-all"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center">
+                    <Users className="w-6 h-6 text-green-600" />
                   </div>
-                )}
-              </div>
-            </Link>
-          ))}
-        </div>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">{client.full_name}</h3>
+                <div className="space-y-1.5 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4" />
+                    <span className="truncate">{client.email}</span>
+                  </div>
+                  {client.phone && (
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4" />
+                      <span>{client.phone}</span>
+                    </div>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-4 bg-white rounded-xl border border-gray-200">
+            <Pagination
+              currentPage={page}
+              totalItems={filtered.length}
+              pageSize={PAGE_SIZE}
+              onPageChange={setPage}
+            />
+          </div>
+        </>
       )}
     </div>
   );

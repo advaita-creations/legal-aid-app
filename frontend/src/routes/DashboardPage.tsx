@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Users, Briefcase, FileText, Plus, Image, File, Clock, CheckCircle, AlertTriangle, Loader } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
@@ -32,6 +33,7 @@ function formatFileSize(bytes: number): string {
 export function DashboardPage() {
   const { profile } = useAuth();
   const navigate = useNavigate();
+  const [statusFilter, setStatusFilter] = useState<DocumentStatus | null>(null);
 
   const { data: statsData } = useQuery({
     queryKey: ['dashboard-stats'],
@@ -40,7 +42,7 @@ export function DashboardPage() {
 
   const { data: documents } = useQuery({
     queryKey: ['documents'],
-    queryFn: documentsApi.getAll,
+    queryFn: () => documentsApi.getAll(),
   });
 
   const docsByStatus = statsData?.documents_by_status;
@@ -51,14 +53,17 @@ export function DashboardPage() {
     { label: 'Total Files', value: String(statsData?.total_documents ?? '–'), icon: FileText, color: 'text-orange-600' },
   ];
 
-  const docStats = [
-    { label: 'Ready to Process', value: String(docsByStatus?.ready_to_process ?? '–'), icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50' },
-    { label: 'In Progress', value: String(docsByStatus?.in_progress ?? '–'), icon: Loader, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { label: 'Processed', value: String(docsByStatus?.processed ?? '–'), icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-50' },
-    { label: 'Uploaded', value: String(docsByStatus?.uploaded ?? '–'), icon: Clock, color: 'text-gray-600', bg: 'bg-gray-50' },
+  const docStats: { label: string; value: string; icon: React.ElementType; color: string; bg: string; status: DocumentStatus }[] = [
+    { label: 'Ready to Process', value: String(docsByStatus?.ready_to_process ?? '–'), icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50', status: 'ready_to_process' },
+    { label: 'In Progress', value: String(docsByStatus?.in_progress ?? '–'), icon: Loader, color: 'text-blue-600', bg: 'bg-blue-50', status: 'in_progress' },
+    { label: 'Processed', value: String(docsByStatus?.processed ?? '–'), icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-50', status: 'processed' },
+    { label: 'Uploaded', value: String(docsByStatus?.uploaded ?? '–'), icon: Clock, color: 'text-gray-600', bg: 'bg-gray-50', status: 'uploaded' },
   ];
 
-  const recentDocs = documents?.slice(0, 10) ?? [];
+  const filteredDocs = statusFilter
+    ? (documents ?? []).filter((d) => d.status === statusFilter)
+    : documents ?? [];
+  const recentDocs = filteredDocs.slice(0, 20);
 
   return (
     <div>
@@ -73,7 +78,7 @@ export function DashboardPage() {
           </div>
           <Link
             to="/documents/new"
-            className="flex items-center gap-2 rounded-lg bg-[#1754cf] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1d3db4] transition-colors"
+            className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Upload Document
@@ -101,9 +106,15 @@ export function DashboardPage() {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
           {docStats.map((stat) => (
-            <div
+            <button
               key={stat.label}
-              className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow"
+              onClick={() => setStatusFilter((prev) => prev === stat.status ? null : stat.status)}
+              className={cn(
+                'bg-white rounded-xl border p-4 hover:shadow-md transition-all text-left',
+                statusFilter === stat.status
+                  ? 'border-green-500 ring-2 ring-green-200'
+                  : 'border-gray-200',
+              )}
             >
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-lg ${stat.bg} flex items-center justify-center ${stat.color}`}>
@@ -114,21 +125,35 @@ export function DashboardPage() {
                   <p className="text-xs font-medium text-gray-500">{stat.label}</p>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8">
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">Recent Documents</h3>
-            <Link to="/documents" className="text-sm text-[#1754cf] hover:underline font-medium">
+            <div className="flex items-center gap-3">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {statusFilter ? `${statusLabels[statusFilter]} Documents` : 'Recent Documents'}
+              </h3>
+              {statusFilter && (
+                <button
+                  onClick={() => setStatusFilter(null)}
+                  className="text-xs text-gray-500 hover:text-gray-700 underline"
+                >
+                  Clear filter
+                </button>
+              )}
+            </div>
+            <Link to="/documents" className="text-sm text-green-600 hover:underline font-medium">
               View All
             </Link>
           </div>
           {recentDocs.length === 0 ? (
             <div className="text-center py-10">
               <FileText className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-              <p className="text-sm text-gray-500">No documents yet. Upload your first file.</p>
+              <p className="text-sm text-gray-500">
+                {statusFilter ? `No ${statusLabels[statusFilter].toLowerCase()} documents.` : 'No documents yet. Upload your first file.'}
+              </p>
             </div>
           ) : (
             <table className="w-full">
@@ -182,23 +207,23 @@ export function DashboardPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link
               to="/clients/new"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-[#1754cf] hover:bg-blue-50/50 transition-colors"
+              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-green-600 hover:bg-green-50/50 transition-colors"
             >
-              <Users className="w-5 h-5 text-[#1754cf]" />
+              <Users className="w-5 h-5 text-green-600" />
               <span className="font-medium text-gray-900">Add Client</span>
             </Link>
             <Link
               to="/cases/new"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-[#1754cf] hover:bg-blue-50/50 transition-colors"
+              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-green-600 hover:bg-green-50/50 transition-colors"
             >
-              <Briefcase className="w-5 h-5 text-[#1754cf]" />
+              <Briefcase className="w-5 h-5 text-green-600" />
               <span className="font-medium text-gray-900">Add Case</span>
             </Link>
             <Link
               to="/documents/new"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-[#1754cf] hover:bg-blue-50/50 transition-colors"
+              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-green-600 hover:bg-green-50/50 transition-colors"
             >
-              <FileText className="w-5 h-5 text-[#1754cf]" />
+              <FileText className="w-5 h-5 text-green-600" />
               <span className="font-medium text-gray-900">Upload Document</span>
             </Link>
           </div>

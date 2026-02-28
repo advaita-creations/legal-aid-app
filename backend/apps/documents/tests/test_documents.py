@@ -1,6 +1,7 @@
 """Tests for document CRUD and status transition endpoints."""
 import pytest
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client as TestClient
 
 from apps.cases.models import Case
@@ -100,37 +101,38 @@ class TestDocumentList:
 class TestDocumentCreate:
     """Tests for POST /api/documents/."""
 
-    def test_create_success(self, authenticated_client, sample_case):
-        """Creates a document with valid data."""
+    def test_create_success(self, authenticated_client, sample_case, tmp_path):
+        """Creates a document with valid file upload."""
+        fake_pdf = SimpleUploadedFile(
+            'new_doc.pdf',
+            b'%PDF-1.4 fake content',
+            content_type='application/pdf',
+        )
         response = authenticated_client.post(
             '/api/documents/',
             data={
                 'case': sample_case.id,
-                'name': 'new_doc.pdf',
-                'file_path': 'advocate-1/case-1/doc-2.pdf',
-                'file_type': 'pdf',
-                'file_size_bytes': 1024000,
-                'mime_type': 'application/pdf',
+                'file': fake_pdf,
             },
-            content_type='application/json',
         )
         assert response.status_code == 201
         data = response.json()
-        assert data['name'] == 'new_doc.pdf'
+        assert data['name'] == 'new_doc'
         assert data['status'] == 'uploaded'
+        assert data['file_type'] == 'pdf'
 
     def test_create_missing_case(self, authenticated_client):
         """Missing case returns 400."""
+        fake_pdf = SimpleUploadedFile(
+            'orphan.pdf',
+            b'%PDF-1.4 fake content',
+            content_type='application/pdf',
+        )
         response = authenticated_client.post(
             '/api/documents/',
             data={
-                'name': 'orphan.pdf',
-                'file_path': 'test/orphan.pdf',
-                'file_type': 'pdf',
-                'file_size_bytes': 1024,
-                'mime_type': 'application/pdf',
+                'file': fake_pdf,
             },
-            content_type='application/json',
         )
         assert response.status_code == 400
 
