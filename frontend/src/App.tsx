@@ -48,6 +48,12 @@ const CaseEditPage = lazy(() =>
 const ProfilePage = lazy(() =>
   import('./routes/ProfilePage').then((m) => ({ default: m.ProfilePage })),
 );
+const AdminDashboardPage = lazy(() =>
+  import('./routes/AdminDashboardPage').then((m) => ({ default: m.AdminDashboardPage })),
+);
+const AdminUsersPage = lazy(() =>
+  import('./routes/AdminUsersPage').then((m) => ({ default: m.AdminUsersPage })),
+);
 const UnauthorizedPage = lazy(() =>
   import('./routes/UnauthorizedPage').then((m) => ({ default: m.UnauthorizedPage })),
 );
@@ -103,6 +109,16 @@ function App() {
                 <Route path="/documents/new" element={<DocumentNewPage />} />
                 <Route path="/documents/:id" element={<DocumentDetailPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+              </Route>
+              <Route
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="/admin" element={<AdminDashboardPage />} />
+                <Route path="/admin/users" element={<AdminUsersPage />} />
               </Route>
             </Routes>
           </Suspense>

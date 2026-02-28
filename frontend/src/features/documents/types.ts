@@ -15,6 +15,7 @@ export interface Document {
   notes: string | null;
   created_at: string;
   updated_at: string;
+  status_history?: DocumentStatusEntry[];
 }
 
 export interface DocumentDetail extends Document {
@@ -26,6 +27,7 @@ export interface DocumentDetail extends Document {
 }
 
 export interface DocumentStatusEntry {
+  id: number;
   from_status: DocumentStatus | null;
   to_status: DocumentStatus;
   changed_by: string;

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 import { documentsApi } from '../api/documentsApi';
 import { useToast } from '@/components/ui/toast';
-import type { DocumentStatus } from '../types';
+import type { DocumentStatus, DocumentStatusEntry } from '../types';
 
 const statusColors: Record<DocumentStatus, string> = {
   uploaded: 'bg-gray-100 text-gray-700',
@@ -223,8 +223,35 @@ export function DocumentDetail() {
           </div>
 
           <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3">Timeline</h3>
-            <p className="text-sm text-gray-500 italic">Timeline feature coming soon.</p>
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">Status History</h3>
+            {(!doc.status_history || doc.status_history.length === 0) ? (
+              <p className="text-sm text-gray-500 italic">No status history recorded.</p>
+            ) : (
+              <div className="space-y-3">
+                {doc.status_history.map((entry: DocumentStatusEntry) => (
+                  <div key={entry.id} className="flex gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className="w-2 h-2 rounded-full bg-[#1754cf] mt-1.5" />
+                      <div className="flex-1 w-px bg-gray-200" />
+                    </div>
+                    <div className="pb-3">
+                      <p className="text-sm text-gray-900">
+                        <span className="font-medium">{statusLabels[entry.to_status as DocumentStatus] ?? entry.to_status}</span>
+                        {entry.from_status && (
+                          <span className="text-gray-500"> from {statusLabels[entry.from_status as DocumentStatus] ?? entry.from_status}</span>
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {entry.changed_by_name} · {new Date(entry.changed_at).toLocaleString()}
+                      </p>
+                      {entry.notes && (
+                        <p className="text-xs text-gray-600 mt-1">{entry.notes}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

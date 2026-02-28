@@ -48,6 +48,23 @@ class UserSerializer(serializers.ModelSerializer):
         return 'admin' if obj.is_superuser else 'advocate'
 
 
+class AdvocateListSerializer(serializers.ModelSerializer):
+    """Serializer for admin advocate list endpoint."""
+
+    full_name = serializers.SerializerMethodField()
+    documents_count = serializers.IntegerField(read_only=True, default=0)
+    clients_count = serializers.IntegerField(read_only=True, default=0)
+
+    class Meta:
+        model = User
+        fields = ['id', 'full_name', 'email', 'is_active', 'documents_count',
+                  'clients_count', 'last_login', 'date_joined']
+
+    def get_full_name(self, obj) -> str:
+        """Return full name or email as fallback."""
+        return f"{obj.first_name} {obj.last_name}".strip() or obj.email
+
+
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     """Serializer for updating the current user's profile."""
 

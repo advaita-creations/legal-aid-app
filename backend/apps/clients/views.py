@@ -1,5 +1,6 @@
 """Client views for API."""
 from rest_framework import viewsets, status
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -11,6 +12,10 @@ class ClientViewSet(viewsets.ModelViewSet):
     """ViewSet for Client CRUD operations."""
     
     permission_classes = [IsAuthenticated]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['full_name', 'email', 'phone']
+    ordering_fields = ['full_name', 'created_at']
+    ordering = ['-created_at']
     
     def get_queryset(self):
         """Return non-deleted clients for the authenticated user."""

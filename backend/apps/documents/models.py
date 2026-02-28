@@ -60,3 +60,30 @@ class Document(models.Model):
     def can_transition_to(self, new_status: str) -> bool:
         """Check if the document can transition to the given status."""
         return new_status in self.VALID_TRANSITIONS.get(self.status, [])
+
+
+class DocumentStatusHistory(models.Model):
+    """Audit log for document status transitions."""
+
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+        related_name='status_history',
+    )
+    from_status = models.CharField(max_length=20, choices=Document.STATUS_CHOICES, null=True, blank=True)
+    to_status = models.CharField(max_length=20, choices=Document.STATUS_CHOICES)
+    changed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='document_status_changes',
+    )
+    notes = models.TextField(blank=True)
+    changed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-changed_at']
+        verbose_name_plural = 'Document status histories'
+
+    def __str__(self) -> str:
+        return f"{self.document.name}: {self.from_status} → {self.to_status}"
