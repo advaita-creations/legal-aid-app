@@ -1,8 +1,11 @@
 """Account views for authentication."""
 from django.contrib.auth import login, logout, get_user_model
 from django.db.models import Count, Q
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import (
+    api_view, authentication_classes, permission_classes,
+)
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
@@ -17,18 +20,20 @@ User = get_user_model()
 
 
 @api_view(['POST'])
+@authentication_classes([])
 @permission_classes([AllowAny])
 def login_view(request):
-    """Login endpoint."""
+    """Login endpoint. No auth/CSRF required — first request from client."""
     serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.validated_data['user']
         login(request, user)
         user_data = UserSerializer(user).data
-        return Response({
+        response = Response({
             'user': user_data,
             'message': 'Login successful'
         }, status=status.HTTP_200_OK)
+        return response
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -42,8 +47,9 @@ def logout_view(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ensure_csrf_cookie
 def me_view(request):
-    """Get current user profile."""
+    """Get current user profile. Sets CSRF cookie for subsequent mutating requests."""
     serializer = UserSerializer(request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -62,11 +68,16 @@ def update_profile_view(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def dashboard_stats_view(request):
-    """Return dashboard statistics scoped to the authenticated advocate."""
+    """Return dashboard statistics. Admin sees system-wide; advocate sees own data."""
     user = request.user
-    total_clients = Client.objects.filter(advocate=user).count()
-    total_cases = Case.objects.filter(advocate=user).count()
-    docs_qs = Document.objects.filter(advocate=user)
+    if user.is_staff:
+        total_clients = Client.objects.count()
+        total_cases = Case.objects.count()
+        docs_qs = Document.objects.all()
+    else:
+        total_clients = Client.objects.filter(advocate=user).count()
+        total_cases = Case.objects.filter(advocate=user).count()
+        docs_qs = Document.objects.filter(advocate=user)
     total_documents = docs_qs.count()
     documents_by_status = {
         "uploaded": docs_qs.filter(status="uploaded").count(),

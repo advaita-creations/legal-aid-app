@@ -7,10 +7,12 @@ import { cn } from '@/lib/utils';
 
 import { adminApi } from '@/features/admin/api/adminApi';
 import { useToast } from '@/components/ui/toast';
+import { useConfirm } from '@/components/ui/confirm-dialog';
 
 export function AdminUsersPage() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { confirm } = useConfirm();
   const [search, setSearch] = useState('');
 
   const { data, isLoading, error } = useQuery({
@@ -118,9 +120,15 @@ export function AdminUsersPage() {
                   </td>
                   <td className="px-4 py-3">
                     <button
-                      onClick={() => {
+                      onClick={async () => {
                         const action = adv.is_active ? 'deactivate' : 'activate';
-                        if (window.confirm(`Are you sure you want to ${action} ${adv.full_name}?`)) {
+                        const confirmed = await confirm({
+                          title: `${adv.is_active ? 'Deactivate' : 'Activate'} Advocate`,
+                          description: `Are you sure you want to ${action} ${adv.full_name}? ${adv.is_active ? 'They will lose access to the platform immediately.' : 'They will regain full access to the platform.'}`,
+                          confirmLabel: adv.is_active ? 'Deactivate' : 'Activate',
+                          variant: adv.is_active ? 'danger' : 'info',
+                        });
+                        if (confirmed) {
                           toggleMutation.mutate({ id: adv.id, is_active: !adv.is_active });
                         }
                       }}

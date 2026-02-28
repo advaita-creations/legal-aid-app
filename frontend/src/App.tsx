@@ -5,6 +5,7 @@ import { lazy, Suspense } from 'react';
 import { AuthProvider, ProtectedRoute } from '@/features/auth';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { ToastProvider } from '@/components/ui/toast';
+import { ConfirmDialogProvider } from '@/components/ui/confirm-dialog';
 
 const LoginPage = lazy(() =>
   import('./routes/LoginPage').then((m) => ({ default: m.LoginPage })),
@@ -83,6 +84,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ToastProvider>
+        <ConfirmDialogProvider>
         <AuthProvider>
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
@@ -123,6 +125,7 @@ function App() {
             </Routes>
           </Suspense>
         </AuthProvider>
+        </ConfirmDialogProvider>
         </ToastProvider>
       </BrowserRouter>
     </QueryClientProvider>

@@ -2,12 +2,25 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
+function getCookie(name: string): string | null {
+  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  return match ? decodeURIComponent(match[2]) : null;
+}
+
 export const djangoApi = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+djangoApi.interceptors.request.use((config) => {
+  const csrfToken = getCookie('csrftoken');
+  if (csrfToken && config.method && ['post', 'put', 'patch', 'delete'].includes(config.method)) {
+    config.headers['X-CSRFToken'] = csrfToken;
+  }
+  return config;
 });
 
 export interface User {
