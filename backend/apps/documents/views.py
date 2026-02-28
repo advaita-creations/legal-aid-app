@@ -22,12 +22,13 @@ class DocumentViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
     def get_queryset(self):
-        """Return documents for the authenticated user."""
-        return Document.objects.filter(
-            advocate=self.request.user,
-        ).select_related('case', 'case__client').prefetch_related(
+        """Return documents. Admin sees all; advocates see own."""
+        qs = Document.objects.select_related('case', 'case__client').prefetch_related(
             'status_history', 'status_history__changed_by',
         )
+        if not self.request.user.is_staff:
+            qs = qs.filter(advocate=self.request.user)
+        return qs
 
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""

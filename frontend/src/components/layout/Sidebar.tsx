@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Scale, LayoutDashboard, Users, Briefcase, FileText, Shield } from 'lucide-react';
+import { LayoutDashboard, Users, Briefcase, FileText, Shield } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/features/auth';
@@ -18,10 +18,8 @@ export function Sidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 z-30 w-60 bg-white border-r border-gray-200 flex flex-col">
       <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-200">
-        <div className="w-9 h-9 bg-[#1754cf] rounded-lg flex items-center justify-center">
-          <Scale className="w-5 h-5 text-white" />
-        </div>
-        <span className="text-lg font-bold text-gray-900">Legal Aid</span>
+        <img src="/images/logo.svg" alt="LegalAiD" className="w-9 h-9" />
+        <span className="text-lg font-bold text-gray-900">Legal<span className="text-green-600">AiD</span></span>
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-1">

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <rect width="40" height="40" rx="10" fill="#0D1F0D"/>
+  <g transform="translate(8, 6)">
+    <!-- Gavel head -->
+    <rect x="6" y="2" width="14" height="6" rx="1.5" fill="#22c55e" transform="rotate(-30 13 5)"/>
+    <!-- Gavel handle -->
+    <rect x="11" y="10" width="3" height="14" rx="1" fill="#4ade80"/>
+    <!-- Base -->
+    <rect x="5" y="25" width="15" height="3" rx="1.5" fill="#16a34a"/>
+    <!-- Circuit dots -->
+    <circle cx="3" cy="14" r="1" fill="#22c55e" opacity="0.6"/>
+    <circle cx="21" cy="14" r="1" fill="#22c55e" opacity="0.6"/>
+    <circle cx="3" cy="20" r="1" fill="#22c55e" opacity="0.4"/>
+    <circle cx="21" cy="20" r="1" fill="#22c55e" opacity="0.4"/>
+  </g>
+</svg>

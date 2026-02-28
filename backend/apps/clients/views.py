@@ -18,8 +18,11 @@ class ClientViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
     
     def get_queryset(self):
-        """Return non-deleted clients for the authenticated user."""
-        return Client.objects.filter(advocate=self.request.user, is_deleted=False)
+        """Return non-deleted clients. Admin sees all; advocates see own."""
+        qs = Client.objects.filter(is_deleted=False)
+        if not self.request.user.is_staff:
+            qs = qs.filter(advocate=self.request.user)
+        return qs
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""

@@ -51,7 +51,7 @@ export function LoginForm() {
           id="email"
           autoComplete="email"
           placeholder="advocate@example.com"
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 placeholder:text-gray-400 focus:border-[#1754cf] focus:outline-none focus:ring-2 focus:ring-[#1754cf]/20 transition-colors"
+          className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 placeholder:text-gray-400 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-600/20 transition-colors"
         />
         {errors.email && (
           <p className="mt-1.5 text-sm text-red-600">{errors.email.message}</p>
@@ -71,7 +71,7 @@ export function LoginForm() {
           id="password"
           autoComplete="current-password"
           placeholder="••••••••"
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 placeholder:text-gray-400 focus:border-[#1754cf] focus:outline-none focus:ring-2 focus:ring-[#1754cf]/20 transition-colors"
+          className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 placeholder:text-gray-400 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-600/20 transition-colors"
         />
         {errors.password && (
           <p className="mt-1.5 text-sm text-red-600">
@@ -89,7 +89,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-lg bg-[#1754cf] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#1d3db4] focus:outline-none focus:ring-2 focus:ring-[#1754cf] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+        className="w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
       >
         {isSubmitting ? 'Signing in...' : 'Sign in'}
       </button>

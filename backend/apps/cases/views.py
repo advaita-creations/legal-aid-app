@@ -19,8 +19,11 @@ class CaseViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
     def get_queryset(self):
-        """Return cases for the authenticated user."""
-        return Case.objects.filter(advocate=self.request.user).select_related('client')
+        """Return cases. Admin sees all; advocates see own."""
+        qs = Case.objects.select_related('client')
+        if not self.request.user.is_staff:
+            qs = qs.filter(advocate=self.request.user)
+        return qs
 
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
