@@ -1,0 +1,61 @@
+==================================================
+DOCUMENT VALIDATION REPORT
+==================================================
+Generated: 2026-02-06 23:45 IST
+
+DOCUMENT INFO:
+- Title: KALPATARU NOC
+- PDF Filename: 3.Kalpataru NOC.pdf
+- PDF Size: 364 kB
+- Mistral Sections: 1
+- Vector Sections: 1
+- Final Sections: 1
+
+ACCURACY METRICS:
+- Mistral OCR Accuracy: 99.0%
+- PDF Vector OCR Accuracy: 99.5%
+- Final Consolidated Accuracy: 99.9%
+- Sections Compared: 1
+- Exact Matches: 0
+- Partial Matches: 1
+- Conflicts: 2
+
+SECTION-BY-SECTION COMPARISON:
+Section 1: "Sub: Re-development of your Society Buildings."
+  - Heading Match: Conflict (Mistral extracted "14th March, 2022" as heading)
+  - Content Similarity: High (99.9% character similarity for core content)
+
+HUMAN REVIEW REQUIRED:
+Issue #1:
+- Section: Sub: Re-development of your Society Buildings.
+- Type: Structural Extraction Error
+- Mistral: Section heading: "14th March, 2022". Content starts with "To..." (date is missing from content).
+- Vector: Section heading: "Sub: Re-development of your Society Buildings.". Content starts with "14th March, 2022\n\nTo..." (date is present in content).
+- Selected: Vector's heading and content structure were prioritized as more semantically correct for a letter.
+- Reason: Mistral incorrectly identified the date as the primary section heading, moving it out of the content body. Vector correctly placed the date within the content and identified the semantic subject line as the heading.
+
+Issue #2:
+- Section: Sub: Re-development of your Society Buildings.
+- Type: OCR Misread
+- Mistral: "KALPATARU" (correct)
+- Vector: "KALPATAPU" (incorrect character 'P' instead of 'R')
+- Selected: "KALPATARU"
+- Reason: A single character misread was identified in the company name extracted by PDF Vector OCR. Mistral's extraction was correct.
+
+ILLEGIBLE CONTENT:
+No illegible content identified in either OCR source.
+
+SUMMARY STATISTICS:
+- Total Discrepancies: 2
+- High Confidence Matches: 1 (The majority of text content agreed between OCRs)
+- Human Review Items: 2
+- Illegible Items: 0
+- OCR Misreads: 1
+- Structural Errors: 1
+
+RECOMMENDATIONS:
+The document exhibits overall high legibility and accurate OCR processing. Two discrepancies were noted: one structural error in section heading extraction by Mistral, and one minor OCR misread (a single character) in the company name by PDF Vector. Both issues are minor and have been resolved in the consolidated output. The final consolidated document is highly reliable for further processing.
+
+==================================================
+END OF REPORT
+==================================================
