@@ -68,16 +68,20 @@ CREATE TRIGGER update_profiles_updated_at
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO accounts_profile (id, full_name, email, role, is_active, is_staff, password, last_login)
-    VALUES (
+    INSERT INTO accounts_profile (
+        id, full_name, email, phone, role,
+        is_active, is_staff, is_superuser,
+        avatar_url, password, last_login,
+        created_at, updated_at
+    ) VALUES (
         NEW.id,
         COALESCE(NEW.raw_user_meta_data->>'full_name', 'New User'),
         NEW.email,
-        COALESCE(NEW.raw_user_meta_data->>'role', 'advocate'),
-        true,
-        false,
         '',
-        NULL
+        COALESCE(NEW.raw_user_meta_data->>'role', 'advocate'),
+        true, false, false,
+        '', '', NULL,
+        NOW(), NOW()
     );
     RETURN NEW;
 END;

@@ -17,6 +17,7 @@ from typing import Optional, Tuple
 from uuid import UUID
 
 import jwt
+from jwt import PyJWKClient
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework.authentication import BaseAuthentication
@@ -64,14 +65,41 @@ class SupabaseJWTAuthentication(BaseAuthentication):
 
     @staticmethod
     def _decode_token(token: str, secret: str) -> dict:
-        """Decode and validate the JWT token."""
+        """Decode and validate the JWT token.
+
+        Supports both HS256 (legacy Supabase) and ES256 (new Supabase projects).
+        ES256 tokens are verified via the JWKS endpoint; HS256 uses the secret directly.
+        """
         try:
-            payload = jwt.decode(
-                token,
-                secret,
-                algorithms=["HS256"],
-                audience="authenticated",
-            )
+            header = jwt.get_unverified_header(token)
+        except jwt.DecodeError:
+            raise AuthenticationFailed("Invalid token.")
+
+        alg = header.get("alg", "HS256")
+
+        try:
+            if alg == "ES256":
+                supabase_url = getattr(settings, "SUPABASE_URL", "")
+                if not supabase_url:
+                    raise AuthenticationFailed(
+                        "SUPABASE_URL required for ES256 token verification."
+                    )
+                jwks_url = f"{supabase_url}/auth/v1/.well-known/jwks.json"
+                jwks_client = PyJWKClient(jwks_url)
+                signing_key = jwks_client.get_signing_key_from_jwt(token)
+                payload = jwt.decode(
+                    token,
+                    signing_key.key,
+                    algorithms=["ES256"],
+                    audience="authenticated",
+                )
+            else:
+                payload = jwt.decode(
+                    token,
+                    secret,
+                    algorithms=["HS256"],
+                    audience="authenticated",
+                )
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed("Token has expired.")
         except jwt.InvalidAudienceError:

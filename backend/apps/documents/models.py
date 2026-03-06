@@ -43,6 +43,9 @@ class Document(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='uploaded')
     notes = models.TextField(blank=True)
     processed_output_path = models.TextField(blank=True, null=True)
+    processed_html_path = models.TextField(blank=True, null=True, help_text='Storage path for validated HTML output')
+    processed_json_path = models.TextField(blank=True, null=True, help_text='Storage path for consolidated JSON output')
+    processed_report_path = models.TextField(blank=True, null=True, help_text='Storage path for validation report')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

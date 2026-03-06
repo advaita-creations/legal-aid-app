@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils';
 import { documentsApi } from '../api/documentsApi';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm-dialog';
+import { ProcessingStatus } from './ProcessingStatus';
+import { ProcessedResults } from './ProcessedResults';
 import type { DocumentStatus, DocumentStatusEntry } from '../types';
 
 const statusColors: Record<DocumentStatus, string> = {
@@ -125,6 +127,10 @@ export function DocumentDetail() {
     queryKey: ['documents', id],
     queryFn: () => documentsApi.getById(id!),
     enabled: !!id,
+    refetchInterval: (query) => {
+      const status = query.state.data?.status;
+      return status === 'in_progress' || status === 'ready_to_process' ? 30000 : false;
+    },
   });
 
   const deleteMutation = useMutation({
@@ -163,7 +169,10 @@ export function DocumentDetail() {
   }
 
   const next = nextStatus[doc.status];
-  const fileUrl = (doc as unknown as { file_url?: string }).file_url ?? null;
+  const fileUrl = doc.file_url ?? null;
+  const isProcessing = doc.status === 'in_progress' || doc.status === 'ready_to_process';
+  const isProcessed = doc.status === 'processed';
+  const hasProcessedResults = !!(doc.processed_html_url || doc.processed_json_url || doc.processed_report_url);
 
   return (
     <div>
@@ -212,8 +221,24 @@ export function DocumentDetail() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
+          {/* Processing animation when in_progress */}
+          {isProcessing && (
+            <ProcessingStatus status={doc.status} name={doc.name} />
+          )}
+
+          {/* Processed results with 3 tabs */}
+          {isProcessed && hasProcessedResults && (
+            <ProcessedResults doc={doc} />
+          )}
+
+          {/* Original file preview (always shown, collapsible when processed) */}
           {fileUrl && (
-            <FilePreview fileUrl={fileUrl} fileType={doc.file_type} name={doc.name} />
+            <details open={!isProcessed || !hasProcessedResults}>
+              <summary className="text-sm font-medium text-gray-600 cursor-pointer hover:text-gray-900 mb-2">
+                {isProcessed ? 'Original Document' : 'Document Preview'}
+              </summary>
+              <FilePreview fileUrl={fileUrl} fileType={doc.file_type} name={doc.name} />
+            </details>
           )}
 
           <div className="bg-white rounded-xl border border-gray-200 p-5">

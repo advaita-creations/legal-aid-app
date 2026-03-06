@@ -100,7 +100,10 @@ class SupabaseStorageBackend(StorageBackend):
         self._client.storage.from_(self.BUCKET).upload(
             relative_path,
             content,
-            file_options={"content-type": file.content_type or "application/octet-stream"},
+            file_options={
+                "content-type": file.content_type or "application/octet-stream",
+                "upsert": "true",
+            },
         )
         return relative_path
 

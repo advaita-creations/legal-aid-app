@@ -37,28 +37,13 @@ CREATE POLICY "Admins can read all status history"
 -- Functions & Triggers
 -- ============================================================
 
--- Optional: auto-log status changes at the DB level.
--- NOTE: Django already logs status changes via the API layer.
---       This trigger is a safety net for direct DB updates.
-CREATE OR REPLACE FUNCTION log_document_status_change()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF (TG_OP = 'UPDATE' AND OLD.status IS DISTINCT FROM NEW.status) THEN
-        INSERT INTO documents_documentstatushistory
-            (id, document_id, from_status, to_status, changed_by_id, notes, changed_at)
-        VALUES (
-            gen_random_uuid(), NEW.id, OLD.status, NEW.status,
-            auth.uid(), COALESCE(NEW.notes, ''), NOW()
-        );
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-CREATE TRIGGER log_document_status_changes
-    AFTER UPDATE ON documents_document
-    FOR EACH ROW
-    EXECUTE FUNCTION log_document_status_change();
+-- DISABLED: Django handles status history logging via the API layer.
+-- The trigger below conflicts with Django's bigint auto-increment PK
+-- (it tries to insert gen_random_uuid() into a bigint column).
+-- If you need DB-level logging, alter the id column to UUID first.
+--
+-- CREATE OR REPLACE FUNCTION log_document_status_change() ...
+-- CREATE TRIGGER log_document_status_changes ...
 
 -- ============================================================
 -- Grants

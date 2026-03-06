@@ -35,17 +35,22 @@ class DocumentStatusHistorySerializer(serializers.ModelSerializer):
 class DocumentSerializer(serializers.ModelSerializer):
     """Serializer for Document model."""
 
+    case_id = serializers.IntegerField(source='case.id', read_only=True)
     case_title = serializers.CharField(source='case.title', read_only=True)
     client_name = serializers.CharField(source='case.client.full_name', read_only=True)
     client_id = serializers.UUIDField(source='case.client.id', read_only=True)
     status_history = DocumentStatusHistorySerializer(many=True, read_only=True)
     file_url = serializers.SerializerMethodField()
+    processed_html_url = serializers.SerializerMethodField()
+    processed_json_url = serializers.SerializerMethodField()
+    processed_report_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Document
         fields = [
             'id',
             'case',
+            'case_id',
             'case_title',
             'client_id',
             'client_name',
@@ -59,21 +64,46 @@ class DocumentSerializer(serializers.ModelSerializer):
             'status',
             'notes',
             'processed_output_path',
+            'processed_html_path',
+            'processed_json_path',
+            'processed_report_path',
+            'processed_html_url',
+            'processed_json_url',
+            'processed_report_url',
             'created_at',
             'updated_at',
             'status_history',
         ]
         read_only_fields = [
-            'id', 'advocate', 'case_title', 'client_name', 'client_id',
-            'file_url', 'created_at', 'updated_at', 'status_history',
+            'id', 'advocate', 'case_id', 'case_title', 'client_name', 'client_id',
+            'file_url', 'processed_html_url', 'processed_json_url',
+            'processed_report_url', 'created_at', 'updated_at', 'status_history',
         ]
 
+    def _get_storage_url(self, path: Optional[str]) -> Optional[str]:
+        """Build a URL for a stored file via the storage backend."""
+        from utils.storage import get_storage_backend
+
+        if not path:
+            return None
+        backend = get_storage_backend()
+        return backend.get_url(path, request=self.context.get('request'))
+
     def get_file_url(self, obj) -> Optional[str]:
-        """Build full URL for the uploaded file."""
-        request = self.context.get('request')
-        if obj.file_path and request:
-            return request.build_absolute_uri(f'/media/{obj.file_path}')
-        return None
+        """Build full URL for the uploaded file via storage backend."""
+        return self._get_storage_url(obj.file_path)
+
+    def get_processed_html_url(self, obj) -> Optional[str]:
+        """Build URL for the validated HTML output."""
+        return self._get_storage_url(obj.processed_html_path)
+
+    def get_processed_json_url(self, obj) -> Optional[str]:
+        """Build URL for the consolidated JSON output."""
+        return self._get_storage_url(obj.processed_json_path)
+
+    def get_processed_report_url(self, obj) -> Optional[str]:
+        """Build URL for the validation report."""
+        return self._get_storage_url(obj.processed_report_path)
 
 
 class DocumentCreateSerializer(serializers.Serializer):
