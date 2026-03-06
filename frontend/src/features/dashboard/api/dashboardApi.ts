@@ -1,4 +1,4 @@
-import { djangoApi } from '@/lib/django-api';
+import { apiClient } from '@/lib/api/client';
 
 export interface DashboardStats {
   total_clients: number;
@@ -14,7 +14,7 @@ export interface DashboardStats {
 
 export const dashboardApi = {
   getStats: async (): Promise<DashboardStats> => {
-    const response = await djangoApi.get<DashboardStats>('/dashboard/stats/');
+    const response = await apiClient.get<DashboardStats>('/dashboard/stats/');
     return response.data;
   },
 };

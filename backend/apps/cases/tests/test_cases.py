@@ -19,11 +19,10 @@ def api_client():
 def advocate_user(db):
     """Create and return a test advocate user."""
     return User.objects.create_user(
-        username='advocate',
         email='advocate@legalaid.test',
         password='Test@123456',
-        first_name='Adv. Rajesh',
-        last_name='Kumar',
+        full_name='Adv. Rajesh Kumar',
+        role='advocate',
     )
 
 
@@ -31,18 +30,17 @@ def advocate_user(db):
 def other_advocate(db):
     """Create another advocate user."""
     return User.objects.create_user(
-        username='other',
         email='other@legalaid.test',
         password='Test@123456',
-        first_name='Other',
-        last_name='Advocate',
+        full_name='Other Advocate',
+        role='advocate',
     )
 
 
 @pytest.fixture
 def authenticated_client(api_client, advocate_user):
     """Return an authenticated test client."""
-    api_client.login(username='advocate', password='Test@123456')
+    api_client.login(email='advocate@legalaid.test', password='Test@123456')
     return api_client
 
 
@@ -106,9 +104,9 @@ class TestCaseList:
         assert response.json()['count'] == 0
 
     def test_list_unauthenticated(self, api_client, db):
-        """Unauthenticated request gets 403."""
+        """Unauthenticated request gets 401."""
         response = api_client.get('/api/cases/')
-        assert response.status_code == 403
+        assert response.status_code == 401
 
 
 class TestCaseCreate:
@@ -209,6 +207,6 @@ class TestCaseDetail:
 
     def test_cannot_access_other_advocates_case(self, api_client, other_advocate, sample_case):
         """Advocate cannot access another advocate's case."""
-        api_client.login(username='other', password='Test@123456')
+        api_client.login(email='other@legalaid.test', password='Test@123456')
         response = api_client.get(f'/api/cases/{sample_case.id}/')
         assert response.status_code == 404

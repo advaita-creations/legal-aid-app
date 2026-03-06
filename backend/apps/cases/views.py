@@ -21,7 +21,7 @@ class CaseViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Return cases. Admin sees all; advocates see own."""
         qs = Case.objects.select_related('client')
-        if not self.request.user.is_staff:
+        if self.request.user.role != 'admin':
             qs = qs.filter(advocate=self.request.user)
         return qs
 

@@ -1,14 +1,14 @@
-import { djangoApi } from '@/lib/django-api';
+import { apiClient } from '@/lib/api/client';
 import type { Document, DocumentStatusUpdateRequest } from '../types';
 
 export const documentsApi = {
   getAll: async (params?: Record<string, string>): Promise<Document[]> => {
-    const response = await djangoApi.get<{ results: Document[] }>('/documents/', { params });
+    const response = await apiClient.get<{ results: Document[] }>('/documents/', { params });
     return response.data.results;
   },
 
   getById: async (id: string): Promise<Document> => {
-    const response = await djangoApi.get<Document>(`/documents/${id}/`);
+    const response = await apiClient.get<Document>(`/documents/${id}/`);
     return response.data;
   },
 
@@ -23,18 +23,25 @@ export const documentsApi = {
     formData.append('case', data.case_id);
     formData.append('name', data.name);
     if (data.notes) formData.append('notes', data.notes);
-    const response = await djangoApi.post<Document>('/documents/', formData, {
+    const response = await apiClient.post<Document>('/documents/', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
   },
 
   updateStatus: async (id: string, data: DocumentStatusUpdateRequest): Promise<Document> => {
-    const response = await djangoApi.patch<Document>(`/documents/${id}/status/`, data);
+    const response = await apiClient.patch<Document>(`/documents/${id}/status/`, data);
     return response.data;
   },
 
   delete: async (id: string): Promise<void> => {
-    await djangoApi.delete(`/documents/${id}/`);
+    await apiClient.delete(`/documents/${id}/`);
+  },
+
+  getDownloadUrl: async (id: string): Promise<{ url: string; name: string; mime_type: string }> => {
+    const response = await apiClient.get<{ url: string; name: string; mime_type: string }>(
+      `/documents/${id}/download/`,
+    );
+    return response.data;
   },
 };

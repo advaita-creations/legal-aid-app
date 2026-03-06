@@ -1,15 +1,21 @@
 # Legal Aid App — MVP Specification
 
-> **Version:** 1.1  
+> **Version:** 2.0  
 > **Status:** In Development  
-> **Last Updated:** 2026-02-27  
+> **Last Updated:** 2026-03-06  
 > **Approach:** SDD (Spec Driven Development) + TDD (Test Driven Development)
 
-### Implementation Notes (MVP)
+### Implementation Notes
 
-- **Auth:** Django session-based authentication (local SQLite DB), NOT Supabase Auth
-- **Database:** SQLite for local development; Supabase Postgres planned for production
-- **Storage:** Local filesystem for MVP; Supabase Storage planned for production
+- **Auth (dual mode):**
+  - **Development (`VITE_AUTH_MODE=django`):** Django session-based auth (local SQLite DB)
+  - **Production (`VITE_AUTH_MODE=supabase`):** Supabase Auth (email/password) with JWT bearer tokens
+  - Backend supports both via `SupabaseJWTAuthentication` (primary) + `SessionAuthentication` (fallback)
+- **Database:** SQLite for local development (`DB_BACKEND=sqlite`); Supabase Postgres for production (`DB_BACKEND=supabase`)
+- **Storage (dual mode):**
+  - **Development (`STORAGE_BACKEND=local`):** Local filesystem under `MEDIA_ROOT`
+  - **Production (`STORAGE_BACKEND=supabase`):** Supabase Storage (private `documents` bucket)
+  - Abstracted via `StorageBackend` interface in `utils/storage.py`
 - **Design System:** Stitch — Primary color `#1754cf`, font `Public Sans`
 
 ---
@@ -30,7 +36,7 @@ The lawyer or legal professional who owns and manages client files.
 
 | Capability | Description |
 |---|---|
-| Login / Logout | Email + password via Django session auth |
+| Login / Logout | Email + password (Django session or Supabase Auth) |
 | Dashboard | View document stats, file list, quick actions |
 | Client Management | Create, view, edit client profiles |
 | Case Management | Create, view, edit cases linked to clients |
@@ -44,7 +50,7 @@ Internal administrator who oversees the platform.
 
 | Capability | Description |
 |---|---|
-| Login / Logout | Email + password via Django session auth |
+| Login / Logout | Email + password (Django session or Supabase Auth) |
 | Admin Dashboard | System-wide stats, all advocates overview |
 | User Management | List advocates, activate/deactivate accounts |
 | All Advocate Capabilities | Can access any advocate's data for support |
@@ -426,19 +432,29 @@ Audit trail for document state transitions.
 
 ## 6. Authentication & Data Access
 
-### 6.1 Auth (MVP — Local Django)
+### 6.1 Auth (Dual Mode)
 
-- **Provider:** Django built-in auth (email + password)
-- **Session:** Django session cookies (`SESSION_COOKIE_SAMESITE = 'Lax'`)
-- **CSRF:** Exempted for API login endpoint; enforced elsewhere via session middleware
-- **CORS:** Configured for `localhost:5173` (frontend dev server)
+| Mode | Provider | Token | Toggle |
+|---|---|---|---|
+| `django` (dev) | Django built-in auth | Session cookie | `VITE_AUTH_MODE=django` |
+| `supabase` (prod) | Supabase Auth | JWT bearer | `VITE_AUTH_MODE=supabase` |
 
-### 6.2 Storage (MVP — Local)
+- **Backend:** `SupabaseJWTAuthentication` (validates Supabase JWTs, auto-creates `Profile`) + `SessionAuthentication` (fallback)
+- **Frontend:** `AuthContext` reads `VITE_AUTH_MODE` and initializes the appropriate auth flow
+- **CORS:** Configured per environment via `CORS_ALLOWED_ORIGINS`
 
-- **Location:** Local filesystem via Django media files
+### 6.2 Storage (Dual Mode)
+
+| Mode | Backend | Toggle |
+|---|---|---|
+| `local` (dev) | Local filesystem under `MEDIA_ROOT` | `STORAGE_BACKEND=local` |
+| `supabase` (prod) | Supabase Storage (private `documents` bucket) | `STORAGE_BACKEND=supabase` |
+
 - **Max file size:** 20MB
 - **Allowed MIME types:** `image/jpeg`, `image/png`, `application/pdf`
-- **Path convention:** `media/{advocate_id}/{case_id}/{document_id}.{ext}`
+- **Path convention:** `{advocate_id}/{case_id}/{filename}`
+- **Download:** `GET /api/documents/:id/download/` returns a URL (local path or signed URL)
+- **Abstraction:** `StorageBackend` ABC in `utils/storage.py` with `LocalStorageBackend` and `SupabaseStorageBackend`
 
 ### 6.3 Data Access Control
 
@@ -448,11 +464,13 @@ Audit trail for document state transitions.
 | Cases | Filtered by `advocate = request.user` in ViewSet queryset |
 | Documents | Filtered by `advocate = request.user` in ViewSet queryset |
 
-### 6.4 Supabase (Production — Planned)
+### 6.4 Supabase (Production)
 
-- Supabase Postgres via `DATABASE_URL` in production settings
-- Supabase Storage for file uploads
-- RLS policies to be configured when migrating to production
+- Supabase Postgres via `DATABASE_URL` when `DB_BACKEND=supabase`
+- Supabase Storage for file uploads when `STORAGE_BACKEND=supabase`
+- RLS policies applied via `supabase/migrations/*.sql` (run after Django migrations)
+- Storage policies applied via `supabase/storage-policies.sql`
+- `handle_new_user()` trigger auto-creates `accounts_profile` on Supabase Auth signup
 
 ---
 

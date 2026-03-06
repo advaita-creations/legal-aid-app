@@ -28,8 +28,7 @@ class DocumentStatusHistorySerializer(serializers.ModelSerializer):
     def get_changed_by_name(self, obj) -> str:
         """Return the display name of the user who made the change."""
         if obj.changed_by:
-            name = f"{obj.changed_by.first_name} {obj.changed_by.last_name}".strip()
-            return name or obj.changed_by.email
+            return obj.changed_by.full_name or obj.changed_by.email
         return 'System'
 
 
@@ -38,7 +37,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 
     case_title = serializers.CharField(source='case.title', read_only=True)
     client_name = serializers.CharField(source='case.client.full_name', read_only=True)
-    client_id = serializers.IntegerField(source='case.client.id', read_only=True)
+    client_id = serializers.UUIDField(source='case.client.id', read_only=True)
     status_history = DocumentStatusHistorySerializer(many=True, read_only=True)
     file_url = serializers.SerializerMethodField()
 
@@ -101,8 +100,8 @@ class DocumentCreateSerializer(serializers.Serializer):
         return value
 
     def create(self, validated_data):
-        """Save uploaded file and create Document record."""
-        from django.conf import settings
+        """Save uploaded file via storage backend and create Document record."""
+        from utils.storage import get_storage_backend
 
         uploaded_file = validated_data['file']
         advocate = validated_data['advocate']
@@ -111,28 +110,15 @@ class DocumentCreateSerializer(serializers.Serializer):
         file_type = ALLOWED_MIME_TYPES[mime_type]
         name = validated_data.get('name') or os.path.splitext(uploaded_file.name)[0]
 
-        rel_dir = f"{advocate.id}/{case.id}"
-        abs_dir = os.path.join(settings.MEDIA_ROOT, rel_dir)
-        os.makedirs(abs_dir, exist_ok=True)
-
-        filename = uploaded_file.name
-        abs_path = os.path.join(abs_dir, filename)
-        counter = 1
-        base, ext = os.path.splitext(filename)
-        while os.path.exists(abs_path):
-            filename = f"{base}_{counter}{ext}"
-            abs_path = os.path.join(abs_dir, filename)
-            counter += 1
-
-        with open(abs_path, 'wb+') as dest:
-            for chunk in uploaded_file.chunks():
-                dest.write(chunk)
+        relative_path = f"{advocate.id}/{case.id}/{uploaded_file.name}"
+        backend = get_storage_backend()
+        stored_path = backend.upload(uploaded_file, relative_path)
 
         return Document.objects.create(
             case=case,
             advocate=advocate,
             name=name,
-            file_path=f"{rel_dir}/{filename}",
+            file_path=stored_path,
             file_type=file_type,
             file_size_bytes=uploaded_file.size,
             mime_type=mime_type,

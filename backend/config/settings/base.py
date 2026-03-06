@@ -108,8 +108,14 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024  # 20MB
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+AUTH_USER_MODEL = "accounts.Profile"
+
 # Django REST Framework
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "utils.supabase_auth.SupabaseJWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
     "DEFAULT_PAGINATION_CLASS": "utils.pagination.StandardPagination",
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
@@ -121,6 +127,9 @@ REST_FRAMEWORK = {
     ],
     "EXCEPTION_HANDLER": "utils.exceptions.custom_exception_handler",
 }
+
+# Storage backend: 'local' (dev) or 'supabase' (prod)
+STORAGE_BACKEND = env("STORAGE_BACKEND", default="local")
 
 # Supabase
 SUPABASE_URL = env("SUPABASE_URL", default="")

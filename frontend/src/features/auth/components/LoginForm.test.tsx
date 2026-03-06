@@ -13,10 +13,9 @@ vi.mock('../context/AuthContext', () => ({
   useAuth: () => ({
     signIn: mockSignIn,
     signOut: vi.fn(),
-    user: null,
     profile: null,
-    session: null,
     isLoading: false,
+    refreshProfile: vi.fn(),
   }),
 }));
 

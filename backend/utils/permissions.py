@@ -17,9 +17,9 @@ class IsAdvocate(BasePermission):
     def has_permission(self, request: Request, view: APIView) -> bool:
         """Check if user has advocate role."""
         return (
-            hasattr(request, "user_profile")
-            and request.user_profile is not None
-            and request.user_profile.get("role") == "advocate"
+            request.user
+            and request.user.is_authenticated
+            and getattr(request.user, "role", None) == "advocate"
         )
 
 
@@ -29,9 +29,9 @@ class IsAdmin(BasePermission):
     def has_permission(self, request: Request, view: APIView) -> bool:
         """Check if user has admin role."""
         return (
-            hasattr(request, "user_profile")
-            and request.user_profile is not None
-            and request.user_profile.get("role") == "admin"
+            request.user
+            and request.user.is_authenticated
+            and getattr(request.user, "role", None) == "admin"
         )
 
 
@@ -46,7 +46,7 @@ class IsOwner(BasePermission):
         self, request: Request, view: APIView, obj: object
     ) -> bool:
         """Check if user owns the object."""
-        if not hasattr(request, "user_profile") or request.user_profile is None:
+        if not request.user or not request.user.is_authenticated:
             return False
         advocate_id = getattr(obj, "advocate_id", None)
-        return str(advocate_id) == str(request.user_profile.get("id", ""))
+        return str(advocate_id) == str(request.user.id)
