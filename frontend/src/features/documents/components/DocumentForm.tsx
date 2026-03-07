@@ -97,6 +97,10 @@ export function DocumentForm() {
       toast('Document uploaded successfully');
       navigate('/documents');
     },
+    onError: (error: any) => {
+      console.error('Upload error:', error);
+      console.error('Error response:', error.response?.data);
+    },
   });
 
   async function onSubmit(values: FormValues) {

@@ -71,16 +71,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   async function signIn(email: string, password: string) {
     const mode = getAuthMode();
+    console.log('AuthContext.signIn - mode:', mode);
 
     if (mode === 'supabase') {
-      const { supabase } = await import('@/lib/supabase');
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
-      const userData = await authApi.me();
-      setProfile(userData);
+      try {
+        const { supabase } = await import('@/lib/supabase');
+        console.log('Supabase client imported successfully');
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        console.log('Supabase signInWithPassword response:', { data, error });
+        if (error) {
+          console.error('Supabase auth error:', error);
+          throw error;
+        }
+        console.log('Supabase auth successful, fetching user profile');
+        const userData = await authApi.me();
+        console.log('User profile fetched:', userData);
+        setProfile(userData);
+      } catch (err) {
+        console.error('Error in Supabase signIn:', err);
+        throw err;
+      }
     } else {
       const response = await authApi.login(email, password);
       setProfile(response.user);

@@ -27,12 +27,18 @@ export function LoginForm() {
   });
 
   async function onSubmit(data: LoginFormData) {
+    console.log('=== LOGIN FORM SUBMITTED ===');
+    console.log('Form data:', data);
     try {
       setError(null);
+      console.log('Attempting login with:', data.email);
       await signIn(data.email, data.password);
+      console.log('Login successful, navigating to dashboard');
       navigate('/dashboard');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign in');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to sign in';
+      console.error('Login error:', err);
+      setError(errorMessage);
     }
   }
 
