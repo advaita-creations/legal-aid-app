@@ -12,6 +12,7 @@ from utils.storage import get_storage_backend
 from .models import Document, DocumentStatusHistory
 from .serializers import DocumentSerializer, DocumentCreateSerializer, DocumentStatusSerializer
 from apps.webhooks.outbound import notify_n8n_ready_to_process
+from apps.webhooks.drive_poller import start_drive_poller
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -110,6 +111,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
                     changed_by=None,
                     notes='Auto-transitioned: n8n acknowledged processing request',
                 )
+            # MVP: Start polling Google Drive for processed output files
+            start_drive_poller(document.id)
 
         doc = Document.objects.select_related('case', 'case__client').prefetch_related(
             'status_history', 'status_history__changed_by',
