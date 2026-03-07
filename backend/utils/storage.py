@@ -13,6 +13,7 @@ Usage:
 """
 import logging
 import os
+import requests
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -96,9 +97,6 @@ class SupabaseStorageBackend(StorageBackend):
 
     def upload(self, file: UploadedFile, relative_path: str) -> str:
         """Upload file to Supabase Storage and return the storage path."""
-        import requests
-        from django.conf import settings
-        
         content = file.read()
         try:
             # Use REST API directly with service role key to bypass RLS
