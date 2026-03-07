@@ -16,6 +16,14 @@ ON CONFLICT (id) DO NOTHING;
 -- Policies
 -- ============================================================
 
+-- Service role (backend) can upload any documents
+CREATE POLICY "Service role can upload documents"
+    ON storage.objects FOR INSERT
+    WITH CHECK (
+        bucket_id = 'documents'
+        AND auth.role() = 'service_role'
+    );
+
 -- Advocates can upload to their own folder (<advocate_uuid>/...)
 CREATE POLICY "Advocates can upload own documents"
     ON storage.objects FOR INSERT
