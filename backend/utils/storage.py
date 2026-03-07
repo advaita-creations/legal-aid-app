@@ -89,54 +89,75 @@ class SupabaseStorageBackend(StorageBackend):
     SIGNED_URL_EXPIRY = 3600
 
     def __init__(self) -> None:
-        """Initialize Supabase client."""
-        from utils.supabase_client import get_supabase_client
-
-        self._client = get_supabase_client()
+        """Initialize Supabase storage headers."""
+        self._headers = {
+            "apikey": settings.SUPABASE_SERVICE_ROLE_KEY,
+            "Authorization": f"Bearer {settings.SUPABASE_SERVICE_ROLE_KEY}",
+        }
+        self._base = f"{settings.SUPABASE_URL}/storage/v1"
 
     def upload(self, file: UploadedFile, relative_path: str) -> str:
         """Upload file to Supabase Storage and return the storage path."""
         import httpx
-        
+
         content = file.read()
-        content_type = file.content_type or "application/octet-stream"
-        url = f"{settings.SUPABASE_URL}/storage/v1/object/{self.BUCKET}/{relative_path}"
-        
+        url = f"{self._base}/object/{self.BUCKET}/{relative_path}"
         headers = {
-            "apikey": settings.SUPABASE_SERVICE_ROLE_KEY,
-            "Authorization": f"Bearer {settings.SUPABASE_SERVICE_ROLE_KEY}",
-            "Content-Type": content_type,
+            **self._headers,
+            "Content-Type": file.content_type or "application/octet-stream",
             "x-upsert": "true",
         }
-        
+
         with httpx.Client(timeout=30.0) as client:
             response = client.post(url, content=content, headers=headers)
-        
+
         if response.status_code not in (200, 201):
             logger.error(f"Supabase upload failed ({response.status_code}): {response.text}")
             raise Exception(f"Storage upload failed: {response.status_code} - {response.text}")
-        
+
         logger.info(f"Uploaded {relative_path} ({len(content)} bytes)")
         return relative_path
 
     def get_url(self, path: str, request: Optional[object] = None) -> Optional[str]:
         """Return a signed URL for the file in Supabase Storage."""
+        import httpx
+
         if not path:
             return None
         try:
-            response = self._client.storage.from_(self.BUCKET).create_signed_url(
-                path, self.SIGNED_URL_EXPIRY
-            )
-            return response.get("signedURL") or response.get("signedUrl")
+            url = f"{self._base}/object/sign/{self.BUCKET}/{path}"
+            with httpx.Client(timeout=10.0) as client:
+                response = client.post(
+                    url,
+                    json={"expiresIn": self.SIGNED_URL_EXPIRY},
+                    headers={**self._headers, "Content-Type": "application/json"},
+                )
+            if response.status_code != 200:
+                logger.error(f"Signed URL failed ({response.status_code}): {response.text}")
+                return None
+            data = response.json()
+            signed_url = data.get("signedURL") or data.get("signedUrl")
+            if signed_url and signed_url.startswith("/"):
+                signed_url = f"{settings.SUPABASE_URL}/storage/v1{signed_url}"
+            return signed_url
         except Exception:
             logger.exception("Failed to create signed URL for: %s", path)
             return None
 
     def delete(self, path: str) -> bool:
         """Delete a file from Supabase Storage."""
+        import httpx
+
         try:
-            self._client.storage.from_(self.BUCKET).remove([path])
-            return True
+            url = f"{self._base}/object/{self.BUCKET}"
+            with httpx.Client(timeout=10.0) as client:
+                response = client.request(
+                    "DELETE",
+                    url,
+                    json={"prefixes": [path]},
+                    headers={**self._headers, "Content-Type": "application/json"},
+                )
+            return response.status_code in (200, 204)
         except Exception:
             logger.exception("Failed to delete from Supabase Storage: %s", path)
             return False
