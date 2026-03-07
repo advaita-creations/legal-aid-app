@@ -45,3 +45,6 @@ htmlcov/
 
 # Windsurf plans (local only)
 .windsurf/plans/
+
+# Local Netlify folder
+.netlify
