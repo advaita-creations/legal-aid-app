@@ -43,10 +43,6 @@ class SupabaseJWTAuthentication(BaseAuthentication):
 
     def authenticate(self, request: Request) -> Optional[Tuple[User, dict]]:
         """Authenticate the request and return (user, token_payload) or None."""
-        jwt_secret = getattr(settings, "SUPABASE_JWT_SECRET", "")
-        if not jwt_secret:
-            return None
-
         auth_header = request.META.get("HTTP_AUTHORIZATION", "")
         if not auth_header.startswith(f"{self.keyword} "):
             return None
@@ -55,6 +51,7 @@ class SupabaseJWTAuthentication(BaseAuthentication):
         if not token:
             return None
 
+        jwt_secret = getattr(settings, "SUPABASE_JWT_SECRET", "")
         payload = self._decode_token(token, jwt_secret)
         user = self._get_or_create_user(payload)
         return (user, payload)
