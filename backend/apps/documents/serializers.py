@@ -134,11 +134,14 @@ class DocumentCreateSerializer(serializers.Serializer):
         from utils.storage import get_storage_backend
 
         uploaded_file = validated_data['file']
-        advocate = validated_data['advocate']
+        advocate = self.context.get('advocate') or validated_data.get('advocate')
         case = validated_data['case']
         mime_type = uploaded_file.content_type
         file_type = ALLOWED_MIME_TYPES[mime_type]
         name = validated_data.get('name') or os.path.splitext(uploaded_file.name)[0]
+
+        if not advocate:
+            raise serializers.ValidationError("Advocate is required.")
 
         relative_path = f"{advocate.id}/{case.id}/{uploaded_file.name}"
         backend = get_storage_backend()

@@ -46,9 +46,11 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """Create document with file upload and return full serialized response."""
-        serializer = self.get_serializer(data=request.data)
+        context = self.get_serializer_context()
+        context['advocate'] = request.user
+        serializer = self.get_serializer(data=request.data, context=context)
         serializer.is_valid(raise_exception=True)
-        doc = serializer.save(advocate=request.user)
+        doc = serializer.save()
         DocumentStatusHistory.objects.create(
             document=doc,
             from_status=None,
