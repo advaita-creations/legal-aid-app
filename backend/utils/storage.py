@@ -96,29 +96,27 @@ class SupabaseStorageBackend(StorageBackend):
 
     def upload(self, file: UploadedFile, relative_path: str) -> str:
         """Upload file to Supabase Storage and return the storage path."""
-        import signal
-        from utils.supabase_client import get_supabase_client
+        import httpx
         
         content = file.read()
-        logger.info(f"Starting upload to {relative_path} (size: {len(content)} bytes)")
+        content_type = file.content_type or "application/octet-stream"
+        url = f"{settings.SUPABASE_URL}/storage/v1/object/{self.BUCKET}/{relative_path}"
         
-        try:
-            # Use Supabase Python client which handles auth properly
-            client = get_supabase_client()
-            logger.info(f"Supabase client initialized")
-            
-            result = client.storage.from_(self.BUCKET).upload(
-                relative_path,
-                content,
-                file_options={
-                    "content-type": file.content_type or "application/octet-stream",
-                    "upsert": True,
-                },
-            )
-            logger.info(f"Successfully uploaded file to {relative_path}: {result}")
-        except Exception as e:
-            logger.error(f"Failed to upload file to {relative_path}: {e}", exc_info=True)
-            raise
+        headers = {
+            "apikey": settings.SUPABASE_SERVICE_ROLE_KEY,
+            "Authorization": f"Bearer {settings.SUPABASE_SERVICE_ROLE_KEY}",
+            "Content-Type": content_type,
+            "x-upsert": "true",
+        }
+        
+        with httpx.Client(timeout=30.0) as client:
+            response = client.post(url, content=content, headers=headers)
+        
+        if response.status_code not in (200, 201):
+            logger.error(f"Supabase upload failed ({response.status_code}): {response.text}")
+            raise Exception(f"Storage upload failed: {response.status_code} - {response.text}")
+        
+        logger.info(f"Uploaded {relative_path} ({len(content)} bytes)")
         return relative_path
 
     def get_url(self, path: str, request: Optional[object] = None) -> Optional[str]:
