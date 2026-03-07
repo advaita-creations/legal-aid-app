@@ -89,12 +89,14 @@ def notify_n8n_ready_to_process(
             ext = filename.rsplit('.', 1)[-1].lower() if '.' in filename else ''
             mime = {'pdf': 'application/pdf', 'png': 'image/png', 'jpg': 'image/jpeg', 'jpeg': 'image/jpeg'}.get(ext, 'application/octet-stream')
             files = {'File': (filename, content, mime)}
-            response = requests.post(url, data=form_data, files=files, headers=headers, timeout=30)
+            logger.info('Sending multipart POST to n8n for document %s (%s, %d bytes)', document_id, filename, len(content))
+            response = requests.post(url, data=form_data, files=files, headers=headers, timeout=60)
         else:
             logger.warning('No file downloaded, sending metadata only for document %s', document_id)
             headers['Content-Type'] = 'application/json'
             response = requests.post(url, json=form_data, headers=headers, timeout=10)
 
+        logger.info('n8n response: status=%s body=%s', response.status_code, response.text[:200])
         response.raise_for_status()
         logger.info('n8n outbound webhook sent for document %s (file=%s)', document_id, bool(file_data))
         return response.json()
