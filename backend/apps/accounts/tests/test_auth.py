@@ -16,11 +16,10 @@ def api_client():
 def advocate_user(db):
     """Create and return a test advocate user."""
     return User.objects.create_user(
-        username='advocate',
         email='advocate@legalaid.test',
         password='Test@123456',
-        first_name='Adv. Rajesh',
-        last_name='Kumar',
+        full_name='Adv. Rajesh Kumar',
+        role='advocate',
     )
 
 
@@ -74,15 +73,15 @@ class TestLogout:
 
     def test_logout_authenticated(self, api_client, advocate_user):
         """Authenticated user can logout."""
-        api_client.login(username='advocate', password='Test@123456')
+        api_client.login(email='advocate@legalaid.test', password='Test@123456')
         response = api_client.post('/api/auth/logout/')
         assert response.status_code == 200
         assert response.json()['message'] == 'Logout successful'
 
     def test_logout_unauthenticated(self, api_client, db):
-        """Unauthenticated user gets 403."""
+        """Unauthenticated user gets 401."""
         response = api_client.post('/api/auth/logout/')
-        assert response.status_code == 403
+        assert response.status_code == 401
 
 
 class TestMe:
@@ -90,7 +89,7 @@ class TestMe:
 
     def test_me_authenticated(self, api_client, advocate_user):
         """Authenticated user gets their profile."""
-        api_client.login(username='advocate', password='Test@123456')
+        api_client.login(email='advocate@legalaid.test', password='Test@123456')
         response = api_client.get('/api/auth/me/')
         assert response.status_code == 200
         data = response.json()
@@ -99,20 +98,18 @@ class TestMe:
         assert data['role'] == 'advocate'
 
     def test_me_unauthenticated(self, api_client, db):
-        """Unauthenticated user gets 403."""
+        """Unauthenticated user gets 401."""
         response = api_client.get('/api/auth/me/')
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     def test_admin_role(self, api_client, db):
-        """Superuser gets admin role."""
-        admin = User.objects.create_superuser(
-            username='admin',
+        """Admin user gets admin role."""
+        User.objects.create_superuser(
             email='admin@legalaid.test',
             password='Admin@123456',
-            first_name='Admin',
-            last_name='User',
+            full_name='Admin User',
         )
-        api_client.login(username='admin', password='Admin@123456')
+        api_client.login(email='admin@legalaid.test', password='Admin@123456')
         response = api_client.get('/api/auth/me/')
         assert response.status_code == 200
         assert response.json()['role'] == 'admin'

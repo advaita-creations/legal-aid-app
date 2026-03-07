@@ -1,73 +1,52 @@
--- Legal Aid App — Document Status History Table Migration
--- Tracks all status changes for documents (audit trail)
+-- Legal Aid App — Document Status History: RLS & Triggers
+-- NOTE: The documents_documentstatushistory table is created by Django migrations.
+--       Run this AFTER `python manage.py migrate` on Supabase Postgres.
 
-CREATE TABLE document_status_history (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
-    from_status document_status,
-    to_status document_status NOT NULL,
-    changed_by UUID NOT NULL REFERENCES profiles(id),
-    notes TEXT,
-    changed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
+-- ============================================================
+-- RLS — documents_documentstatushistory
+-- ============================================================
+ALTER TABLE documents_documentstatushistory ENABLE ROW LEVEL SECURITY;
 
--- Create indexes
-CREATE INDEX idx_document_status_history_document_id ON document_status_history(document_id);
-CREATE INDEX idx_document_status_history_changed_at ON document_status_history(changed_at DESC);
-
--- Enable Row Level Security
-ALTER TABLE document_status_history ENABLE ROW LEVEL SECURITY;
-
--- RLS Policy: Advocates can read status history for their own documents
+-- Advocates can read status history for their own documents
 CREATE POLICY "Advocates can read own document status history"
-    ON document_status_history
-    FOR SELECT
+    ON documents_documentstatushistory FOR SELECT
     USING (
         EXISTS (
-            SELECT 1 FROM documents
-            WHERE documents.id = document_status_history.document_id
-            AND documents.advocate_id = auth.uid()
+            SELECT 1 FROM documents_document
+            WHERE documents_document.id = documents_documentstatushistory.document_id
+            AND documents_document.advocate_id = auth.uid()
         )
     );
 
--- RLS Policy: System can insert status history (via trigger)
-CREATE POLICY "System can insert status history"
-    ON document_status_history
-    FOR INSERT
+-- Authenticated users can insert status history (Django handles this via API)
+CREATE POLICY "Authenticated can insert status history"
+    ON documents_documentstatushistory FOR INSERT
     WITH CHECK (true);
 
--- RLS Policy: Admins can read all status history
+-- Admins can read all status history
 CREATE POLICY "Admins can read all status history"
-    ON document_status_history
-    FOR SELECT
+    ON documents_documentstatushistory FOR SELECT
     USING (
         EXISTS (
-            SELECT 1 FROM profiles
+            SELECT 1 FROM accounts_profile
             WHERE id = auth.uid() AND role = 'admin'
         )
     );
 
--- Function to log document status changes
-CREATE OR REPLACE FUNCTION log_document_status_change()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF (TG_OP = 'UPDATE' AND OLD.status IS DISTINCT FROM NEW.status) THEN
-        INSERT INTO document_status_history (document_id, from_status, to_status, changed_by, notes)
-        VALUES (NEW.id, OLD.status, NEW.status, auth.uid(), NEW.notes);
-    ELSIF (TG_OP = 'INSERT') THEN
-        INSERT INTO document_status_history (document_id, from_status, to_status, changed_by, notes)
-        VALUES (NEW.id, NULL, NEW.status, auth.uid(), NEW.notes);
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+-- ============================================================
+-- Functions & Triggers
+-- ============================================================
 
--- Trigger to auto-log status changes
-CREATE TRIGGER log_document_status_changes
-    AFTER INSERT OR UPDATE ON documents
-    FOR EACH ROW
-    EXECUTE FUNCTION log_document_status_change();
+-- DISABLED: Django handles status history logging via the API layer.
+-- The trigger below conflicts with Django's bigint auto-increment PK
+-- (it tries to insert gen_random_uuid() into a bigint column).
+-- If you need DB-level logging, alter the id column to UUID first.
+--
+-- CREATE OR REPLACE FUNCTION log_document_status_change() ...
+-- CREATE TRIGGER log_document_status_changes ...
 
--- Grant permissions
-GRANT SELECT ON document_status_history TO authenticated;
-GRANT INSERT ON document_status_history TO authenticated;
+-- ============================================================
+-- Grants
+-- ============================================================
+GRANT SELECT ON documents_documentstatushistory TO authenticated;
+GRANT INSERT ON documents_documentstatushistory TO authenticated;

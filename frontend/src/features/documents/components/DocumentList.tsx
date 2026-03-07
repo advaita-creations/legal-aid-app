@@ -6,7 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 import { documentsApi } from '../api/documentsApi';
+import { Pagination } from '@/components/ui/pagination';
+import { TableSkeleton } from '@/components/ui/table-skeleton';
 import type { DocumentStatus } from '../types';
+
+const PAGE_SIZE = 10;
 
 const statusColors: Record<DocumentStatus, string> = {
   uploaded: 'bg-gray-100 text-gray-700',
@@ -32,15 +36,23 @@ export function DocumentList() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [page, setPage] = useState(1);
+
   const { data: documents, isLoading, error } = useQuery({
     queryKey: ['documents'],
-    queryFn: documentsApi.getAll,
+    queryFn: () => documentsApi.getAll(),
   });
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-gray-500">Loading documents...</div>
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Documents</h2>
+            <p className="text-sm text-gray-600 mt-1">Track and manage your uploaded documents</p>
+          </div>
+        </div>
+        <TableSkeleton columns={6} rows={6} />
       </div>
     );
   }
@@ -53,6 +65,14 @@ export function DocumentList() {
     );
   }
 
+  const filtered = documents?.filter((d) => {
+    const matchesSearch = !search || d.name.toLowerCase().includes(search.toLowerCase()) || d.case_title.toLowerCase().includes(search.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || d.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  }) ?? [];
+
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -64,14 +84,14 @@ export function DocumentList() {
         </div>
         <Link
           to="/documents/new"
-          className="flex items-center gap-2 rounded-lg bg-[#1754cf] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1d3db4] transition-colors"
+          className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Upload Document
         </Link>
       </div>
 
-      {!isLoading && documents && documents.length > 0 && (
+      {documents && documents.length > 0 && (
         <div className="flex gap-3 mb-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -79,14 +99,14 @@ export function DocumentList() {
               type="text"
               placeholder="Search documents..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-[#1754cf] focus:outline-none focus:ring-1 focus:ring-[#1754cf]"
+              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
             />
           </div>
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#1754cf] focus:outline-none focus:ring-1 focus:ring-[#1754cf]"
+            onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
           >
             <option value="all">All Status</option>
             <option value="uploaded">Uploaded</option>
@@ -104,7 +124,7 @@ export function DocumentList() {
           <p className="text-gray-600 mb-4">Upload your first document to get started.</p>
           <Link
             to="/documents/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-[#1754cf] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1d3db4] transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Upload Document
@@ -124,11 +144,7 @@ export function DocumentList() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {documents?.filter((d) => {
-                const matchesSearch = !search || d.name.toLowerCase().includes(search.toLowerCase()) || d.case_title.toLowerCase().includes(search.toLowerCase());
-                const matchesStatus = statusFilter === 'all' || d.status === statusFilter;
-                return matchesSearch && matchesStatus;
-              }).map((doc) => (
+              {paginated.map((doc) => (
                 <tr
                   key={doc.id}
                   onClick={() => navigate(`/documents/${doc.id}`)}
@@ -164,6 +180,12 @@ export function DocumentList() {
               ))}
             </tbody>
           </table>
+          <Pagination
+            currentPage={page}
+            totalItems={filtered.length}
+            pageSize={PAGE_SIZE}
+            onPageChange={setPage}
+          />
         </div>
       )}
     </div>

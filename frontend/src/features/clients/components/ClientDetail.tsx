@@ -1,13 +1,16 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Mail, Phone, MapPin, FileText, Briefcase, Trash2, Pencil } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, MapPin, FileText, Briefcase, Trash2, Pencil, Image, File } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
 import { clientsApi } from '../api/clientsApi';
 import { casesApi } from '@/features/cases/api/casesApi';
+import { documentsApi } from '@/features/documents/api/documentsApi';
 import { useToast } from '@/components/ui/toast';
+import { useConfirm } from '@/components/ui/confirm-dialog';
 import type { CaseStatus } from '@/features/cases/types';
+import type { DocumentStatus } from '@/features/documents/types';
 
 const statusColors: Record<CaseStatus, string> = {
   active: 'bg-green-100 text-green-700',
@@ -15,11 +18,26 @@ const statusColors: Record<CaseStatus, string> = {
   archived: 'bg-amber-100 text-amber-700',
 };
 
+const docStatusColors: Record<DocumentStatus, string> = {
+  uploaded: 'bg-gray-100 text-gray-700',
+  ready_to_process: 'bg-amber-100 text-amber-700',
+  in_progress: 'bg-blue-100 text-blue-700',
+  processed: 'bg-green-100 text-green-700',
+};
+
+const docStatusLabels: Record<DocumentStatus, string> = {
+  uploaded: 'Uploaded',
+  ready_to_process: 'Ready',
+  in_progress: 'In Progress',
+  processed: 'Processed',
+};
+
 export function ClientDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { confirm } = useConfirm();
 
   const { data: client, isLoading, error } = useQuery({
     queryKey: ['clients', id],
@@ -30,7 +48,14 @@ export function ClientDetail() {
   const { data: cases } = useQuery({
     queryKey: ['cases'],
     queryFn: casesApi.getAll,
-    select: (allCases) => allCases.filter((c) => c.client === id),
+    select: (allCases) => allCases.filter((c) => String(c.client) === id),
+    enabled: !!id,
+  });
+
+  const { data: documents } = useQuery({
+    queryKey: ['documents'],
+    queryFn: () => documentsApi.getAll(),
+    select: (allDocs) => allDocs.filter((d) => String(d.client_id) === id),
     enabled: !!id,
   });
 
@@ -85,10 +110,14 @@ export function ClientDetail() {
             Edit
           </Link>
           <button
-            onClick={() => {
-              if (window.confirm('Are you sure you want to delete this client?')) {
-                deleteMutation.mutate();
-              }
+            onClick={async () => {
+              const ok = await confirm({
+                title: 'Delete Client',
+                description: 'Are you sure you want to delete this client? This action cannot be undone.',
+                confirmLabel: 'Delete',
+                variant: 'danger',
+              });
+              if (ok) deleteMutation.mutate();
             }}
             className="flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
           >
@@ -105,7 +134,7 @@ export function ClientDetail() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <Mail className="w-4 h-4 text-gray-400" />
-                <a href={`mailto:${client.email}`} className="text-[#1754cf] hover:underline">
+                <a href={`mailto:${client.email}`} className="text-green-600 hover:underline">
                   {client.email}
                 </a>
               </div>
@@ -138,7 +167,7 @@ export function ClientDetail() {
               <h3 className="text-sm font-semibold text-gray-900">Cases</h3>
               <Link
                 to="/cases/new"
-                className="text-sm text-[#1754cf] hover:underline font-medium"
+                className="text-sm text-green-600 hover:underline font-medium"
               >
                 + Add Case
               </Link>
@@ -171,6 +200,51 @@ export function ClientDetail() {
                       )}
                     >
                       {caseItem.status}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="lg:col-span-3">
+          <div className="bg-white rounded-xl border border-gray-200 p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-semibold text-gray-900">Documents</h3>
+            </div>
+
+            {!documents || documents.length === 0 ? (
+              <div className="text-center py-8">
+                <FileText className="w-10 h-10 text-gray-300 mx-auto mb-2" />
+                <p className="text-sm text-gray-500">No documents for this client yet.</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {documents.map((doc) => (
+                  <Link
+                    key={doc.id}
+                    to={`/documents/${doc.id}`}
+                    className="flex items-center justify-between rounded-lg border border-gray-100 p-3 hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      {doc.file_type === 'image' ? (
+                        <Image className="w-4 h-4 text-blue-500" />
+                      ) : (
+                        <File className="w-4 h-4 text-red-500" />
+                      )}
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{doc.name}</p>
+                        <p className="text-xs text-gray-500">{doc.case_title}</p>
+                      </div>
+                    </div>
+                    <span
+                      className={cn(
+                        'rounded-full px-2.5 py-0.5 text-xs font-medium',
+                        docStatusColors[doc.status],
+                      )}
+                    >
+                      {docStatusLabels[doc.status]}
                     </span>
                   </Link>
                 ))}

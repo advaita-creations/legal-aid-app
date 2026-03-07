@@ -34,12 +34,23 @@ def notify_n8n_ready_to_process(
         logger.info('N8N_OUTBOUND_WEBHOOK_URL not configured; skipping outbound webhook.')
         return None
 
+    # Generate a signed download URL so n8n can fetch the file
+    file_download_url = ''
+    try:
+        from utils.storage import get_storage_backend
+        backend = get_storage_backend()
+        file_download_url = backend.get_url(file_path) or ''
+    except Exception:
+        logger.warning('Could not generate download URL for document %s', document_id)
+
     payload = {
         'document_id': document_id,
         'document_name': document_name,
         'file_path': file_path,
+        'file_download_url': file_download_url,
         'case_title': case_title,
         'advocate_email': advocate_email,
+        'callback_url': os.environ.get('N8N_CALLBACK_URL', ''),
     }
 
     headers = {

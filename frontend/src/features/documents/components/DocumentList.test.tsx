@@ -27,7 +27,8 @@ function renderWithProviders(ui: React.ReactElement) {
 describe('DocumentList', () => {
   it('shows loading state initially', () => {
     renderWithProviders(<DocumentList />);
-    expect(screen.getByText('Loading documents...')).toBeInTheDocument();
+    expect(screen.getByText('Documents')).toBeInTheDocument();
+    expect(screen.getByText('Track and manage your uploaded documents')).toBeInTheDocument();
   });
 
   it('shows empty state when no documents', async () => {

@@ -1,6 +1,7 @@
 """Tests for document CRUD and status transition endpoints."""
 import pytest
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client as TestClient
 
 from apps.cases.models import Case
@@ -20,18 +21,17 @@ def api_client():
 def advocate_user(db):
     """Create and return a test advocate user."""
     return User.objects.create_user(
-        username='advocate',
         email='advocate@legalaid.test',
         password='Test@123456',
-        first_name='Adv. Rajesh',
-        last_name='Kumar',
+        full_name='Adv. Rajesh Kumar',
+        role='advocate',
     )
 
 
 @pytest.fixture
 def authenticated_client(api_client, advocate_user):
     """Return an authenticated test client."""
-    api_client.login(username='advocate', password='Test@123456')
+    api_client.login(email='advocate@legalaid.test', password='Test@123456')
     return api_client
 
 
@@ -92,45 +92,46 @@ class TestDocumentList:
         assert data['results'][0]['client_name'] == 'Test Client'
 
     def test_list_unauthenticated(self, api_client, db):
-        """Unauthenticated request gets 403."""
+        """Unauthenticated request gets 401."""
         response = api_client.get('/api/documents/')
-        assert response.status_code == 403
+        assert response.status_code == 401
 
 
 class TestDocumentCreate:
     """Tests for POST /api/documents/."""
 
-    def test_create_success(self, authenticated_client, sample_case):
-        """Creates a document with valid data."""
+    def test_create_success(self, authenticated_client, sample_case, tmp_path):
+        """Creates a document with valid file upload."""
+        fake_pdf = SimpleUploadedFile(
+            'new_doc.pdf',
+            b'%PDF-1.4 fake content',
+            content_type='application/pdf',
+        )
         response = authenticated_client.post(
             '/api/documents/',
             data={
                 'case': sample_case.id,
-                'name': 'new_doc.pdf',
-                'file_path': 'advocate-1/case-1/doc-2.pdf',
-                'file_type': 'pdf',
-                'file_size_bytes': 1024000,
-                'mime_type': 'application/pdf',
+                'file': fake_pdf,
             },
-            content_type='application/json',
         )
         assert response.status_code == 201
         data = response.json()
-        assert data['name'] == 'new_doc.pdf'
+        assert data['name'] == 'new_doc'
         assert data['status'] == 'uploaded'
+        assert data['file_type'] == 'pdf'
 
     def test_create_missing_case(self, authenticated_client):
         """Missing case returns 400."""
+        fake_pdf = SimpleUploadedFile(
+            'orphan.pdf',
+            b'%PDF-1.4 fake content',
+            content_type='application/pdf',
+        )
         response = authenticated_client.post(
             '/api/documents/',
             data={
-                'name': 'orphan.pdf',
-                'file_path': 'test/orphan.pdf',
-                'file_type': 'pdf',
-                'file_size_bytes': 1024,
-                'mime_type': 'application/pdf',
+                'file': fake_pdf,
             },
-            content_type='application/json',
         )
         assert response.status_code == 400
 
@@ -209,3 +210,22 @@ class TestDocumentDetail:
         response = authenticated_client.delete(f'/api/documents/{sample_document.id}/')
         assert response.status_code == 204
         assert Document.objects.count() == 0
+
+
+class TestDocumentDownload:
+    """Tests for GET /api/documents/:id/download/."""
+
+    def test_download_returns_url(self, authenticated_client, sample_document):
+        """Returns download URL for an existing document."""
+        response = authenticated_client.get(f'/api/documents/{sample_document.id}/download/')
+        assert response.status_code == 200
+        data = response.json()
+        assert 'url' in data
+        assert data['name'] == 'agreement_scan.jpg'
+        assert data['mime_type'] == 'image/jpeg'
+        assert '/media/' in data['url']
+
+    def test_download_unauthenticated(self, api_client, sample_document):
+        """Unauthenticated request gets 401."""
+        response = api_client.get(f'/api/documents/{sample_document.id}/download/')
+        assert response.status_code == 401

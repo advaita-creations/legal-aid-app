@@ -13,22 +13,20 @@ User = get_user_model()
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="advocate",
         email="advocate@test.com",
         password="TestPass123!",
-        first_name="Test",
-        last_name="Advocate",
+        full_name="Test Advocate",
+        role="advocate",
     )
 
 
 @pytest.fixture
 def other_user(db):
     return User.objects.create_user(
-        username="other",
         email="other@test.com",
         password="TestPass123!",
-        first_name="Other",
-        last_name="Advocate",
+        full_name="Other Advocate",
+        role="advocate",
     )
 
 
@@ -87,10 +85,10 @@ def sample_data(user, other_user):
 
 @pytest.mark.django_db
 class TestDashboardStats:
-    def test_unauthenticated_returns_403(self):
+    def test_unauthenticated_returns_401(self):
         client = APIClient()
         response = client.get("/api/dashboard/stats/")
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     def test_returns_correct_stats(self, api_client, sample_data):
         response = api_client.get("/api/dashboard/stats/")

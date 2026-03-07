@@ -1,28 +1,28 @@
-import { djangoApi } from '@/lib/django-api';
+import { apiClient } from '@/lib/api/client';
 import type { Client, ClientFormData } from '../types';
 
 export const clientsApi = {
   getAll: async (): Promise<Client[]> => {
-    const response = await djangoApi.get<{ results: Client[] }>('/clients/');
+    const response = await apiClient.get<{ results: Client[] }>('/clients/');
     return response.data.results;
   },
 
   getById: async (id: string): Promise<Client> => {
-    const response = await djangoApi.get<Client>(`/clients/${id}/`);
+    const response = await apiClient.get<Client>(`/clients/${id}/`);
     return response.data;
   },
 
   create: async (data: ClientFormData): Promise<Client> => {
-    const response = await djangoApi.post<Client>('/clients/', data);
+    const response = await apiClient.post<Client>('/clients/', data);
     return response.data;
   },
 
   update: async (id: string, data: Partial<ClientFormData>): Promise<Client> => {
-    const response = await djangoApi.patch<Client>(`/clients/${id}/`, data);
+    const response = await apiClient.patch<Client>(`/clients/${id}/`, data);
     return response.data;
   },
 
   delete: async (id: string): Promise<void> => {
-    await djangoApi.delete(`/clients/${id}/`);
+    await apiClient.delete(`/clients/${id}/`);
   },
 };

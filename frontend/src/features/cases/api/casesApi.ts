@@ -1,28 +1,28 @@
-import { djangoApi } from '@/lib/django-api';
+import { apiClient } from '@/lib/api/client';
 import type { Case, CaseCreateRequest } from '../types';
 
 export const casesApi = {
   getAll: async (): Promise<Case[]> => {
-    const response = await djangoApi.get<{ results: Case[] }>('/cases/');
+    const response = await apiClient.get<{ results: Case[] }>('/cases/');
     return response.data.results;
   },
 
   getById: async (id: string): Promise<Case> => {
-    const response = await djangoApi.get<Case>(`/cases/${id}/`);
+    const response = await apiClient.get<Case>(`/cases/${id}/`);
     return response.data;
   },
 
   create: async (data: CaseCreateRequest & { client: string }): Promise<Case> => {
-    const response = await djangoApi.post<Case>('/cases/', data);
+    const response = await apiClient.post<Case>('/cases/', data);
     return response.data;
   },
 
   update: async (id: string, data: Partial<CaseCreateRequest>): Promise<Case> => {
-    const response = await djangoApi.patch<Case>(`/cases/${id}/`, data);
+    const response = await apiClient.patch<Case>(`/cases/${id}/`, data);
     return response.data;
   },
 
   delete: async (id: string): Promise<void> => {
-    await djangoApi.delete(`/cases/${id}/`);
+    await apiClient.delete(`/cases/${id}/`);
   },
 };

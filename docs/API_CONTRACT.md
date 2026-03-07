@@ -1,11 +1,18 @@
 # Legal Aid App — API Contract
 
-> **Version:** 1.1  
+> **Version:** 2.0  
 > **Base URL:** `/api`  
-> **Auth:** Django session-based authentication. All endpoints (except login) require an active session cookie.  
-> **Content-Type:** `application/json` (unless file upload)  
+> **Auth:** Dual mode — Supabase JWT bearer token (production) OR Django session cookie (development). All endpoints (except login and health) require authentication.  
+> **Content-Type:** `application/json` (unless file upload — `multipart/form-data`)  
 > **Pagination:** `?page=1&page_size=20` (default 20, max 100)  
-> **CORS:** Credentials included (`withCredentials: true`)
+> **CORS:** Configured per environment via `CORS_ALLOWED_ORIGINS`
+>
+> ### Authentication Modes
+>
+> | Mode | Header | Toggle |
+> |---|---|---|
+> | Supabase (prod) | `Authorization: Bearer <jwt>` | `VITE_AUTH_MODE=supabase` |
+> | Django (dev) | Session cookie + CSRF | `VITE_AUTH_MODE=django` |
 
 ---
 
@@ -385,33 +392,31 @@ GET /api/documents/?status=&file_type=&search=&case_id=&client_id=&ordering=-cre
 }
 ```
 
-### 5.2 Create Document
+### 5.2 Create Document (File Upload)
 
 ```
 POST /api/documents/
+Content-Type: multipart/form-data
 ```
 
-**Request:**
+**Request (multipart form):**
 
-```json
-{
-  "case": 1,
-  "name": "agreement_scan.jpg",
-  "file_path": "advocate-1/case-1/doc-1.jpg",
-  "file_type": "image",
-  "file_size_bytes": 2048576,
-  "mime_type": "image/jpeg",
-  "notes": "Scanned agreement"
-}
-```
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | File | Yes | JPG, PNG, or PDF — max 20MB |
+| `case` | UUID | Yes | Case ID to attach document to |
+| `name` | string | No | Display name (defaults to filename without extension) |
+| `notes` | string | No | Optional notes |
 
 **Response: 201** — Full document object (same shape as list item, with `case_title`, `client_name`, `client_id`)
 
-**Side effect:** `advocate` auto-assigned. Default status is `uploaded`.
+**Side effects:**
+- `advocate` auto-assigned to `request.user`
+- File saved via configured storage backend (`local` or `supabase`)
+- Default status is `uploaded`
+- `DocumentStatusHistory` entry created
 
-**Errors:** `400 Bad Request` (validation), `403 Forbidden` (not authenticated)
-
-> **Note:** File upload via `multipart/form-data` is planned for production. MVP creates document records with a `file_path` string.
+**Errors:** `400 Bad Request` (validation, unsupported file type, file too large), `401 Unauthorized`
 
 ### 5.3 Get Document Detail
 
@@ -453,6 +458,27 @@ DELETE /api/documents/:id/
 ```
 
 **Response: 204 No Content**
+
+### 5.6 Download Document
+
+```
+GET /api/documents/:id/download/
+```
+
+**Response: 200**
+
+```json
+{
+  "url": "/media/advocate-uuid/case-uuid/file.pdf",
+  "name": "agreement_scan.jpg",
+  "mime_type": "image/jpeg"
+}
+```
+
+- **Local storage:** Returns a relative URL to the media file
+- **Supabase storage:** Returns a time-limited signed URL (1 hour expiry)
+
+**Errors:** `404 Not Found` (file not available), `401 Unauthorized`
 
 ---
 

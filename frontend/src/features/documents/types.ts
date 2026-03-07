@@ -8,22 +8,46 @@ export interface Document {
   mime_type: string;
   file_size_bytes: number;
   status: DocumentStatus;
+  case: string;
   case_id: string;
   case_title: string;
   client_id: string;
   client_name: string;
   notes: string | null;
+  file_url: string | null;
+  processed_html_url: string | null;
+  processed_json_url: string | null;
+  processed_report_url: string | null;
   created_at: string;
   updated_at: string;
   status_history?: DocumentStatusEntry[];
 }
 
-export interface DocumentDetail extends Document {
-  file_path: string;
-  file_url: string;
-  processed_output_path: string | null;
-  processed_output_url: string | null;
-  status_history: DocumentStatusEntry[];
+export interface ConsolidatedJson {
+  document_metadata: {
+    title: string;
+    source: string;
+    timestamp: string;
+    mistral_sections_count: number;
+    vector_sections_count: number;
+  };
+  document_title: string;
+  sections: {
+    section_heading: string;
+    content: string;
+    tables: string[];
+  }[];
+  tables: string[];
+  total_sections: number;
+}
+
+export interface ValidationReport {
+  raw: string;
+  accuracy: string;
+  discrepancies: number;
+  humanReviewItems: number;
+  illegibleItems: number;
+  recommendations: string;
 }
 
 export interface DocumentStatusEntry {

@@ -1,12 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { authApi, type User } from '@/lib/django-api';
+import { getAuthMode } from '@/lib/auth-mode';
+import { authApi } from '@/lib/django-api';
 import type { UserProfile } from '../types';
 
 interface AuthContextType {
-  user: User | null;
   profile: UserProfile | null;
-  session: null;
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -16,31 +15,54 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    checkAuth();
+    const mode = getAuthMode();
+    if (mode === 'supabase') {
+      initSupabaseAuth();
+    } else {
+      initDjangoAuth();
+    }
   }, []);
 
-  async function checkAuth() {
+  async function initSupabaseAuth() {
+    try {
+      const { supabase } = await import('@/lib/supabase');
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        const userData = await authApi.me();
+        setProfile(userData);
+      }
+
+      supabase.auth.onAuthStateChange(async (_event, session) => {
+        if (session) {
+          try {
+            const userData = await authApi.me();
+            setProfile(userData);
+          } catch {
+            setProfile(null);
+          }
+        } else {
+          setProfile(null);
+        }
+      });
+    } catch {
+      setProfile(null);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function initDjangoAuth() {
     try {
       const userData = await authApi.me();
-      setUser(userData);
-      setProfile({
-        id: userData.id,
-        full_name: userData.full_name,
-        email: userData.email,
-        phone: null,
-        role: userData.role,
-        is_active: true,
-        avatar_url: null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      });
-    } catch (error) {
-      setUser(null);
+      setProfile(userData);
+    } catch {
       setProfile(null);
     } finally {
       setIsLoading(false);
@@ -48,35 +70,46 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function signIn(email: string, password: string) {
-    const response = await authApi.login(email, password);
-    setUser(response.user);
-    setProfile({
-      id: response.user.id,
-      full_name: response.user.full_name,
-      email: response.user.email,
-      phone: null,
-      role: response.user.role,
-      is_active: true,
-      avatar_url: null,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    });
+    const mode = getAuthMode();
+
+    if (mode === 'supabase') {
+      const { supabase } = await import('@/lib/supabase');
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+      const userData = await authApi.me();
+      setProfile(userData);
+    } else {
+      const response = await authApi.login(email, password);
+      setProfile(response.user);
+    }
   }
 
   async function signOut() {
-    await authApi.logout();
-    setUser(null);
+    const mode = getAuthMode();
+
+    if (mode === 'supabase') {
+      const { supabase } = await import('@/lib/supabase');
+      await supabase.auth.signOut();
+    } else {
+      await authApi.logout();
+    }
     setProfile(null);
   }
 
   async function refreshProfile() {
-    await checkAuth();
+    try {
+      const userData = await authApi.me();
+      setProfile(userData);
+    } catch {
+      setProfile(null);
+    }
   }
 
-  const value = {
-    user,
+  const value: AuthContextType = {
     profile,
-    session: null,
     isLoading,
     signIn,
     signOut,

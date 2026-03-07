@@ -27,8 +27,8 @@ function renderWithProviders(ui: React.ReactElement) {
 describe('ClientList', () => {
   it('shows loading state initially', () => {
     renderWithProviders(<ClientList />);
-
-    expect(screen.getByText('Loading clients...')).toBeInTheDocument();
+    expect(screen.getByText('Clients')).toBeInTheDocument();
+    expect(screen.getByText('Manage your client information')).toBeInTheDocument();
   });
 
   it('renders heading and add button after loading', async () => {
@@ -37,7 +37,7 @@ describe('ClientList', () => {
 
     renderWithProviders(<ClientList />);
 
-    expect(await screen.findByText('Clients')).toBeInTheDocument();
+    expect(await screen.findByText('No clients yet')).toBeInTheDocument();
     expect(screen.getAllByText('Add Client').length).toBeGreaterThanOrEqual(1);
   });
 

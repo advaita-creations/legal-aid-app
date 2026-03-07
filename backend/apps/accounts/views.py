@@ -70,7 +70,7 @@ def update_profile_view(request):
 def dashboard_stats_view(request):
     """Return dashboard statistics. Admin sees system-wide; advocate sees own data."""
     user = request.user
-    if user.is_staff:
+    if user.role == 'admin':
         total_clients = Client.objects.count()
         total_cases = Case.objects.count()
         docs_qs = Document.objects.all()
@@ -98,18 +98,17 @@ def dashboard_stats_view(request):
 def admin_advocates_list(request):
     """List all advocate users with aggregate counts."""
     advocates = (
-        User.objects.filter(is_superuser=False)
+        User.objects.filter(role='advocate')
         .annotate(
             documents_count=Count('documents', distinct=True),
             clients_count=Count('clients', distinct=True),
         )
-        .order_by('-date_joined')
+        .order_by('-created_at')
     )
     search = request.query_params.get('search', '')
     if search:
         advocates = advocates.filter(
-            Q(first_name__icontains=search) |
-            Q(last_name__icontains=search) |
+            Q(full_name__icontains=search) |
             Q(email__icontains=search)
         )
     is_active = request.query_params.get('is_active')
@@ -124,7 +123,7 @@ def admin_advocates_list(request):
 def admin_toggle_advocate(request, pk):
     """Toggle advocate active status."""
     try:
-        advocate = User.objects.get(pk=pk, is_superuser=False)
+        advocate = User.objects.get(pk=pk, role='advocate')
     except User.DoesNotExist:
         return Response({"error": "Advocate not found"}, status=status.HTTP_404_NOT_FOUND)
     is_active = request.data.get('is_active')
@@ -139,8 +138,8 @@ def admin_toggle_advocate(request, pk):
 @permission_classes([IsAdminUser])
 def admin_stats_view(request):
     """Return system-wide admin statistics."""
-    total_advocates = User.objects.filter(is_superuser=False).count()
-    active_advocates = User.objects.filter(is_superuser=False, is_active=True).count()
+    total_advocates = User.objects.filter(role='advocate').count()
+    active_advocates = User.objects.filter(role='advocate', is_active=True).count()
     total_clients = Client.objects.count()
     total_cases = Case.objects.count()
     docs_qs = Document.objects.all()

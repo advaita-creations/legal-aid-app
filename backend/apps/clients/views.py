@@ -20,7 +20,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Return non-deleted clients. Admin sees all; advocates see own."""
         qs = Client.objects.filter(is_deleted=False)
-        if not self.request.user.is_staff:
+        if self.request.user.role != 'admin':
             qs = qs.filter(advocate=self.request.user)
         return qs
     

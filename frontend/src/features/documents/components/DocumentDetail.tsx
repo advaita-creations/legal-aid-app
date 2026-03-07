@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Image, File, Trash2, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Image, File, Trash2, ArrowRight, ZoomIn, ZoomOut, Download } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
 import { documentsApi } from '../api/documentsApi';
 import { useToast } from '@/components/ui/toast';
+import { useConfirm } from '@/components/ui/confirm-dialog';
+import { ProcessingStatus } from './ProcessingStatus';
+import { ProcessedResults } from './ProcessedResults';
 import type { DocumentStatus, DocumentStatusEntry } from '../types';
 
 const statusColors: Record<DocumentStatus, string> = {
@@ -40,16 +44,93 @@ function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+function FilePreview({ fileUrl, fileType, name }: { fileUrl: string; fileType: string; name: string }) {
+  const [zoom, setZoom] = useState(100);
+
+  if (fileType === 'image') {
+    return (
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="flex items-center justify-between px-4 py-2 border-b border-gray-100 bg-gray-50">
+          <span className="text-xs font-medium text-gray-600">Preview</span>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setZoom((z) => Math.max(25, z - 25))}
+              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              title="Zoom out"
+            >
+              <ZoomOut className="w-4 h-4 text-gray-500" />
+            </button>
+            <span className="text-xs text-gray-500 min-w-[3rem] text-center">{zoom}%</span>
+            <button
+              onClick={() => setZoom((z) => Math.min(200, z + 25))}
+              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              title="Zoom in"
+            >
+              <ZoomIn className="w-4 h-4 text-gray-500" />
+            </button>
+            <a
+              href={fileUrl}
+              download={name}
+              className="p-1 rounded hover:bg-gray-200 transition-colors ml-1"
+              title="Download"
+            >
+              <Download className="w-4 h-4 text-gray-500" />
+            </a>
+          </div>
+        </div>
+        <div className="overflow-auto max-h-[500px] bg-gray-100 flex items-center justify-center p-4">
+          <img
+            src={fileUrl}
+            alt={name}
+            style={{ width: `${zoom}%`, maxWidth: 'none' }}
+            className="rounded shadow-sm"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (fileType === 'pdf') {
+    return (
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="flex items-center justify-between px-4 py-2 border-b border-gray-100 bg-gray-50">
+          <span className="text-xs font-medium text-gray-600">PDF Preview</span>
+          <a
+            href={fileUrl}
+            download={name}
+            className="p-1 rounded hover:bg-gray-200 transition-colors"
+            title="Download"
+          >
+            <Download className="w-4 h-4 text-gray-500" />
+          </a>
+        </div>
+        <iframe
+          src={fileUrl}
+          title={name}
+          className="w-full h-[500px] border-0"
+        />
+      </div>
+    );
+  }
+
+  return null;
+}
+
 export function DocumentDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { confirm } = useConfirm();
 
   const { data: doc, isLoading, error } = useQuery({
     queryKey: ['documents', id],
     queryFn: () => documentsApi.getById(id!),
     enabled: !!id,
+    refetchInterval: (query) => {
+      const status = query.state.data?.status;
+      return status === 'in_progress' || status === 'ready_to_process' ? 30000 : false;
+    },
   });
 
   const deleteMutation = useMutation({
@@ -88,6 +169,10 @@ export function DocumentDetail() {
   }
 
   const next = nextStatus[doc.status];
+  const fileUrl = doc.file_url ?? null;
+  const isProcessing = doc.status === 'in_progress' || doc.status === 'ready_to_process';
+  const isProcessed = doc.status === 'processed';
+  const hasProcessedResults = !!(doc.processed_html_url || doc.processed_json_url || doc.processed_report_url);
 
   return (
     <div>
@@ -118,10 +203,14 @@ export function DocumentDetail() {
           </div>
         </div>
         <button
-          onClick={() => {
-            if (window.confirm('Are you sure you want to delete this document?')) {
-              deleteMutation.mutate();
-            }
+          onClick={async () => {
+            const ok = await confirm({
+              title: 'Delete Document',
+              description: 'Are you sure you want to delete this document? This action cannot be undone.',
+              confirmLabel: 'Delete',
+              variant: 'danger',
+            });
+            if (ok) deleteMutation.mutate();
           }}
           className="flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
         >
@@ -132,6 +221,26 @@ export function DocumentDetail() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
+          {/* Processing animation when in_progress */}
+          {isProcessing && (
+            <ProcessingStatus status={doc.status} name={doc.name} />
+          )}
+
+          {/* Processed results with 3 tabs */}
+          {isProcessed && hasProcessedResults && (
+            <ProcessedResults doc={doc} />
+          )}
+
+          {/* Original file preview (always shown, collapsible when processed) */}
+          {fileUrl && (
+            <details open={!isProcessed || !hasProcessedResults}>
+              <summary className="text-sm font-medium text-gray-600 cursor-pointer hover:text-gray-900 mb-2">
+                {isProcessed ? 'Original Document' : 'Document Preview'}
+              </summary>
+              <FilePreview fileUrl={fileUrl} fileType={doc.file_type} name={doc.name} />
+            </details>
+          )}
+
           <div className="bg-white rounded-xl border border-gray-200 p-5">
             <h3 className="text-sm font-semibold text-gray-900 mb-4">Document Information</h3>
             <dl className="grid grid-cols-2 gap-x-6 gap-y-4">
@@ -158,7 +267,7 @@ export function DocumentDetail() {
               <div>
                 <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider">Case</dt>
                 <dd className="mt-1">
-                  <Link to={`/cases/${doc.case_id}`} className="text-sm text-[#1754cf] hover:underline">
+                  <Link to={`/cases/${doc.case_id}`} className="text-sm text-green-600 hover:underline">
                     {doc.case_title}
                   </Link>
                 </dd>
@@ -166,7 +275,7 @@ export function DocumentDetail() {
               <div>
                 <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider">Client</dt>
                 <dd className="mt-1">
-                  <Link to={`/clients/${doc.client_id}`} className="text-sm text-[#1754cf] hover:underline">
+                  <Link to={`/clients/${doc.client_id}`} className="text-sm text-green-600 hover:underline">
                     {doc.client_name}
                   </Link>
                 </dd>
@@ -204,13 +313,17 @@ export function DocumentDetail() {
 
               {next && (
                 <button
-                  onClick={() => {
-                    if (window.confirm(`Transition document to "${statusLabels[next]}"?`)) {
-                      statusMutation.mutate(next);
-                    }
+                  onClick={async () => {
+                    const ok = await confirm({
+                      title: 'Update Status',
+                      description: `Transition document to "${statusLabels[next]}"?`,
+                      confirmLabel: 'Confirm',
+                      variant: 'info',
+                    });
+                    if (ok) statusMutation.mutate(next);
                   }}
                   disabled={statusMutation.isPending}
-                  className="w-full mt-2 rounded-lg bg-[#1754cf] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1d3db4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full mt-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   {statusMutation.isPending ? 'Updating...' : nextStatusLabel[doc.status]}
                 </button>
@@ -231,7 +344,7 @@ export function DocumentDetail() {
                 {doc.status_history.map((entry: DocumentStatusEntry) => (
                   <div key={entry.id} className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className="w-2 h-2 rounded-full bg-[#1754cf] mt-1.5" />
+                      <div className="w-2 h-2 rounded-full bg-green-600 mt-1.5" />
                       <div className="flex-1 w-px bg-gray-200" />
                     </div>
                     <div className="pb-3">

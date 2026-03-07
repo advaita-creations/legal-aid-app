@@ -2,8 +2,9 @@ export type {
   Document,
   DocumentStatus,
   DocumentFileType,
-  DocumentDetail,
   DocumentStatusEntry,
   DocumentUploadRequest,
   DocumentStatusUpdateRequest,
+  ConsolidatedJson,
+  ValidationReport,
 } from './types';
