@@ -100,16 +100,20 @@ class SupabaseStorageBackend(StorageBackend):
         content = file.read()
         try:
             # Use REST API directly with service role key to bypass RLS
+            # Supabase Storage API: PUT /storage/v1/object/bucketName/path
             url = f"{settings.SUPABASE_URL}/storage/v1/object/{self.BUCKET}/{relative_path}"
             headers = {
                 "Authorization": f"Bearer {settings.SUPABASE_SERVICE_ROLE_KEY}",
                 "Content-Type": file.content_type or "application/octet-stream",
             }
-            response = requests.post(url, data=content, headers=headers, params={"upsert": "true"})
-            response.raise_for_status()
+            # Use PUT method with upsert parameter
+            response = requests.put(url, data=content, headers=headers, params={"upsert": "true"})
+            if response.status_code not in (200, 201):
+                logger.error(f"Supabase upload failed: {response.status_code} - {response.text}")
+                response.raise_for_status()
             logger.info(f"Successfully uploaded file to {relative_path}")
         except Exception as e:
-            logger.error(f"Failed to upload file to {relative_path}: {e}")
+            logger.error(f"Failed to upload file to {relative_path}: {e}", exc_info=True)
             raise
         return relative_path
 
