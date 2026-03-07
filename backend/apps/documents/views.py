@@ -93,13 +93,23 @@ class DocumentViewSet(viewsets.ModelViewSet):
         )
 
         if new_status == 'ready_to_process':
-            notify_n8n_ready_to_process(
+            result = notify_n8n_ready_to_process(
                 document_id=document.id,
                 document_name=document.name,
                 file_path=document.file_path,
                 case_title=document.case.title,
                 advocate_email=request.user.email,
             )
+            if result is not None:
+                document.status = 'in_progress'
+                document.save(update_fields=['status', 'updated_at'])
+                DocumentStatusHistory.objects.create(
+                    document=document,
+                    from_status='ready_to_process',
+                    to_status='in_progress',
+                    changed_by=None,
+                    notes='Auto-transitioned: n8n acknowledged processing request',
+                )
 
         doc = Document.objects.select_related('case', 'case__client').prefetch_related(
             'status_history', 'status_history__changed_by',
