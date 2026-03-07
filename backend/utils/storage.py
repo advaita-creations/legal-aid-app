@@ -97,14 +97,19 @@ class SupabaseStorageBackend(StorageBackend):
     def upload(self, file: UploadedFile, relative_path: str) -> str:
         """Upload file to Supabase Storage and return the storage path."""
         content = file.read()
-        self._client.storage.from_(self.BUCKET).upload(
-            relative_path,
-            content,
-            file_options={
-                "content-type": file.content_type or "application/octet-stream",
-                "upsert": "true",
-            },
-        )
+        try:
+            self._client.storage.from_(self.BUCKET).upload(
+                relative_path,
+                content,
+                file_options={
+                    "content-type": file.content_type or "application/octet-stream",
+                    "upsert": "true",
+                },
+            )
+            logger.info(f"Successfully uploaded file to {relative_path}")
+        except Exception as e:
+            logger.error(f"Failed to upload file to {relative_path}: {e}")
+            raise
         return relative_path
 
     def get_url(self, path: str, request: Optional[object] = None) -> Optional[str]:
