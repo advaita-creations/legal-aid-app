@@ -96,16 +96,19 @@ class SupabaseStorageBackend(StorageBackend):
 
     def upload(self, file: UploadedFile, relative_path: str) -> str:
         """Upload file to Supabase Storage and return the storage path."""
+        import requests
+        from django.conf import settings
+        
         content = file.read()
         try:
-            self._client.storage.from_(self.BUCKET).upload(
-                relative_path,
-                content,
-                file_options={
-                    "content-type": file.content_type or "application/octet-stream",
-                    "upsert": "true",
-                },
-            )
+            # Use REST API directly with service role key to bypass RLS
+            url = f"{settings.SUPABASE_URL}/storage/v1/object/{self.BUCKET}/{relative_path}"
+            headers = {
+                "Authorization": f"Bearer {settings.SUPABASE_SERVICE_ROLE_KEY}",
+                "Content-Type": file.content_type or "application/octet-stream",
+            }
+            response = requests.post(url, data=content, headers=headers, params={"upsert": "true"})
+            response.raise_for_status()
             logger.info(f"Successfully uploaded file to {relative_path}")
         except Exception as e:
             logger.error(f"Failed to upload file to {relative_path}: {e}")
