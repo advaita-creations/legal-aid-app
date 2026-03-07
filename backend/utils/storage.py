@@ -13,7 +13,6 @@ Usage:
 """
 import logging
 import os
-import requests
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -97,20 +96,20 @@ class SupabaseStorageBackend(StorageBackend):
 
     def upload(self, file: UploadedFile, relative_path: str) -> str:
         """Upload file to Supabase Storage and return the storage path."""
+        from utils.supabase_client import get_supabase_client
+        
         content = file.read()
         try:
-            # Use REST API directly with service role key to bypass RLS
-            # Supabase Storage API: PUT /storage/v1/object/bucketName/path
-            url = f"{settings.SUPABASE_URL}/storage/v1/object/{self.BUCKET}/{relative_path}"
-            headers = {
-                "Authorization": f"Bearer {settings.SUPABASE_SERVICE_ROLE_KEY}",
-                "Content-Type": file.content_type or "application/octet-stream",
-            }
-            # Use PUT method with upsert parameter
-            response = requests.put(url, data=content, headers=headers, params={"upsert": "true"})
-            if response.status_code not in (200, 201):
-                logger.error(f"Supabase upload failed: {response.status_code} - {response.text}")
-                response.raise_for_status()
+            # Use Supabase Python client which handles auth properly
+            client = get_supabase_client()
+            client.storage.from_(self.BUCKET).upload(
+                relative_path,
+                content,
+                file_options={
+                    "content-type": file.content_type or "application/octet-stream",
+                    "upsert": True,
+                },
+            )
             logger.info(f"Successfully uploaded file to {relative_path}")
         except Exception as e:
             logger.error(f"Failed to upload file to {relative_path}: {e}", exc_info=True)
