@@ -60,11 +60,7 @@ def notify_n8n_ready_to_process(
         headers['X-Webhook-Secret'] = secret
 
     try:
-        # Try POST first, fall back to GET if n8n webhook is GET-only
         response = requests.post(url, json=payload, headers=headers, timeout=10)
-        if response.status_code == 404:
-            logger.info('n8n webhook rejected POST, retrying with GET for document %s', document_id)
-            response = requests.get(url, params=payload, timeout=10)
         response.raise_for_status()
         logger.info('n8n outbound webhook sent for document %s', document_id)
         return response.json()
