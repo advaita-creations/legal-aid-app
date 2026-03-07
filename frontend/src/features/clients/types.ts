@@ -19,6 +19,9 @@ export interface ClientFormData {
   notes?: string;
 }
 
+export type ClientCreateRequest = ClientFormData;
+export type ClientUpdateRequest = Partial<ClientFormData>;
+
 export interface ClientDetail extends Client {
   cases: ClientCase[];
 }
