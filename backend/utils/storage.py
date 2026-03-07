@@ -96,13 +96,18 @@ class SupabaseStorageBackend(StorageBackend):
 
     def upload(self, file: UploadedFile, relative_path: str) -> str:
         """Upload file to Supabase Storage and return the storage path."""
+        import signal
         from utils.supabase_client import get_supabase_client
         
         content = file.read()
+        logger.info(f"Starting upload to {relative_path} (size: {len(content)} bytes)")
+        
         try:
             # Use Supabase Python client which handles auth properly
             client = get_supabase_client()
-            client.storage.from_(self.BUCKET).upload(
+            logger.info(f"Supabase client initialized")
+            
+            result = client.storage.from_(self.BUCKET).upload(
                 relative_path,
                 content,
                 file_options={
@@ -110,7 +115,7 @@ class SupabaseStorageBackend(StorageBackend):
                     "upsert": True,
                 },
             )
-            logger.info(f"Successfully uploaded file to {relative_path}")
+            logger.info(f"Successfully uploaded file to {relative_path}: {result}")
         except Exception as e:
             logger.error(f"Failed to upload file to {relative_path}: {e}", exc_info=True)
             raise
