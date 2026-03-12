@@ -22,7 +22,7 @@ const stats = [
     suffix: '.7%',
     label: 'Accuracy Rate',
     description: 'Industry-leading OCR precision',
-    gradient: 'from-green-400 to-emerald-500',
+    gradient: 'from-blue-600 to-indigo-600',
   },
   {
     value: 500,

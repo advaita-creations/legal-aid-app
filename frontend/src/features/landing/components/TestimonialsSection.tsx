@@ -69,12 +69,12 @@ export function TestimonialsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="mb-4 inline-block rounded-full border border-green-400/30 bg-green-400/10 px-4 py-1.5 text-xs font-medium text-green-300">
+          <span className="mb-4 inline-block rounded-full border border-blue-600/30 bg-blue-600/10 px-4 py-1.5 text-xs font-medium text-blue-300">
             Success Stories
           </span>
           <h2 className="mb-4 text-4xl font-black text-white md:text-5xl">
             Advocates{' '}
-            <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 to-cyan-400 bg-clip-text text-transparent">
               Love
             </span>{' '}
             What We Do

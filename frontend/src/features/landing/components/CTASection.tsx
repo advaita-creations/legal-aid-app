@@ -17,9 +17,9 @@ export function CTASection() {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1.5">
-            <Sparkles size={14} className="text-cyan-400" />
-            <span className="text-xs font-medium text-cyan-300">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-600/30 bg-blue-600/10 px-4 py-1.5">
+            <Sparkles size={14} className="text-blue-400" />
+            <span className="text-xs font-medium text-blue-300">
               Limited Time Offer
             </span>
           </div>
@@ -39,7 +39,7 @@ export function CTASection() {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="#pricing"
-              className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 px-10 py-4 text-base font-bold text-white shadow-xl shadow-cyan-500/25 transition-all hover:shadow-cyan-500/40 hover:brightness-110"
+              className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-10 py-4 text-base font-bold text-white shadow-xl shadow-blue-600/25 transition-all hover:shadow-blue-600/40 hover:brightness-110"
             >
               Start Your Free Trial
               <ArrowRight
@@ -64,19 +64,19 @@ export function CTASection() {
             transition={{ delay: 0.4 }}
           >
             <span className="flex items-center gap-2">
-              <svg className="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               No credit card required
             </span>
             <span className="flex items-center gap-2">
-              <svg className="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               Cancel anytime
             </span>
             <span className="flex items-center gap-2">
-              <svg className="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               30-day money-back guarantee

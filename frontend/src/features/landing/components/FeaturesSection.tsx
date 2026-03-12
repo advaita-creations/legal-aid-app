@@ -32,8 +32,8 @@ const features = [
     title: 'Bank-Level Security',
     description:
       'End-to-end encryption, role-based access, and SOC 2 compliant infrastructure protect every byte of client data.',
-    gradient: 'from-green-400 to-emerald-500',
-    glow: 'shadow-green-500/20',
+    gradient: 'from-blue-600 to-indigo-600',
+    glow: 'shadow-blue-600/20',
   },
   {
     icon: FileSearch,

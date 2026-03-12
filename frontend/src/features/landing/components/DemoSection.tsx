@@ -43,10 +43,10 @@ const colorMap: Record<string, { bg: string; text: string; border: string; glow:
     glow: 'shadow-[0_0_40px_rgba(168,85,247,0.15)]',
   },
   green: {
-    bg: 'bg-green-400/10',
-    text: 'text-green-400',
-    border: 'border-green-400/30',
-    glow: 'shadow-[0_0_40px_rgba(74,222,128,0.15)]',
+    bg: 'bg-blue-600/10',
+    text: 'text-blue-400',
+    border: 'border-blue-600/30',
+    glow: 'shadow-[0_0_40px_rgba(37,99,235,0.15)]',
   },
 };
 
@@ -183,7 +183,7 @@ export function DemoSection() {
             <div className={`absolute -inset-4 rounded-3xl bg-gradient-to-r ${
               step.color === 'cyan' ? 'from-cyan-500/10 to-blue-500/10'
                 : step.color === 'purple' ? 'from-purple-500/10 to-pink-500/10'
-                : 'from-green-500/10 to-emerald-500/10'
+                : 'from-blue-600/10 to-indigo-600/10'
             } blur-2xl transition-all duration-700`} />
 
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0f1235]/80 backdrop-blur-xl">
