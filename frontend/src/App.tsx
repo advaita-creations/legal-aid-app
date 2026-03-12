@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, Suspense } from 'react';
 
@@ -58,6 +58,9 @@ const AdminUsersPage = lazy(() =>
 const UnauthorizedPage = lazy(() =>
   import('./routes/UnauthorizedPage').then((m) => ({ default: m.UnauthorizedPage })),
 );
+const LandingPageRoute = lazy(() =>
+  import('./routes/LandingPage').then((m) => ({ default: m.LandingPage })),
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -88,7 +91,7 @@ function App() {
         <AuthProvider>
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/" element={<LandingPageRoute />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/unauthorized" element={<UnauthorizedPage />} />
               <Route
