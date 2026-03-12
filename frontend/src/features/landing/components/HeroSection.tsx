@@ -9,7 +9,7 @@ export function HeroSection() {
       {/* Gradient orbs */}
       <div className="pointer-events-none absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-cyan-500/10 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-purple-600/15 blur-[120px]" />
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-green-500/8 blur-[100px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-blue-600/8 blur-[100px]" />
 
       {/* Animated grid */}
       <div
@@ -71,7 +71,7 @@ export function HeroSection() {
             >
               <a
                 href="#pricing"
-                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-cyan-500/25 transition-all hover:shadow-cyan-500/40 hover:brightness-110"
+                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-blue-600/25 transition-all hover:shadow-blue-600/40 hover:brightness-110"
               >
                 Start Free Trial
                 <ArrowRight
@@ -142,7 +142,7 @@ export function HeroSection() {
             transition={{ delay: 0.6, duration: 1, ease: 'easeOut' }}
           >
             {/* Glow behind card */}
-            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 blur-2xl" />
+            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-blue-600/20 via-purple-500/20 to-pink-500/20 blur-2xl" />
 
             {/* Dashboard mockup */}
             <div className="relative rounded-2xl border border-white/10 bg-[#0f1235]/80 p-1 shadow-2xl backdrop-blur-xl">

@@ -58,7 +58,7 @@ export function Navbar() {
           </Link>
           <a
             href="#pricing"
-            className="rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all hover:shadow-cyan-500/40 hover:brightness-110"
+            className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:shadow-blue-600/40 hover:brightness-110"
           >
             Start Free Trial
           </a>
@@ -104,7 +104,7 @@ export function Navbar() {
               <a
                 href="#pricing"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 px-6 py-2.5 text-center text-sm font-semibold text-white"
+                className="mt-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2.5 text-center text-sm font-semibold text-white"
               >
                 Start Free Trial
               </a>

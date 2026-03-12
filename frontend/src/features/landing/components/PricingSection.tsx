@@ -105,7 +105,7 @@ export function PricingSection() {
             >
               {/* Popular badge */}
               {plan.popular && (
-                <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 px-3 py-1">
+                <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-3 py-1">
                   <Sparkles size={12} className="text-white" />
                   <span className="text-xs font-bold text-white">
                     Most Popular
@@ -159,7 +159,7 @@ export function PricingSection() {
                   href={plan.popular ? '/login' : '#'}
                   className={`mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold transition-all ${
                     plan.popular
-                      ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:brightness-110'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:brightness-110'
                       : 'border border-white/20 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'
                   }`}
                 >

@@ -74,11 +74,11 @@ export function ProcessingStatus({ status, name }: ProcessingStatusProps) {
                   className={cn(
                     'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all duration-500',
                     i < activeStep
-                      ? 'bg-green-500 border-green-500 text-white'
+                      ? 'bg-blue-600 border-blue-600 text-white'
                       : i === activeStep
                         ? isProcessing
                           ? 'bg-blue-500 border-blue-500 text-white animate-pulse'
-                          : 'bg-green-500 border-green-500 text-white'
+                          : 'bg-blue-600 border-blue-600 text-white'
                         : 'bg-white border-gray-300 text-gray-400',
                   )}
                 >
@@ -97,7 +97,7 @@ export function ProcessingStatus({ status, name }: ProcessingStatusProps) {
                 <div
                   className={cn(
                     'h-0.5 flex-1 mx-1 -mt-5 transition-colors duration-500',
-                    i < activeStep ? 'bg-green-500' : 'bg-gray-200',
+                    i < activeStep ? 'bg-blue-600' : 'bg-gray-200',
                   )}
                 />
               )}
