@@ -23,13 +23,13 @@ interface ProcessedResultsProps {
 type TabKey = 'validated' | 'report' | 'structured';
 
 const tabs: { key: TabKey; label: string; icon: typeof FileText }[] = [
-  { key: 'validated', label: 'Validated Document', icon: FileText },
   { key: 'report', label: 'Validation Report', icon: ShieldCheck },
+  { key: 'validated', label: 'Validated Document', icon: FileText },
   { key: 'structured', label: 'Structured Data', icon: Database },
 ];
 
 export function ProcessedResults({ doc }: ProcessedResultsProps) {
-  const [activeTab, setActiveTab] = useState<TabKey>('validated');
+  const [activeTab, setActiveTab] = useState<TabKey>('report');
 
   const hasResults =
     doc.processed_html_url || doc.processed_json_url || doc.processed_report_url;
@@ -54,7 +54,7 @@ export function ProcessedResults({ doc }: ProcessedResultsProps) {
               className={cn(
                 'flex items-center gap-2 px-5 py-3 text-sm font-medium transition-colors border-b-2 -mb-px',
                 activeTab === tab.key
-                  ? 'border-green-600 text-green-700 bg-white'
+                  ? 'border-blue-600 text-blue-700 bg-white'
                   : isDisabled
                     ? 'border-transparent text-gray-300 cursor-not-allowed'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100',
@@ -264,14 +264,14 @@ function MetricCard({
       className={cn(
         'rounded-lg border p-4 text-center',
         variant === 'success'
-          ? 'bg-green-50 border-green-200'
+          ? 'bg-blue-50 border-blue-200'
           : 'bg-amber-50 border-amber-200',
       )}
     >
       <div
         className={cn(
           'text-2xl font-bold',
-          variant === 'success' ? 'text-green-700' : 'text-amber-700',
+          variant === 'success' ? 'text-blue-700' : 'text-amber-700',
         )}
       >
         {value}
@@ -325,7 +325,7 @@ function IssueCard({
         <div className="px-4 pb-3 pt-0 space-y-2 border-t border-gray-100">
           {selected && (
             <div className="flex items-center gap-2 mt-2">
-              <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-blue-500" />
               <span className="text-xs text-gray-700">
                 <strong>Selected:</strong> {selected}
               </span>

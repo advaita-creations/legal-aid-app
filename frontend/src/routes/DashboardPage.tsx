@@ -14,7 +14,7 @@ const statusColors: Record<DocumentStatus, string> = {
   uploaded: 'bg-gray-100 text-gray-700',
   ready_to_process: 'bg-amber-100 text-amber-700',
   in_progress: 'bg-blue-100 text-blue-700',
-  processed: 'bg-green-100 text-green-700',
+  processed: 'bg-blue-100 text-blue-700',
 };
 
 const statusLabels: Record<DocumentStatus, string> = {
@@ -49,14 +49,14 @@ export function DashboardPage() {
 
   const summaryStats = [
     { label: 'Active Clients', value: String(statsData?.total_clients ?? '–'), icon: Users, color: 'text-blue-600' },
-    { label: 'Open Cases', value: String(statsData?.total_cases ?? '–'), icon: Briefcase, color: 'text-green-600' },
+    { label: 'Open Cases', value: String(statsData?.total_cases ?? '–'), icon: Briefcase, color: 'text-blue-600' },
     { label: 'Total Files', value: String(statsData?.total_documents ?? '–'), icon: FileText, color: 'text-orange-600' },
   ];
 
   const docStats: { label: string; value: string; icon: React.ElementType; color: string; bg: string; status: DocumentStatus }[] = [
     { label: 'Ready to Process', value: String(docsByStatus?.ready_to_process ?? '–'), icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50', status: 'ready_to_process' },
     { label: 'In Progress', value: String(docsByStatus?.in_progress ?? '–'), icon: Loader, color: 'text-blue-600', bg: 'bg-blue-50', status: 'in_progress' },
-    { label: 'Processed', value: String(docsByStatus?.processed ?? '–'), icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-50', status: 'processed' },
+    { label: 'Processed', value: String(docsByStatus?.processed ?? '–'), icon: CheckCircle, color: 'text-blue-600', bg: 'bg-blue-50', status: 'processed' },
     { label: 'Uploaded', value: String(docsByStatus?.uploaded ?? '–'), icon: Clock, color: 'text-gray-600', bg: 'bg-gray-50', status: 'uploaded' },
   ];
 
@@ -78,10 +78,11 @@ export function DashboardPage() {
           </div>
           <Link
             to="/documents/new"
-            className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+            className="group relative flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition-all hover:shadow-blue-600/40 hover:scale-105"
           >
-            <Plus className="w-4 h-4" />
-            Upload Document
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 transition-opacity group-hover:opacity-100" />
+            <Plus className="relative w-5 h-5" />
+            <span className="relative">Easy Doc Upload</span>
           </Link>
         </div>
 
@@ -112,7 +113,7 @@ export function DashboardPage() {
               className={cn(
                 'bg-white rounded-xl border p-4 hover:shadow-md transition-all text-left',
                 statusFilter === stat.status
-                  ? 'border-green-500 ring-2 ring-green-200'
+                  ? 'border-blue-600 ring-2 ring-blue-200'
                   : 'border-gray-200',
               )}
             >
@@ -144,7 +145,7 @@ export function DashboardPage() {
                 </button>
               )}
             </div>
-            <Link to="/documents" className="text-sm text-green-600 hover:underline font-medium">
+            <Link to="/documents" className="text-sm text-blue-600 hover:underline font-medium">
               View All
             </Link>
           </div>
@@ -207,23 +208,23 @@ export function DashboardPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link
               to="/clients/new"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-green-600 hover:bg-green-50/50 transition-colors"
+              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-blue-600 hover:bg-blue-50/50 transition-colors"
             >
-              <Users className="w-5 h-5 text-green-600" />
+              <Users className="w-5 h-5 text-blue-600" />
               <span className="font-medium text-gray-900">Add Client</span>
             </Link>
             <Link
               to="/cases/new"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-green-600 hover:bg-green-50/50 transition-colors"
+              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-blue-600 hover:bg-blue-50/50 transition-colors"
             >
-              <Briefcase className="w-5 h-5 text-green-600" />
+              <Briefcase className="w-5 h-5 text-blue-600" />
               <span className="font-medium text-gray-900">Add Case</span>
             </Link>
             <Link
               to="/documents/new"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-green-600 hover:bg-green-50/50 transition-colors"
+              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-blue-600 hover:bg-blue-50/50 transition-colors"
             >
-              <FileText className="w-5 h-5 text-green-600" />
+              <FileText className="w-5 h-5 text-blue-600" />
               <span className="font-medium text-gray-900">Upload Document</span>
             </Link>
           </div>
