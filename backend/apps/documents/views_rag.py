@@ -1,8 +1,10 @@
-"""Views for document version saving and RAG finalization.
+"""Views for document version saving, revert, RAG finalization, and processing logs.
 
 Supports the post-OCR workflow:
   - Save edited HTML as a new version (v{n})
+  - Revert to a previous version
   - Finalize and push to RAG webhook for vector indexing
+  - Live processing / debug logs
 """
 import logging
 import os
@@ -16,7 +18,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .models import Document, DocumentVersion
+from .models import Document, DocumentStatusHistory, DocumentVersion
 from .serializers_review import DocumentVersionSerializer
 
 logger = logging.getLogger(__name__)
@@ -231,3 +233,97 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
             {'error': f'RAG webhook failed: {str(exc)}'},
             status=status.HTTP_502_BAD_GATEWAY,
         )
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def revert_version(request: Request, pk: int, version_id: int) -> Response:
+    """Revert document to a specific version.
+
+    POST /api/v2/documents/<pk>/versions/<version_id>/revert/
+
+    Sets the document's processed_html_path to the target version's html_path.
+    """
+    doc = _get_document_for_user(pk, request.user)
+    version = get_object_or_404(DocumentVersion, document=doc, id=version_id)
+
+    doc.processed_html_path = version.html_path
+    doc.save(update_fields=['processed_html_path', 'updated_at'])
+
+    logger.info(
+        "Document %s: reverted to v%d by %s",
+        doc.id, version.version_number, request.user.email,
+    )
+
+    return Response({
+        'ok': True,
+        'reverted_to': version.version_number,
+        'html_path': version.html_path,
+    })
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def processing_logs(request: Request, pk: int) -> Response:
+    """Get processing / debug logs for a document.
+
+    GET /api/v2/documents/<pk>/logs/
+
+    Returns status history, version history, and webhook activity in
+    a unified timeline for troubleshooting.
+    """
+    doc = _get_document_for_user(pk, request.user)
+
+    entries = []
+
+    # Status history
+    for sh in doc.status_history.select_related('changed_by').order_by('changed_at'):
+        entries.append({
+            'timestamp': sh.changed_at.isoformat(),
+            'type': 'status',
+            'level': 'info',
+            'message': f'Status: {sh.from_status or "—"} → {sh.to_status}',
+            'detail': sh.notes or '',
+            'actor': sh.changed_by.email if sh.changed_by else 'system',
+        })
+
+    # Version history
+    for v in doc.versions.select_related('created_by').order_by('created_at'):
+        entries.append({
+            'timestamp': v.created_at.isoformat(),
+            'type': 'version',
+            'level': 'info',
+            'message': f'Version v{v.version_number} created',
+            'detail': v.notes or '',
+            'actor': v.created_by.email if v.created_by else 'system',
+        })
+
+    # Webhook / processing metadata
+    if doc.processed_html_path:
+        entries.append({
+            'timestamp': doc.updated_at.isoformat(),
+            'type': 'file',
+            'level': 'success',
+            'message': f'Processed HTML stored: {doc.processed_html_path.split("/")[-1]}',
+            'detail': doc.processed_html_path,
+            'actor': 'n8n',
+        })
+    if doc.processed_report_path:
+        entries.append({
+            'timestamp': doc.updated_at.isoformat(),
+            'type': 'file',
+            'level': 'success',
+            'message': f'Report stored: {doc.processed_report_path.split("/")[-1]}',
+            'detail': doc.processed_report_path,
+            'actor': 'n8n',
+        })
+
+    # Sort by timestamp
+    entries.sort(key=lambda e: e['timestamp'])
+
+    return Response({
+        'document_id': doc.id,
+        'document_name': doc.name,
+        'current_status': doc.status,
+        'entries': entries,
+    })

@@ -12,7 +12,6 @@ from utils.storage import get_storage_backend
 from .models import Document, DocumentStatusHistory
 from .serializers import DocumentSerializer, DocumentCreateSerializer, DocumentStatusSerializer
 from apps.webhooks.outbound import notify_n8n_ready_to_process
-from apps.webhooks.drive_poller import start_drive_poller
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -119,7 +118,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
                         notes=f'Processed by n8n OCR: {len(files_stored)} file(s) returned',
                     )
                 else:
-                    # n8n acknowledged but no files yet — mark in_progress, start poller
+                    # n8n acknowledged but no files yet — mark in_progress, wait for callback
                     document.status = 'in_progress'
                     document.save(update_fields=['status', 'updated_at'])
                     DocumentStatusHistory.objects.create(
@@ -127,9 +126,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
                         from_status='ready_to_process',
                         to_status='in_progress',
                         changed_by=None,
-                        notes='Auto-transitioned: n8n acknowledged processing request',
+                        notes='Processing started (waiting for n8n webhook callback)',
                     )
-                    start_drive_poller(document.id)
 
         doc = Document.objects.select_related('case', 'case__client').prefetch_related(
             'status_history', 'status_history__changed_by',

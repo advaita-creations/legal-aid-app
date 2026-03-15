@@ -2,13 +2,13 @@ import { useState, useRef, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Columns2, ZoomIn, ZoomOut, Download, Maximize2, Minimize2,
-  Save, CheckCircle, Loader, Pencil, Eye, Send, History,
+  Save, CheckCircle, Loader, Pencil, Eye, Send, History, RotateCcw,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { documentsApi } from '../api/documentsApi';
 import { useToast } from '@/components/ui/toast';
-import type { Document } from '../types';
+import type { Document, DocumentVersion } from '../types';
 
 interface DocumentDiffViewProps {
   doc: Document;
@@ -64,6 +64,17 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['document', doc.id] });
       toast(`Finalized v${data.version} — ${data.rag_response}`);
+    },
+  });
+
+  const revertMutation = useMutation({
+    mutationFn: (versionId: number) => documentsApi.revertVersion(doc.id, versionId),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['doc-versions', doc.id] });
+      queryClient.invalidateQueries({ queryKey: ['diff-html'] });
+      queryClient.invalidateQueries({ queryKey: ['documents', doc.id] });
+      queryClient.invalidateQueries({ queryKey: ['processing-logs', doc.id] });
+      toast(`Reverted to v${data.reverted_to}`);
     },
   });
 
@@ -254,44 +265,98 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
         </div>
       </div>
 
-      {/* Footer: version history + FINALIZE */}
-      <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-gray-50">
-        <div className="flex items-center gap-3">
-          <History className="w-4 h-4 text-gray-400" />
+      {/* Footer: version list with revert + FINALIZE */}
+      <div className="border-t border-gray-200 bg-gray-50">
+        {/* Version list */}
+        {versions && versions.length > 0 && (
+          <div className="px-4 py-2 border-b border-gray-100">
+            <div className="flex items-center gap-2 mb-2">
+              <History className="w-3.5 h-3.5 text-gray-400" />
+              <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                Versions ({versions.length})
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {[...versions].sort((a, b) => b.version_number - a.version_number).map((v: DocumentVersion) => {
+                const isCurrent = v.version_number === latestVersion;
+                return (
+                  <div
+                    key={v.id}
+                    className={cn(
+                      'flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[11px] border transition-colors',
+                      isCurrent
+                        ? 'bg-blue-50 border-blue-200 text-blue-700 font-semibold'
+                        : 'bg-white border-gray-200 text-gray-600',
+                    )}
+                  >
+                    <span>v{v.version_number}</span>
+                    <span className="text-gray-400">·</span>
+                    <span className="text-gray-400">{new Date(v.created_at).toLocaleString()}</span>
+                    {v.notes && (
+                      <>
+                        <span className="text-gray-400">·</span>
+                        <span className="text-gray-500 truncate max-w-[120px]">{v.notes}</span>
+                      </>
+                    )}
+                    {!isCurrent && (
+                      <button
+                        onClick={() => revertMutation.mutate(v.id)}
+                        disabled={revertMutation.isPending}
+                        className="ml-1 flex items-center gap-0.5 text-[10px] text-amber-600 hover:text-amber-800 font-medium transition-colors"
+                        title={`Revert to v${v.version_number}`}
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                        Revert
+                      </button>
+                    )}
+                    {isCurrent && (
+                      <span className="text-[9px] bg-blue-200/60 text-blue-800 px-1 py-0.5 rounded font-medium ml-1">
+                        CURRENT
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Finalize row */}
+        <div className="flex items-center justify-between px-4 py-3">
           <span className="text-xs text-gray-500">
             {versions && versions.length > 0
-              ? `${versions.length} version(s) — latest v${latestVersion}`
+              ? `Viewing v${latestVersion}`
               : 'Version 1 (AI output)'}
           </span>
-        </div>
 
-        <button
-          onClick={handleFinalize}
-          disabled={finalizeMutation.isPending || hasUnsavedChanges}
-          className={cn(
-            'flex items-center gap-2 rounded-lg px-5 py-2 text-sm font-bold transition-all',
-            finalizeMutation.isSuccess
-              ? 'bg-emerald-600 text-white'
-              : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:shadow-lg hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed',
-          )}
-        >
-          {finalizeMutation.isPending ? (
-            <>
-              <Loader className="w-4 h-4 animate-spin" />
-              Finalizing...
-            </>
-          ) : finalizeMutation.isSuccess ? (
-            <>
-              <CheckCircle className="w-4 h-4" />
-              Finalized
-            </>
-          ) : (
-            <>
-              <Send className="w-4 h-4" />
-              Finalize &amp; Push to RAG
-            </>
-          )}
-        </button>
+          <button
+            onClick={handleFinalize}
+            disabled={finalizeMutation.isPending || hasUnsavedChanges}
+            className={cn(
+              'flex items-center gap-2 rounded-lg px-5 py-2 text-sm font-bold transition-all',
+              finalizeMutation.isSuccess
+                ? 'bg-emerald-600 text-white'
+                : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:shadow-lg hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed',
+            )}
+          >
+            {finalizeMutation.isPending ? (
+              <>
+                <Loader className="w-4 h-4 animate-spin" />
+                Finalizing...
+              </>
+            ) : finalizeMutation.isSuccess ? (
+              <>
+                <CheckCircle className="w-4 h-4" />
+                Finalized
+              </>
+            ) : (
+              <>
+                <Send className="w-4 h-4" />
+                Finalize &amp; Push to RAG
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

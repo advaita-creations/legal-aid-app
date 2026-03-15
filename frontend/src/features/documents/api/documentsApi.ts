@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api/client';
-import type { Document, DocumentStatusUpdateRequest, DocumentVersion } from '../types';
+import type { Document, DocumentStatusUpdateRequest, DocumentVersion, ProcessingLogsResponse } from '../types';
 
 export const documentsApi = {
   getAll: async (params?: Record<string, string>): Promise<Document[]> => {
@@ -59,6 +59,18 @@ export const documentsApi = {
     const response = await apiClient.post<{ ok: boolean; version: number; rag_response: string }>(
       `/v2/documents/${id}/finalize-rag/`,
     );
+    return response.data;
+  },
+
+  revertVersion: async (id: string, versionId: number): Promise<{ ok: boolean; reverted_to: number }> => {
+    const response = await apiClient.post<{ ok: boolean; reverted_to: number }>(
+      `/v2/documents/${id}/versions/${versionId}/revert/`,
+    );
+    return response.data;
+  },
+
+  getProcessingLogs: async (id: string): Promise<ProcessingLogsResponse> => {
+    const response = await apiClient.get<ProcessingLogsResponse>(`/v2/documents/${id}/logs/`);
     return response.data;
   },
 };

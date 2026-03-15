@@ -82,3 +82,19 @@ export interface DocumentVersion {
   notes: string;
   created_at: string;
 }
+
+export interface ProcessingLogEntry {
+  timestamp: string;
+  type: 'status' | 'version' | 'file';
+  level: 'info' | 'success' | 'warning' | 'error';
+  message: string;
+  detail: string;
+  actor: string;
+}
+
+export interface ProcessingLogsResponse {
+  document_id: number;
+  document_name: string;
+  current_status: string;
+  entries: ProcessingLogEntry[];
+}
