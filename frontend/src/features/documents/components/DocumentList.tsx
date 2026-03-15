@@ -16,7 +16,7 @@ const statusColors: Record<DocumentStatus, string> = {
   uploaded: 'bg-gray-100 text-gray-700',
   ready_to_process: 'bg-amber-100 text-amber-700',
   in_progress: 'bg-blue-100 text-blue-700',
-  processed: 'bg-green-100 text-green-700',
+  processed: 'bg-blue-100 text-blue-700',
 };
 
 const statusLabels: Record<DocumentStatus, string> = {
@@ -84,7 +84,7 @@ export function DocumentList() {
         </div>
         <Link
           to="/documents/new"
-          className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Upload Document
@@ -100,13 +100,13 @@ export function DocumentList() {
               placeholder="Search documents..."
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
+              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
             />
           </div>
           <select
             value={statusFilter}
             onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
           >
             <option value="all">All Status</option>
             <option value="uploaded">Uploaded</option>
@@ -124,7 +124,7 @@ export function DocumentList() {
           <p className="text-gray-600 mb-4">Upload your first document to get started.</p>
           <Link
             to="/documents/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Upload Document

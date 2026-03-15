@@ -21,7 +21,7 @@ export function AdminDashboardPage() {
   const summaryStats = [
     { label: 'Total Advocates', value: String(stats?.total_advocates ?? '–'), icon: Shield, color: 'text-purple-600', bg: 'bg-purple-50' },
     { label: 'Active Advocates', value: String(stats?.active_advocates ?? '–'), icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { label: 'Total Clients', value: String(stats?.total_clients ?? '–'), icon: Users, color: 'text-green-600', bg: 'bg-green-50' },
+    { label: 'Total Clients', value: String(stats?.total_clients ?? '–'), icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
     { label: 'Total Cases', value: String(stats?.total_cases ?? '–'), icon: Briefcase, color: 'text-orange-600', bg: 'bg-orange-50' },
     { label: 'Total Documents', value: String(stats?.total_documents ?? '–'), icon: FileText, color: 'text-red-600', bg: 'bg-red-50' },
   ];
@@ -31,7 +31,7 @@ export function AdminDashboardPage() {
     { label: 'Uploaded', value: String(docsByStatus?.uploaded ?? '–'), icon: Clock, color: 'text-gray-600', bg: 'bg-gray-50' },
     { label: 'Ready to Process', value: String(docsByStatus?.ready_to_process ?? '–'), icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50' },
     { label: 'In Progress', value: String(docsByStatus?.in_progress ?? '–'), icon: Loader, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { label: 'Processed', value: String(docsByStatus?.processed ?? '–'), icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-50' },
+    { label: 'Processed', value: String(docsByStatus?.processed ?? '–'), icon: CheckCircle, color: 'text-blue-600', bg: 'bg-blue-50' },
   ];
 
   return (

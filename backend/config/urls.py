@@ -21,6 +21,10 @@ urlpatterns = [
     path("api/", include("apps.cases.urls")),
     path("api/", include("apps.documents.urls")),
     path("api/", include("apps.webhooks.urls")),
+    path("api/", include("apps.search.urls")),
+    # v2 API — Document review (Phase 2) and Chat relay (Phase 3)
+    path("api/v2/documents/", include("apps.documents.urls_v2")),
+    path("api/chat/", include("apps.webhooks.chat_urls")),
 ]
 
 if settings.DEBUG:

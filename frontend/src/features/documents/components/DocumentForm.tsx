@@ -144,7 +144,7 @@ export function DocumentForm() {
                 className={cn(
                   'border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors',
                   isDragActive
-                    ? 'border-green-500 bg-green-50'
+                    ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-300 hover:border-gray-400 bg-gray-50',
                 )}
               >
@@ -197,7 +197,7 @@ export function DocumentForm() {
               <select
                 id="case_id"
                 {...register('case_id')}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
               >
                 <option value="">Select a case</option>
                 {cases?.map((c) => (
@@ -218,7 +218,7 @@ export function DocumentForm() {
               id="name"
               type="text"
               {...register('name')}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
               placeholder="Auto-filled from filename"
             />
             {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
@@ -232,7 +232,7 @@ export function DocumentForm() {
               id="notes"
               rows={3}
               {...register('notes')}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
               placeholder="Optional notes about this document"
             />
           </div>
@@ -241,7 +241,7 @@ export function DocumentForm() {
             <button
               type="submit"
               disabled={isSubmitting || mutation.isPending}
-              className="rounded-lg bg-green-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting || mutation.isPending ? 'Uploading...' : 'Upload Document'}
             </button>

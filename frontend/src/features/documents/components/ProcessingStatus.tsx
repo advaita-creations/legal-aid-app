@@ -35,14 +35,14 @@ export function ProcessingStatus({ status, name }: ProcessingStatusProps) {
               isProcessing
                 ? 'bg-blue-50 animate-pulse'
                 : status === 'processed'
-                  ? 'bg-green-50'
+                  ? 'bg-blue-50'
                   : 'bg-gray-50',
             )}
           >
             {isProcessing ? (
               <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
             ) : status === 'processed' ? (
-              <CheckCircle2 className="w-10 h-10 text-green-500" />
+              <CheckCircle2 className="w-10 h-10 text-blue-500" />
             ) : (
               <FileText className="w-10 h-10 text-gray-400" />
             )}

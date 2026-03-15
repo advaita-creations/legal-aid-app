@@ -108,7 +108,7 @@ export function AdminUsersPage() {
                       className={cn(
                         'rounded-full px-2.5 py-0.5 text-xs font-medium',
                         adv.is_active
-                          ? 'bg-green-100 text-green-700'
+                          ? 'bg-blue-100 text-blue-700'
                           : 'bg-red-100 text-red-700',
                       )}
                     >
@@ -137,7 +137,7 @@ export function AdminUsersPage() {
                         'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                         adv.is_active
                           ? 'border border-red-200 text-red-600 hover:bg-red-50'
-                          : 'border border-green-200 text-green-600 hover:bg-green-50',
+                          : 'border border-blue-200 text-blue-600 hover:bg-blue-50',
                       )}
                     >
                       {adv.is_active ? (

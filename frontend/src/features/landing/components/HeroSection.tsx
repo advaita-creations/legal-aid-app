@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Play, Sparkles } from 'lucide-react';
 
 import { ParticleField } from './ParticleField';
+import { WaitlistForm } from './WaitlistForm';
+import { isFeatureEnabled } from '@/lib/feature-flags';
 
 export function HeroSection() {
   return (
@@ -69,23 +71,29 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.7 }}
             >
-              <a
-                href="#pricing"
-                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-blue-600/25 transition-all hover:shadow-blue-600/40 hover:brightness-110"
-              >
-                Start Free Trial
-                <ArrowRight
-                  size={18}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </a>
-              <a
-                href="#demo"
-                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all hover:border-white/30 hover:bg-white/10"
-              >
-                <Play size={16} className="text-cyan-400" />
-                See It In Action
-              </a>
+              {isFeatureEnabled('WAITLIST') ? (
+                <WaitlistForm variant="inline" className="w-full max-w-md" />
+              ) : (
+                <>
+                  <a
+                    href="#pricing"
+                    className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-blue-600/25 transition-all hover:shadow-blue-600/40 hover:brightness-110"
+                  >
+                    Start Free Trial
+                    <ArrowRight
+                      size={18}
+                      className="transition-transform group-hover:translate-x-1"
+                    />
+                  </a>
+                  <a
+                    href="#demo"
+                    className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all hover:border-white/30 hover:bg-white/10"
+                  >
+                    <Play size={16} className="text-cyan-400" />
+                    See It In Action
+                  </a>
+                </>
+              )}
             </motion.div>
 
             {/* Social proof */}

@@ -41,11 +41,11 @@ export function LoginPage() {
 
           <p className="text-center text-xs text-gray-500 mt-6">
             By signing in, you agree to our{' '}
-            <a href="#" className="text-green-600 hover:underline">
+            <a href="#" className="text-blue-600 hover:underline">
               Terms
             </a>{' '}
             and{' '}
-            <a href="#" className="text-green-600 hover:underline">
+            <a href="#" className="text-blue-600 hover:underline">
               Privacy Policy
             </a>
           </p>

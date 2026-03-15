@@ -90,3 +90,108 @@ class DocumentStatusHistory(models.Model):
 
     def __str__(self) -> str:
         return f"{self.document.name}: {self.from_status} → {self.to_status}"
+
+
+class DocumentVersion(models.Model):
+    """Tracks versioned snapshots of a processed document.
+
+    Version 1 is the raw AI output (may contain mismatches).
+    Version 2+ are human-reviewed corrections.
+    """
+
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+        related_name='versions',
+    )
+    version_number = models.PositiveIntegerField(default=1)
+    html_path = models.TextField(
+        blank=True,
+        help_text='Storage path for this version\'s HTML',
+    )
+    json_path = models.TextField(
+        blank=True,
+        help_text='Storage path for this version\'s JSON',
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='document_versions',
+    )
+    notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-version_number']
+        unique_together = [('document', 'version_number')]
+
+    def __str__(self) -> str:
+        return f"{self.document.name} v{self.version_number}"
+
+
+class DocumentMismatch(models.Model):
+    """A single mismatch detected by the AI during document processing.
+
+    Each mismatch represents a discrepancy between the original document
+    and the AI's interpretation, requiring human review.
+    """
+
+    RESOLUTION_CHOICES = [
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+        ('edited', 'Edited'),
+    ]
+
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+        related_name='mismatches',
+    )
+    version = models.ForeignKey(
+        DocumentVersion,
+        on_delete=models.CASCADE,
+        related_name='mismatches',
+    )
+    mismatch_id = models.CharField(
+        max_length=50,
+        help_text='Unique identifier within the HTML, e.g. "mismatch-1"',
+    )
+    field_label = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text='Human-readable label for the field, e.g. "Salutation"',
+    )
+    original_text = models.TextField(help_text='Text from the original document')
+    suggested_text = models.TextField(help_text='AI-suggested correction')
+    status = models.CharField(
+        max_length=10,
+        choices=RESOLUTION_CHOICES,
+        default='pending',
+    )
+    resolved_text = models.TextField(
+        blank=True,
+        help_text='Final text after human decision (for edited mismatches)',
+    )
+    resolved_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='resolved_mismatches',
+    )
+    resolved_at = models.DateTimeField(null=True, blank=True)
+    confidence_score = models.FloatField(
+        null=True,
+        blank=True,
+        help_text='AI confidence score 0.0-1.0',
+    )
+
+    class Meta:
+        ordering = ['id']
+        unique_together = [('document', 'mismatch_id')]
+
+    def __str__(self) -> str:
+        return f"{self.document.name} — {self.mismatch_id} ({self.status})"

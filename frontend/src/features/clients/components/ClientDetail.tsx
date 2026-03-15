@@ -13,7 +13,7 @@ import type { CaseStatus } from '@/features/cases/types';
 import type { DocumentStatus } from '@/features/documents/types';
 
 const statusColors: Record<CaseStatus, string> = {
-  active: 'bg-green-100 text-green-700',
+  active: 'bg-blue-100 text-blue-700',
   closed: 'bg-gray-100 text-gray-700',
   archived: 'bg-amber-100 text-amber-700',
 };
@@ -22,7 +22,7 @@ const docStatusColors: Record<DocumentStatus, string> = {
   uploaded: 'bg-gray-100 text-gray-700',
   ready_to_process: 'bg-amber-100 text-amber-700',
   in_progress: 'bg-blue-100 text-blue-700',
-  processed: 'bg-green-100 text-green-700',
+  processed: 'bg-blue-100 text-blue-700',
 };
 
 const docStatusLabels: Record<DocumentStatus, string> = {
@@ -134,7 +134,7 @@ export function ClientDetail() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <Mail className="w-4 h-4 text-gray-400" />
-                <a href={`mailto:${client.email}`} className="text-green-600 hover:underline">
+                <a href={`mailto:${client.email}`} className="text-blue-600 hover:underline">
                   {client.email}
                 </a>
               </div>
@@ -167,7 +167,7 @@ export function ClientDetail() {
               <h3 className="text-sm font-semibold text-gray-900">Cases</h3>
               <Link
                 to="/cases/new"
-                className="text-sm text-green-600 hover:underline font-medium"
+                className="text-sm text-blue-600 hover:underline font-medium"
               >
                 + Add Case
               </Link>

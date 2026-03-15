@@ -1,0 +1,5689 @@
+
+Meeting created at: 14th Mar, 2026 - 2:00 PM1
+00:00:04,560 --> 00:00:04,840
+Aditya Sriram M: Hey.
+
+2
+00:00:04,840 --> 00:00:05,280
+Aditya Sriram M: Hi.
+
+3
+00:00:11,120 --> 00:00:12,000
+Aditya Sriram M: Just hold on.
+
+4
+00:00:14,000 --> 00:00:15,280
+Aditya Sriram M: Govind also will join.
+
+5
+00:01:42,440 --> 00:01:42,640
+Aditya Sriram M: Hey.
+
+6
+00:01:42,640 --> 00:01:43,000
+Aditya Sriram M: Hi.
+
+7
+00:01:47,720 --> 00:01:48,200
+Aditya Sriram M: Yes.
+
+8
+00:01:49,080 --> 00:01:49,640
+Aditya Sriram M: Yeah.
+
+9
+00:01:50,120 --> 00:01:50,440
+Govind Lotlikar: Hey.
+
+10
+00:01:50,440 --> 00:01:50,640
+Tanmay Bhowmick: Hi.
+
+11
+00:01:50,640 --> 00:01:50,840
+Tanmay Bhowmick: Hi.
+
+12
+00:01:50,840 --> 00:01:51,400
+Tanmay Bhowmick: Govind.
+
+13
+00:01:53,080 --> 00:01:54,440
+Govind Lotlikar: I can't hear you guys.
+
+14
+00:01:56,520 --> 00:01:57,000
+Govind Lotlikar: Hello.
+
+15
+00:01:57,320 --> 00:01:57,800
+Tanmay Bhowmick: Hello.
+
+16
+00:01:58,120 --> 00:01:59,400
+Aditya Sriram M: I can hear both of you.
+
+17
+00:02:01,880 --> 00:02:05,880
+Govind Lotlikar: Govind, I can't hear you.
+
+18
+00:02:08,050 --> 00:02:08,289
+Aditya Sriram M: Problem.
+
+19
+00:02:09,090 --> 00:02:09,570
+Govind Lotlikar: One second.
+
+20
+00:02:09,570 --> 00:02:11,730
+Govind Lotlikar: I'm going to connect from my mobile as well.
+
+21
+00:02:12,450 --> 00:02:13,010
+Govind Lotlikar: Okay.
+
+22
+00:02:37,420 --> 00:02:38,700
+Govind Lotlikar: Are you guys able to hear me?
+
+23
+00:02:39,900 --> 00:02:40,380
+Aditya Sriram M: Yes.
+
+24
+00:02:41,180 --> 00:02:41,820
+Govind Lotlikar: Oh great.
+
+25
+00:02:42,060 --> 00:02:42,620
+Govind Lotlikar: One second.
+
+26
+00:02:45,500 --> 00:02:46,660
+Aditya Sriram M: You're able to hear now.
+
+27
+00:02:46,660 --> 00:02:47,020
+Govind Lotlikar: Go.
+
+28
+00:02:47,660 --> 00:02:48,140
+Govind Lotlikar: Yeah.
+
+29
+00:02:48,620 --> 00:02:49,180
+Aditya Sriram M: Okay.
+
+30
+00:02:50,700 --> 00:02:52,620
+Aditya Sriram M: Tanmay, can you also confirm?
+
+31
+00:02:54,380 --> 00:02:54,780
+Tanmay Bhowmick: Yes.
+
+32
+00:02:54,780 --> 00:02:55,060
+Tanmay Bhowmick: Yes.
+
+33
+00:02:55,060 --> 00:02:56,140
+Tanmay Bhowmick: Yes, I can hear you both.
+
+34
+00:02:56,780 --> 00:02:59,260
+Aditya Sriram M: Okay, cool.
+
+35
+00:03:00,970 --> 00:03:01,210
+Govind Lotlikar: Great.
+
+36
+00:03:01,690 --> 00:03:05,770
+Govind Lotlikar: So let me kind of show you what.
+
+37
+00:03:06,810 --> 00:03:07,850
+Govind Lotlikar: What I have done.
+
+38
+00:03:08,970 --> 00:03:09,530
+Aditya Sriram M: Okay.
+
+39
+00:03:25,060 --> 00:03:25,300
+Govind Lotlikar: It.
+
+40
+00:03:51,380 --> 00:03:51,660
+Aditya Sriram M: Okay.
+
+41
+00:03:51,660 --> 00:03:52,980
+Aditya Sriram M: I shifted to the laptop.
+
+42
+00:03:57,220 --> 00:03:57,700
+Govind Lotlikar: Yes.
+
+43
+00:03:58,580 --> 00:03:59,100
+Aditya Sriram M: Okay.
+
+44
+00:03:59,100 --> 00:03:59,780
+Govind Lotlikar: One second.
+
+45
+00:03:59,780 --> 00:04:03,380
+Govind Lotlikar: I'm going to share my screen, not the window.
+
+46
+00:04:06,979 --> 00:04:07,620
+Aditya Sriram M: Okay.
+
+47
+00:04:26,349 --> 00:04:28,189
+Govind Lotlikar: So I guess you're not able to see my screen.
+
+48
+00:04:28,909 --> 00:04:29,389
+Aditya Sriram M: Yes.
+
+49
+00:04:31,309 --> 00:04:31,949
+Govind Lotlikar: Okay.
+
+50
+00:04:32,829 --> 00:04:33,869
+Aditya Sriram M: Can you also confirm?
+
+51
+00:04:34,589 --> 00:04:35,309
+Tanmay Bhowmick: Oh yes.
+
+52
+00:04:37,469 --> 00:04:37,829
+Govind Lotlikar: Okay.
+
+53
+00:04:37,829 --> 00:04:38,109
+Govind Lotlikar: Great.
+
+54
+00:04:42,920 --> 00:04:43,400
+Govind Lotlikar: Okay.
+
+55
+00:04:44,120 --> 00:04:48,040
+Govind Lotlikar: So see, this was the original architecture.
+
+56
+00:04:48,600 --> 00:04:49,240
+Aditya Sriram M: Okay.
+
+57
+00:04:49,720 --> 00:04:50,240
+Govind Lotlikar: Okay.
+
+58
+00:04:50,240 --> 00:04:51,000
+Govind Lotlikar: The engine.
+
+59
+00:04:51,880 --> 00:05:02,040
+Govind Lotlikar: Now I have simplified the design but the code has been more complicated.
+
+60
+00:05:02,360 --> 00:05:02,920
+Govind Lotlikar: Okay.
+
+61
+00:05:03,400 --> 00:05:05,000
+Govind Lotlikar: So this is the.
+
+62
+00:05:05,640 --> 00:05:06,840
+Govind Lotlikar: This is the new design.
+
+63
+00:05:08,050 --> 00:05:08,330
+Govind Lotlikar: Okay.
+
+64
+00:05:08,330 --> 00:05:08,610
+Govind Lotlikar: It's.
+
+65
+00:05:08,610 --> 00:05:15,090
+Govind Lotlikar: It's more simplified but the code is extensive.
+
+66
+00:05:15,170 --> 00:05:16,930
+Govind Lotlikar: You know, over here and over here.
+
+67
+00:05:17,250 --> 00:05:18,690
+Govind Lotlikar: And the prompt is huge.
+
+68
+00:05:19,330 --> 00:05:21,650
+Govind Lotlikar: So I'll.
+
+69
+00:05:21,650 --> 00:05:23,170
+Govind Lotlikar: I'll show you the output of this.
+
+70
+00:05:23,810 --> 00:05:24,370
+Govind Lotlikar: Okay.
+
+71
+00:05:24,690 --> 00:05:29,250
+Govind Lotlikar: So you know, initially what we had done was.
+
+72
+00:05:29,890 --> 00:05:30,650
+Govind Lotlikar: Aditya.
+
+73
+00:05:30,650 --> 00:05:33,970
+Govind Lotlikar: And you will confirm that were generating.
+
+74
+00:05:34,480 --> 00:05:36,000
+Govind Lotlikar: One was the HTML file.
+
+75
+00:05:36,400 --> 00:05:39,400
+Govind Lotlikar: Then were the consolidated.HTML file.
+
+76
+00:05:39,400 --> 00:05:42,000
+Govind Lotlikar: The consolidated.JSON file.
+
+77
+00:05:42,560 --> 00:05:43,120
+Govind Lotlikar: Okay.
+
+78
+00:05:43,600 --> 00:05:44,880
+Govind Lotlikar: Then there was a report.
+
+79
+00:05:46,560 --> 00:05:47,120
+Govind Lotlikar: Okay.
+
+80
+00:05:47,120 --> 00:05:53,920
+Govind Lotlikar: These three files were getting generated and all the mismatches were getting updated in the report.
+
+81
+00:05:55,280 --> 00:05:55,840
+Govind Lotlikar: Okay.
+
+82
+00:05:56,160 --> 00:05:58,320
+Govind Lotlikar: Now when I was going through Sarvam.
+
+83
+00:05:58,720 --> 00:05:59,360
+Govind Lotlikar: Okay.
+
+84
+00:05:59,600 --> 00:06:01,450
+Govind Lotlikar: It suddenly struck me that.
+
+85
+00:06:01,600 --> 00:06:10,400
+Govind Lotlikar: That instead of, you know, having those mismatches in the report why don't we show the mismatches directly in the HTML itself?
+
+86
+00:06:11,680 --> 00:06:12,160
+Aditya Sriram M: Yeah.
+
+87
+00:06:12,560 --> 00:06:13,120
+Govind Lotlikar: I was.
+
+88
+00:06:13,440 --> 00:06:14,960
+Aditya Sriram M: I was thinking about it.
+
+89
+00:06:15,920 --> 00:06:16,960
+Aditya Sriram M: How to do it now.
+
+90
+00:06:16,960 --> 00:06:19,760
+Aditya Sriram M: How to combine this information and do it.
+
+91
+00:06:19,840 --> 00:06:20,400
+Govind Lotlikar: Okay.
+
+92
+00:06:20,400 --> 00:06:22,800
+Govind Lotlikar: So I. I have actually done this now.
+
+93
+00:06:23,280 --> 00:06:27,680
+Govind Lotlikar: So what is going to get output are actually only two files.
+
+94
+00:06:28,590 --> 00:06:28,870
+Govind Lotlikar: Okay.
+
+95
+00:06:28,870 --> 00:06:30,270
+Govind Lotlikar: One is the HTML file.
+
+96
+00:06:30,670 --> 00:06:31,230
+Aditya Sriram M: Okay.
+
+97
+00:06:31,470 --> 00:06:32,030
+Aditya Sriram M: Okay.
+
+98
+00:06:32,510 --> 00:06:36,350
+Govind Lotlikar: And second one is the report.
+
+99
+00:06:37,470 --> 00:06:38,110
+Aditya Sriram M: Okay.
+
+100
+00:06:38,830 --> 00:06:39,390
+Govind Lotlikar: Okay.
+
+101
+00:06:40,190 --> 00:06:42,110
+Govind Lotlikar: So this is.
+
+102
+00:06:42,110 --> 00:06:42,670
+Govind Lotlikar: This is the.
+
+103
+00:06:42,670 --> 00:06:46,510
+Govind Lotlikar: This is the original file.
+
+104
+00:06:47,310 --> 00:06:48,430
+Govind Lotlikar: I'll show this to you.
+
+105
+00:06:49,950 --> 00:06:50,590
+Aditya Sriram M: Okay.
+
+106
+00:06:53,800 --> 00:06:54,200
+Aditya Sriram M: Okay.
+
+107
+00:06:57,160 --> 00:06:57,720
+Aditya Sriram M: Wow.
+
+108
+00:06:58,200 --> 00:06:58,600
+Govind Lotlikar: Right?
+
+109
+00:06:58,600 --> 00:07:00,360
+Govind Lotlikar: This is the original file.
+
+110
+00:07:01,480 --> 00:07:02,040
+Govind Lotlikar: Okay.
+
+111
+00:07:02,360 --> 00:07:12,040
+Govind Lotlikar: And what we are doing is we are generating version one of the HTML and the report.
+
+112
+00:07:12,280 --> 00:07:12,760
+Govind Lotlikar: Okay.
+
+113
+00:07:12,760 --> 00:07:14,280
+Govind Lotlikar: These two files are getting generated.
+
+114
+00:07:15,560 --> 00:07:16,080
+Govind Lotlikar: Okay.
+
+115
+00:07:16,080 --> 00:07:18,360
+Aditya Sriram M: Is there any specific Meaninging to version one?
+
+116
+00:07:19,090 --> 00:07:19,410
+Govind Lotlikar: Yeah.
+
+117
+00:07:19,490 --> 00:07:20,290
+Govind Lotlikar: I'll tell you that.
+
+118
+00:07:20,690 --> 00:07:21,490
+Govind Lotlikar: So this is.
+
+119
+00:07:21,890 --> 00:07:22,850
+Govind Lotlikar: This is our report.
+
+120
+00:07:23,490 --> 00:07:25,570
+Govind Lotlikar: It's concise and crisp.
+
+121
+00:07:27,250 --> 00:07:27,890
+Aditya Sriram M: Okay.
+
+122
+00:07:28,770 --> 00:07:29,410
+Govind Lotlikar: Okay.
+
+123
+00:07:36,290 --> 00:07:37,170
+Govind Lotlikar: Version one.
+
+124
+00:07:39,090 --> 00:07:39,570
+Govind Lotlikar: Yeah.
+
+125
+00:07:40,050 --> 00:07:41,090
+Tanmay Bhowmick: I just want to ask.
+
+126
+00:07:41,250 --> 00:07:44,450
+Tanmay Bhowmick: This report is the final report which the client will get.
+
+127
+00:07:44,450 --> 00:07:44,770
+Tanmay Bhowmick: Right?
+
+128
+00:07:45,980 --> 00:07:48,820
+Govind Lotlikar: So see, when he uploads the file, okay?
+
+129
+00:07:48,820 --> 00:07:50,300
+Govind Lotlikar: He will start processing, right?
+
+130
+00:07:50,380 --> 00:07:52,140
+Govind Lotlikar: So let's go over here.
+
+131
+00:07:53,260 --> 00:07:58,500
+Govind Lotlikar: Okay, See, this is where, you know, the file is going to be sent through, okay.
+
+132
+00:07:58,500 --> 00:08:01,100
+Govind Lotlikar: It is going through these two OCR engines.
+
+133
+00:08:01,660 --> 00:08:05,820
+Govind Lotlikar: And this is the original file itself which is being fed in.
+
+134
+00:08:06,540 --> 00:08:07,100
+Govind Lotlikar: Okay?
+
+135
+00:08:07,580 --> 00:08:15,450
+Govind Lotlikar: So when it goes through this entire process, okay, at the end of this, these files are generated.
+
+136
+00:08:15,690 --> 00:08:17,850
+Govind Lotlikar: These two files are generated, okay?
+
+137
+00:08:18,170 --> 00:08:20,010
+Govind Lotlikar: So, so, you know, it's.
+
+138
+00:08:20,010 --> 00:08:20,610
+Govind Lotlikar: It's like this.
+
+139
+00:08:20,610 --> 00:08:31,370
+Govind Lotlikar: When you open a PDF to jpg, or I love PDF, you know, online, and you upload the PDF and you say convert to jpg, okay?
+
+140
+00:08:31,370 --> 00:08:32,730
+Govind Lotlikar: It gives you a message, right?
+
+141
+00:08:33,210 --> 00:08:34,809
+Govind Lotlikar: JPG has been converted.
+
+142
+00:08:37,159 --> 00:08:39,400
+Govind Lotlikar: So this is exactly that.
+
+143
+00:08:39,799 --> 00:08:43,039
+Govind Lotlikar: This is your file that was sent, okay?
+
+144
+00:08:43,039 --> 00:08:45,400
+Govind Lotlikar: Total characters, these many mistral.
+
+145
+00:08:45,560 --> 00:08:47,000
+Govind Lotlikar: Process these many characters.
+
+146
+00:08:47,000 --> 00:08:50,000
+Govind Lotlikar: PDF, process these many characters, okay?
+
+147
+00:08:50,000 --> 00:08:58,440
+Govind Lotlikar: And this is 69 is the agreement level, you know, and integrity score is 66.37.
+
+148
+00:08:59,160 --> 00:09:03,970
+Tanmay Bhowmick: Okay, so just what I was asking is key.
+
+149
+00:09:04,690 --> 00:09:06,410
+Tanmay Bhowmick: This is the final image, right?
+
+150
+00:09:06,410 --> 00:09:08,450
+Tanmay Bhowmick: This is the final page.
+
+151
+00:09:08,450 --> 00:09:12,650
+Tanmay Bhowmick: No, what a person is getting or it is also getting beautified afterward.
+
+152
+00:09:12,650 --> 00:09:14,850
+Govind Lotlikar: Yeah, I'll come to that.
+
+153
+00:09:14,930 --> 00:09:18,210
+Govind Lotlikar: This is the first, this is the first report that will get generated once.
+
+154
+00:09:18,210 --> 00:09:20,450
+Govind Lotlikar: Once the user processes.
+
+155
+00:09:20,770 --> 00:09:22,250
+Tanmay Bhowmick: Okay, this is not for the user.
+
+156
+00:09:22,250 --> 00:09:24,210
+Tanmay Bhowmick: This is the internal system which is running, right?
+
+157
+00:09:24,450 --> 00:09:32,170
+Govind Lotlikar: System plus, you know, he also gets a summary of, you know, based on what kind of document he has given.
+
+158
+00:09:32,570 --> 00:09:33,130
+Govind Lotlikar: Okay.
+
+159
+00:09:33,130 --> 00:09:38,970
+Govind Lotlikar: Sometimes the document is very clear, sometimes the document is faded, sometimes there are stamps on it.
+
+160
+00:09:39,370 --> 00:09:43,130
+Govind Lotlikar: Okay, so based on that, what was the agreement level?
+
+161
+00:09:43,770 --> 00:09:50,010
+Govind Lotlikar: You know, ocr, parallel processing kind of a thing.
+
+162
+00:09:50,170 --> 00:09:50,810
+Aditya Sriram M: Okay.
+
+163
+00:09:51,050 --> 00:09:53,370
+Govind Lotlikar: Okay, we could.
+
+164
+00:09:53,690 --> 00:09:54,490
+Aditya Sriram M: Yeah, one question.
+
+165
+00:09:55,530 --> 00:09:59,810
+Aditya Sriram M: Maybe I should wait, but let me ask the accuracy level, right?
+
+166
+00:09:59,810 --> 00:10:02,810
+Aditya Sriram M: It is, yeah, 69% correct.
+
+167
+00:10:02,890 --> 00:10:06,210
+Aditya Sriram M: But were aiming something around 95 plus.
+
+168
+00:10:06,210 --> 00:10:11,770
+Govind Lotlikar: Yes, yes, that is for, you know, clear documents.
+
+169
+00:10:12,090 --> 00:10:19,130
+Govind Lotlikar: Now if you look at this particular document that we have taken, okay, look at all this noise inside.
+
+170
+00:10:20,630 --> 00:10:21,430
+Govind Lotlikar: Are you seeing this?
+
+171
+00:10:22,550 --> 00:10:26,630
+Govind Lotlikar: You know, so see all this noise?
+
+172
+00:10:27,030 --> 00:10:29,510
+Govind Lotlikar: And luckily there are no stamps.
+
+173
+00:10:29,750 --> 00:10:33,710
+Govind Lotlikar: But let's look at the next thing, okay?
+
+174
+00:10:33,710 --> 00:10:35,030
+Govind Lotlikar: This will give you more confidence.
+
+175
+00:10:35,429 --> 00:10:36,070
+Aditya Sriram M: Okay.
+
+176
+00:10:36,070 --> 00:10:39,750
+Govind Lotlikar: Okay, so let's look at this HTML file.
+
+177
+00:10:45,040 --> 00:11:04,720
+Govind Lotlikar: Okay, now see, this is the HTML file, okay, that has been created, okay, now see over here, wherever it felt that, you know, there was a mismatch, okay, Some of the mismatches, you know, See, this is showing 19.
+
+178
+00:11:05,600 --> 00:11:11,080
+Govind Lotlikar: Okay, that means there were some mismatches which it has directly resolved.
+
+179
+00:11:11,240 --> 00:11:11,880
+Govind Lotlikar: Okay?
+
+180
+00:11:12,280 --> 00:11:15,960
+Govind Lotlikar: Plus it is giving me an option to directly edit over here also.
+
+181
+00:11:16,680 --> 00:11:17,560
+Govind Lotlikar: Are you seeing this?
+
+182
+00:11:18,040 --> 00:11:20,840
+Govind Lotlikar: Yeah, in the HTML.
+
+183
+00:11:21,320 --> 00:11:23,720
+Aditya Sriram M: Oh, this is the way admin can update the.
+
+184
+00:11:24,520 --> 00:11:25,320
+Govind Lotlikar: Yes, yes.
+
+185
+00:11:26,120 --> 00:11:27,360
+Aditya Sriram M: Can update his document.
+
+186
+00:11:27,360 --> 00:11:28,480
+Govind Lotlikar: Yes, yes.
+
+187
+00:11:28,480 --> 00:11:31,240
+Govind Lotlikar: So we will have to show this side by side.
+
+188
+00:11:31,320 --> 00:11:31,760
+Govind Lotlikar: Okay.
+
+189
+00:11:31,760 --> 00:11:34,240
+Govind Lotlikar: This document one side and this document.
+
+190
+00:11:34,240 --> 00:11:35,880
+Govind Lotlikar: Now we don't have three, we've got only two.
+
+191
+00:11:36,610 --> 00:11:38,930
+Govind Lotlikar: Okay, getting it.
+
+192
+00:11:39,090 --> 00:11:45,730
+Govind Lotlikar: So now this one is saying as auto resolved because it has already resolved this.
+
+193
+00:11:46,690 --> 00:11:47,250
+Govind Lotlikar: Okay.
+
+194
+00:11:47,970 --> 00:11:53,890
+Govind Lotlikar: But it is giving you what is the page number on which page this is coming on.
+
+195
+00:11:54,610 --> 00:11:55,170
+Govind Lotlikar: Okay.
+
+196
+00:11:55,650 --> 00:11:58,530
+Govind Lotlikar: Now if I see, say accept and remove.
+
+197
+00:11:59,410 --> 00:11:59,850
+Govind Lotlikar: I'm.
+
+198
+00:11:59,850 --> 00:12:00,770
+Govind Lotlikar: I'm okay with this.
+
+199
+00:12:00,930 --> 00:12:01,850
+Govind Lotlikar: Accept and remove.
+
+200
+00:12:01,850 --> 00:12:02,530
+Govind Lotlikar: It will remove.
+
+201
+00:12:04,530 --> 00:12:07,810
+Govind Lotlikar: Okay, same thing.
+
+202
+00:12:07,970 --> 00:12:08,850
+Govind Lotlikar: I'll go ahead.
+
+203
+00:12:08,930 --> 00:12:10,450
+Govind Lotlikar: I say accept and remove.
+
+204
+00:12:11,330 --> 00:12:11,970
+Govind Lotlikar: Okay.
+
+205
+00:12:13,010 --> 00:12:15,770
+Govind Lotlikar: Now all of them have been done.
+
+206
+00:12:15,770 --> 00:12:23,250
+Govind Lotlikar: If, if I think that, you know, I need to edit something anywhere, you know, I can just do this, say whatever I want to say.
+
+207
+00:12:23,250 --> 00:12:26,890
+Govind Lotlikar: You know, I can do that.
+
+208
+00:12:26,890 --> 00:12:29,090
+Govind Lotlikar: And when I save and export.
+
+209
+00:12:30,170 --> 00:12:30,650
+Govind Lotlikar: Okay.
+
+210
+00:12:31,450 --> 00:12:34,010
+Govind Lotlikar: There are three files that are getting generated.
+
+211
+00:12:34,810 --> 00:12:36,090
+Govind Lotlikar: One is a version two.
+
+212
+00:12:37,050 --> 00:12:37,690
+Govind Lotlikar: Okay.
+
+213
+00:12:37,690 --> 00:12:41,530
+Govind Lotlikar: Now this version two is without those mismatches.
+
+214
+00:12:45,530 --> 00:12:47,370
+Govind Lotlikar: This is for the on demand download.
+
+215
+00:12:47,450 --> 00:12:51,850
+Aditya Sriram M: So this is all happening statically within the JavaScript logic.
+
+216
+00:12:51,930 --> 00:12:53,530
+Govind Lotlikar: Yes, yes, yes.
+
+217
+00:12:54,410 --> 00:12:55,050
+Govind Lotlikar: Okay.
+
+218
+00:12:55,360 --> 00:12:55,680
+Aditya Sriram M: Yes.
+
+219
+00:12:58,560 --> 00:12:59,080
+Govind Lotlikar: Okay.
+
+220
+00:12:59,080 --> 00:13:01,280
+Govind Lotlikar: So this is on demand download.
+
+221
+00:13:02,080 --> 00:13:02,640
+Govind Lotlikar: Okay.
+
+222
+00:13:02,800 --> 00:13:07,040
+Govind Lotlikar: Second document that is getting generated is the same version but is a text format.
+
+223
+00:13:07,200 --> 00:13:09,200
+Govind Lotlikar: This will be fed into the Pine Cone.
+
+224
+00:13:11,119 --> 00:13:11,599
+Aditya Sriram M: Oh.
+
+225
+00:13:12,560 --> 00:13:14,960
+Govind Lotlikar: Because Pine cone is more comfortable with text.
+
+226
+00:13:16,000 --> 00:13:16,640
+Aditya Sriram M: Okay.
+
+227
+00:13:17,760 --> 00:13:18,400
+Govind Lotlikar: Okay.
+
+228
+00:13:18,640 --> 00:13:20,920
+Govind Lotlikar: So we'll send this directly to Pine Cone.
+
+229
+00:13:23,390 --> 00:13:23,790
+Govind Lotlikar: Okay.
+
+230
+00:13:23,790 --> 00:13:25,150
+Govind Lotlikar: So search becomes easier.
+
+231
+00:13:25,550 --> 00:13:26,110
+Govind Lotlikar: Okay.
+
+232
+00:13:26,110 --> 00:13:27,630
+Govind Lotlikar: And the last one is the log.
+
+233
+00:13:28,350 --> 00:13:31,150
+Govind Lotlikar: All the, all the ones that you know, we accepted.
+
+234
+00:13:34,270 --> 00:13:34,830
+Govind Lotlikar: Okay.
+
+235
+00:13:36,350 --> 00:13:36,990
+Aditya Sriram M: The history.
+
+236
+00:13:37,310 --> 00:13:38,270
+Aditya Sriram M: All the changes.
+
+237
+00:13:38,750 --> 00:13:40,030
+Govind Lotlikar: Yeah, all the changes.
+
+238
+00:13:40,270 --> 00:13:45,790
+Govind Lotlikar: Now we're keeping this log because these have been accepted by the human in the loop.
+
+239
+00:13:47,320 --> 00:13:47,720
+Govind Lotlikar: Okay.
+
+240
+00:13:48,280 --> 00:13:48,920
+Govind Lotlikar: Okay.
+
+241
+00:13:49,080 --> 00:13:51,160
+Govind Lotlikar: Now you know some of these did not show.
+
+242
+00:13:52,120 --> 00:13:53,200
+Govind Lotlikar: I need to troubleshoot.
+
+243
+00:13:53,200 --> 00:13:58,040
+Govind Lotlikar: You know why 19 was showing but the ones before 19 were not showing.
+
+244
+00:13:59,240 --> 00:14:00,440
+Aditya Sriram M: Oh, okay.
+
+245
+00:14:01,240 --> 00:14:01,720
+Govind Lotlikar: Okay.
+
+246
+00:14:01,720 --> 00:14:03,880
+Govind Lotlikar: So most of them are.
+
+247
+00:14:03,960 --> 00:14:05,200
+Govind Lotlikar: See now look at this one.
+
+248
+00:14:05,200 --> 00:14:08,200
+Govind Lotlikar: Like you know, let's take one example.
+
+249
+00:14:11,320 --> 00:14:15,160
+Govind Lotlikar: Wherever there is Hindi or Marathi.
+
+250
+00:14:15,380 --> 00:14:15,860
+Govind Lotlikar: Okay.
+
+251
+00:14:16,340 --> 00:14:18,740
+Govind Lotlikar: It will automatically convert it into English.
+
+252
+00:14:19,940 --> 00:14:20,580
+Aditya Sriram M: Okay.
+
+253
+00:14:21,540 --> 00:14:22,100
+Govind Lotlikar: Okay.
+
+254
+00:14:22,580 --> 00:14:26,260
+Govind Lotlikar: So this part I need to do a little bit of troubleshooting.
+
+255
+00:14:26,260 --> 00:14:36,140
+Govind Lotlikar: Like all of these need to show, even if it is auto resolved, let the user in the, the human confirm that you know, it's okay.
+
+256
+00:14:36,140 --> 00:14:37,140
+Govind Lotlikar: I am fine with this.
+
+257
+00:14:38,580 --> 00:14:39,060
+Aditya Sriram M: Okay.
+
+258
+00:14:39,060 --> 00:14:45,070
+Govind Lotlikar: So you know, whenever the human in the loo confirms.
+
+259
+00:14:45,710 --> 00:14:49,230
+Govind Lotlikar: I don't know if I have that earlier one.
+
+260
+00:14:50,350 --> 00:14:51,550
+Govind Lotlikar: No, I don't have that.
+
+261
+00:14:53,310 --> 00:14:59,150
+Govind Lotlikar: It also gives you that option, you know, it will show you Mistral radio buttons on the side.
+
+262
+00:14:59,150 --> 00:15:00,430
+Govind Lotlikar: You want to select Mistral.
+
+263
+00:15:00,430 --> 00:15:06,910
+Govind Lotlikar: You want to Select PDF vector or there is one text box in that same HTML file.
+
+264
+00:15:09,400 --> 00:15:09,680
+Govind Lotlikar: Okay.
+
+265
+00:15:09,680 --> 00:15:12,120
+Govind Lotlikar: I mean I've been running it over and over.
+
+266
+00:15:12,440 --> 00:15:15,880
+Govind Lotlikar: So in order to get a better one, I deleted those.
+
+267
+00:15:16,360 --> 00:15:21,000
+Govind Lotlikar: But the last one that I saved it gave me fewer errors.
+
+268
+00:15:21,800 --> 00:15:24,040
+Govind Lotlikar: Okay, but the log is capturing everything.
+
+269
+00:15:24,040 --> 00:15:24,440
+Govind Lotlikar: See.
+
+270
+00:15:32,520 --> 00:15:33,640
+Govind Lotlikar: All these errors?
+
+271
+00:15:35,970 --> 00:15:36,450
+Govind Lotlikar: Okay.
+
+272
+00:15:37,330 --> 00:15:45,570
+Govind Lotlikar: Now this particular file, this text file which I said this is the version 2 text file which is error free, right?
+
+273
+00:15:45,890 --> 00:15:49,010
+Govind Lotlikar: This gets fed to.
+
+274
+00:15:54,530 --> 00:15:55,410
+Govind Lotlikar: Pine cone.
+
+275
+00:16:04,570 --> 00:16:07,450
+Govind Lotlikar: See, this is the feeder to the pine cone.
+
+276
+00:16:08,890 --> 00:16:10,490
+Govind Lotlikar: Now this is on form submission.
+
+277
+00:16:10,810 --> 00:16:12,090
+Govind Lotlikar: But I'll.
+
+278
+00:16:12,090 --> 00:16:13,770
+Govind Lotlikar: I'll be adding a webhook over here.
+
+279
+00:16:13,770 --> 00:16:18,970
+Govind Lotlikar: And I'll give you the webhook which you can embed into the ui.
+
+280
+00:16:20,570 --> 00:16:21,210
+Govind Lotlikar: Okay.
+
+281
+00:16:21,370 --> 00:16:21,970
+Govind Lotlikar: So when I.
+
+282
+00:16:21,970 --> 00:16:22,970
+Govind Lotlikar: When I run this.
+
+283
+00:16:23,690 --> 00:16:24,410
+Govind Lotlikar: Okay.
+
+284
+00:16:24,570 --> 00:16:25,770
+Govind Lotlikar: The pine cone.
+
+285
+00:16:26,200 --> 00:16:28,880
+Govind Lotlikar: See, there are three fields that, you know, I'm.
+
+286
+00:16:28,880 --> 00:16:30,040
+Govind Lotlikar: I am giving it.
+
+287
+00:16:32,840 --> 00:16:35,000
+Govind Lotlikar: Let me just run it and show it to you.
+
+288
+00:16:43,880 --> 00:16:44,680
+Govind Lotlikar: See the.
+
+289
+00:16:44,760 --> 00:16:45,880
+Govind Lotlikar: The client name.
+
+290
+00:16:46,840 --> 00:16:47,480
+Govind Lotlikar: Okay.
+
+291
+00:16:47,880 --> 00:16:49,320
+Govind Lotlikar: This is one of the fields.
+
+292
+00:16:50,120 --> 00:16:50,760
+Govind Lotlikar: Okay.
+
+293
+00:16:50,760 --> 00:16:51,880
+Govind Lotlikar: The file itself.
+
+294
+00:16:54,770 --> 00:16:55,010
+Govind Lotlikar: Right.
+
+295
+00:16:55,330 --> 00:16:57,730
+Govind Lotlikar: And third one is what kind of file it is.
+
+296
+00:17:06,450 --> 00:17:07,010
+Aditya Sriram M: Yes.
+
+297
+00:17:07,730 --> 00:17:08,409
+Govind Lotlikar: Okay.
+
+298
+00:17:08,409 --> 00:17:09,810
+Tanmay Bhowmick: So this is the fourth step, right?
+
+299
+00:17:11,329 --> 00:17:11,890
+Govind Lotlikar: This is.
+
+300
+00:17:12,210 --> 00:17:12,770
+Govind Lotlikar: This is.
+
+301
+00:17:12,770 --> 00:17:14,369
+Govind Lotlikar: Once the final file is.
+
+302
+00:17:14,369 --> 00:17:18,690
+Govind Lotlikar: Is updated then we need to feed it into the Pine cone, right?
+
+303
+00:17:18,690 --> 00:17:19,810
+Govind Lotlikar: We have to create a rag.
+
+304
+00:17:20,599 --> 00:17:21,079
+Tanmay Bhowmick: Okay?
+
+305
+00:17:22,440 --> 00:17:22,920
+Govind Lotlikar: Okay.
+
+306
+00:17:22,920 --> 00:17:24,440
+Govind Lotlikar: For creation of the rag.
+
+307
+00:17:25,079 --> 00:17:25,720
+Govind Lotlikar: Okay.
+
+308
+00:17:27,319 --> 00:17:27,720
+Aditya Sriram M: Question.
+
+309
+00:17:28,600 --> 00:17:29,080
+Govind Lotlikar: Yeah.
+
+310
+00:17:32,760 --> 00:17:34,280
+Aditya Sriram M: So in this flow, right.
+
+311
+00:17:35,480 --> 00:17:38,360
+Aditya Sriram M: Say for example, three users are there.
+
+312
+00:17:38,440 --> 00:17:39,080
+Aditya Sriram M: Okay.
+
+313
+00:17:40,600 --> 00:17:45,320
+Aditya Sriram M: For the, for the purpose of easy understanding, let's call them Govind Aditya.
+
+314
+00:17:46,810 --> 00:17:49,850
+Aditya Sriram M: We are using the same workflow.
+
+315
+00:17:51,290 --> 00:17:53,090
+Aditya Sriram M: I'm uploading a different text.
+
+316
+00:17:53,090 --> 00:17:54,570
+Aditya Sriram M: You're uploading a different text.
+
+317
+00:17:54,570 --> 00:17:56,730
+Aditya Sriram M: Tanmay is uploading his text.
+
+318
+00:17:57,450 --> 00:17:57,930
+Govind Lotlikar: Yeah.
+
+319
+00:17:58,890 --> 00:18:02,730
+Aditya Sriram M: So when we actually chart from the web app, right.
+
+320
+00:18:03,610 --> 00:18:08,930
+Aditya Sriram M: We will get answers related to only our context.
+
+321
+00:18:08,930 --> 00:18:09,290
+Govind Lotlikar: Right?
+
+322
+00:18:09,450 --> 00:18:10,890
+Aditya Sriram M: It won't be intermixed.
+
+323
+00:18:11,890 --> 00:18:12,210
+Govind Lotlikar: So the.
+
+324
+00:18:12,210 --> 00:18:20,050
+Govind Lotlikar: The question that I will ask you is are Govind Aditya and Tanmay three different people?
+
+325
+00:18:21,650 --> 00:18:22,130
+Aditya Sriram M: Yes.
+
+326
+00:18:23,250 --> 00:18:23,810
+Govind Lotlikar: Okay.
+
+327
+00:18:23,970 --> 00:18:30,050
+Govind Lotlikar: I mean three different people in the same organization or three different people in sep.
+
+328
+00:18:30,050 --> 00:18:32,370
+Govind Lotlikar: I mean owners of separate organizations.
+
+329
+00:18:33,890 --> 00:18:34,370
+Aditya Sriram M: Oh.
+
+330
+00:18:35,730 --> 00:18:37,930
+Aditya Sriram M: So if it is same organization, they'll.
+
+331
+00:18:37,930 --> 00:18:38,770
+Govind Lotlikar: be able to chat.
+
+332
+00:18:39,470 --> 00:18:39,750
+Aditya Sriram M: Yeah.
+
+333
+00:18:39,750 --> 00:18:48,510
+Govind Lotlikar: So even if it is same organization, we can, you know, the user, the UI will have different logins for them.
+
+334
+00:18:49,230 --> 00:18:49,870
+Govind Lotlikar: Okay.
+
+335
+00:18:50,270 --> 00:18:52,030
+Govind Lotlikar: They will upload their files.
+
+336
+00:18:52,590 --> 00:18:53,230
+Govind Lotlikar: Correct.
+
+337
+00:18:53,470 --> 00:18:55,470
+Govind Lotlikar: With a different customer name.
+
+338
+00:18:55,470 --> 00:18:59,390
+Govind Lotlikar: Now over here, this, Govind and Aditya that you see.
+
+339
+00:18:59,950 --> 00:19:00,590
+Govind Lotlikar: Okay.
+
+340
+00:19:00,670 --> 00:19:04,270
+Govind Lotlikar: Are the client names, not the employee names.
+
+341
+00:19:05,320 --> 00:19:06,360
+Govind Lotlikar: Because we need to ident.
+
+342
+00:19:06,360 --> 00:19:11,920
+Govind Lotlikar: You know, we need to fetch data, resting it, restricting it to a particular client.
+
+343
+00:19:11,920 --> 00:19:12,280
+Govind Lotlikar: Right?
+
+344
+00:19:13,640 --> 00:19:14,120
+Aditya Sriram M: Yes.
+
+345
+00:19:14,840 --> 00:19:15,800
+Govind Lotlikar: Are you getting me?
+
+346
+00:19:16,120 --> 00:19:30,440
+Govind Lotlikar: So these are client names, the users, the number of users that, that will come through our super base access to how many customers we're giving.
+
+347
+00:19:30,900 --> 00:19:31,260
+Govind Lotlikar: Okay.
+
+348
+00:19:31,260 --> 00:19:32,260
+Govind Lotlikar: So let's say.
+
+349
+00:19:32,900 --> 00:19:34,420
+Govind Lotlikar: Let's say you and I, we are.
+
+350
+00:19:34,740 --> 00:19:37,460
+Govind Lotlikar: We are employees of an organization.
+
+351
+00:19:38,180 --> 00:19:38,700
+Govind Lotlikar: Okay.
+
+352
+00:19:38,700 --> 00:19:40,740
+Govind Lotlikar: But the customer's name is Tanmay.
+
+353
+00:19:42,740 --> 00:19:43,300
+Govind Lotlikar: Okay.
+
+354
+00:19:43,300 --> 00:19:44,860
+Govind Lotlikar: Customer's name is Tanmay.
+
+355
+00:19:44,860 --> 00:19:45,060
+Govind Lotlikar: And.
+
+356
+00:19:45,060 --> 00:19:46,180
+Govind Lotlikar: And maybe Karthik.
+
+357
+00:19:46,260 --> 00:19:48,820
+Govind Lotlikar: So you are uploading files for Tanmay.
+
+358
+00:19:49,140 --> 00:19:49,780
+Govind Lotlikar: Okay.
+
+359
+00:19:50,500 --> 00:19:53,260
+Govind Lotlikar: So over here under client name you will.
+
+360
+00:19:53,260 --> 00:19:54,660
+Govind Lotlikar: You will select Tanmay.
+
+361
+00:19:55,060 --> 00:19:55,580
+Aditya Sriram M: Okay.
+
+362
+00:19:55,580 --> 00:19:55,940
+Govind Lotlikar: Right.
+
+363
+00:19:56,430 --> 00:19:58,510
+Govind Lotlikar: And I will select Karthik.
+
+364
+00:20:00,510 --> 00:20:01,150
+Aditya Sriram M: Okay.
+
+365
+00:20:01,150 --> 00:20:03,710
+Govind Lotlikar: And all these, once uploaded.
+
+366
+00:20:04,190 --> 00:20:04,830
+Govind Lotlikar: Okay.
+
+367
+00:20:05,150 --> 00:20:06,270
+Govind Lotlikar: They will be.
+
+368
+00:20:06,270 --> 00:20:07,950
+Govind Lotlikar: We need to put them into a queue.
+
+369
+00:20:09,150 --> 00:20:09,790
+Aditya Sriram M: Okay.
+
+370
+00:20:09,950 --> 00:20:10,590
+Govind Lotlikar: Okay.
+
+371
+00:20:11,790 --> 00:20:16,750
+Govind Lotlikar: Although parallel processing is possible for now what we'll do is, you know, we.
+
+372
+00:20:17,470 --> 00:20:21,070
+Govind Lotlikar: We will need to send them one after the other.
+
+373
+00:20:21,390 --> 00:20:21,730
+Aditya Sriram M: So.
+
+374
+00:20:22,120 --> 00:20:22,600
+Aditya Sriram M: Okay.
+
+375
+00:20:22,840 --> 00:20:23,560
+Aditya Sriram M: Not an issue.
+
+376
+00:20:24,280 --> 00:20:24,840
+Govind Lotlikar: Yeah.
+
+377
+00:20:24,840 --> 00:20:30,200
+Govind Lotlikar: So even if there are four or you know, five files which have been listed over there.
+
+378
+00:20:30,600 --> 00:20:31,240
+Govind Lotlikar: Okay.
+
+379
+00:20:31,240 --> 00:20:35,480
+Govind Lotlikar: Only after the first one says processed, the next one will be sent.
+
+380
+00:20:36,280 --> 00:20:40,680
+Govind Lotlikar: That way, you know, we can make sure that it's not crashing.
+
+381
+00:20:42,200 --> 00:20:42,760
+Govind Lotlikar: Okay.
+
+382
+00:20:42,760 --> 00:20:44,040
+Govind Lotlikar: We want a good demo, right?
+
+383
+00:20:44,040 --> 00:20:45,080
+Govind Lotlikar: We don't want it to crash.
+
+384
+00:20:47,000 --> 00:20:47,560
+Govind Lotlikar: Okay.
+
+385
+00:20:47,640 --> 00:20:50,080
+Tanmay Bhowmick: Govind, just wanted to ask one thing.
+
+386
+00:20:50,080 --> 00:20:51,240
+Tanmay Bhowmick: Maybe it's a silly question.
+
+387
+00:20:52,510 --> 00:20:56,350
+Tanmay Bhowmick: I want to ask that all of these things has been developed, right?
+
+388
+00:20:56,350 --> 00:20:58,270
+Tanmay Bhowmick: You have custom coded it, right?
+
+389
+00:20:58,270 --> 00:21:03,230
+Tanmay Bhowmick: Or it is something which you have used with automation logics and AI.
+
+390
+00:21:03,630 --> 00:21:04,070
+Tanmay Bhowmick: Is it.
+
+391
+00:21:04,070 --> 00:21:06,950
+Tanmay Bhowmick: Is it something which you have developed or it is all.
+
+392
+00:21:06,950 --> 00:21:10,830
+Tanmay Bhowmick: Is it something that you have managed to develop it with the help of AI?
+
+393
+00:21:12,270 --> 00:21:14,030
+Govind Lotlikar: So I'm not a coder.
+
+394
+00:21:14,190 --> 00:21:14,750
+Govind Lotlikar: Okay.
+
+395
+00:21:14,750 --> 00:21:16,670
+Govind Lotlikar: I'm a project manager by profession.
+
+396
+00:21:16,750 --> 00:21:17,390
+Tanmay Bhowmick: Okay.
+
+397
+00:21:18,220 --> 00:21:19,100
+Govind Lotlikar: So that the.
+
+398
+00:21:19,100 --> 00:21:19,420
+Govind Lotlikar: The.
+
+399
+00:21:19,420 --> 00:21:22,700
+Govind Lotlikar: This is my logic that's gone into it.
+
+400
+00:21:22,700 --> 00:21:23,340
+Govind Lotlikar: Okay.
+
+401
+00:21:23,500 --> 00:21:24,180
+Govind Lotlikar: And it's.
+
+402
+00:21:24,180 --> 00:21:26,380
+Govind Lotlikar: It's refined over the period of last one month.
+
+403
+00:21:26,540 --> 00:21:29,180
+Govind Lotlikar: You know, Aditya knows what we started off with.
+
+404
+00:21:29,500 --> 00:21:31,580
+Govind Lotlikar: And slowly, you know, things changed.
+
+405
+00:21:31,820 --> 00:21:38,220
+Govind Lotlikar: And what has now evolved is a refined version of that.
+
+406
+00:21:38,460 --> 00:21:40,860
+Govind Lotlikar: So entire coding has been done by.
+
+407
+00:21:41,020 --> 00:21:41,820
+Govind Lotlikar: By AI.
+
+408
+00:21:43,020 --> 00:21:43,380
+Tanmay Bhowmick: That.
+
+409
+00:21:43,380 --> 00:21:45,430
+Tanmay Bhowmick: That's what I want to understand.
+
+410
+00:21:45,430 --> 00:21:48,550
+Tanmay Bhowmick: Because I have skipped a lot of things to be very honest.
+
+411
+00:21:48,710 --> 00:21:49,910
+Tanmay Bhowmick: So just wanted to understand.
+
+412
+00:21:50,070 --> 00:21:50,590
+Tanmay Bhowmick: So this.
+
+413
+00:21:50,590 --> 00:21:55,030
+Tanmay Bhowmick: You are not non coder and you have done it by your own self with the help of AI, right?
+
+414
+00:21:55,270 --> 00:21:55,750
+Aditya Sriram M: Yes.
+
+415
+00:21:55,750 --> 00:21:56,230
+Aditya Sriram M: Yes.
+
+416
+00:21:56,550 --> 00:21:56,990
+Govind Lotlikar: Okay.
+
+417
+00:21:56,990 --> 00:22:00,950
+Tanmay Bhowmick: And this is all you have been taught with outschool sessions, right?
+
+418
+00:22:01,750 --> 00:22:02,310
+Aditya Sriram M: Yes.
+
+419
+00:22:02,710 --> 00:22:03,190
+Aditya Sriram M: Okay.
+
+420
+00:22:03,190 --> 00:22:03,710
+Tanmay Bhowmick: Makes sense.
+
+421
+00:22:03,710 --> 00:22:09,630
+Tanmay Bhowmick: I have to go back to the classes, I guess then I definitely need to go back to the classes.
+
+422
+00:22:09,630 --> 00:22:10,950
+Tanmay Bhowmick: And I'm glad.
+
+423
+00:22:11,220 --> 00:22:13,900
+Tanmay Bhowmick: I'm really glad that I have like connected with you people.
+
+424
+00:22:13,900 --> 00:22:18,460
+Tanmay Bhowmick: Because I think I'm going to coordinate a bit more with Govind and Aditya.
+
+425
+00:22:18,460 --> 00:22:20,580
+Tanmay Bhowmick: I guess rather going to Karthike.
+
+426
+00:22:23,940 --> 00:22:25,260
+Aditya Sriram M: just to give you a context.
+
+427
+00:22:25,260 --> 00:22:25,620
+Aditya Sriram M: Right.
+
+428
+00:22:25,620 --> 00:22:27,540
+Aditya Sriram M: Tanma is from Cohort 4.
+
+429
+00:22:27,940 --> 00:22:28,420
+Aditya Sriram M: Yeah.
+
+430
+00:22:28,740 --> 00:22:35,620
+Aditya Sriram M: Some issue is unable to continue in Cohort 4 and in Cohort 5 he joined and is part.
+
+431
+00:22:36,340 --> 00:22:37,460
+Aditya Sriram M: Part of our project.
+
+432
+00:22:38,950 --> 00:22:39,110
+Tanmay Bhowmick: Yeah.
+
+433
+00:22:39,110 --> 00:22:46,990
+Tanmay Bhowmick: And Cohort 5 also that the Cohort 4 issue was continued and now I'm got bit free because Karthike coordinated with me.
+
+434
+00:22:46,990 --> 00:22:52,390
+Tanmay Bhowmick: You have to get into a project and helped me enter this project with you guys which is already built.
+
+435
+00:22:52,390 --> 00:22:53,590
+Tanmay Bhowmick: Thank you so much for that.
+
+436
+00:22:53,990 --> 00:22:54,390
+Tanmay Bhowmick: And.
+
+437
+00:22:55,110 --> 00:23:01,750
+Tanmay Bhowmick: And after that like Karthike told me that just go through with the classes again and come back like I haven't.
+
+438
+00:23:02,070 --> 00:23:12,210
+Tanmay Bhowmick: So I left Learning after image generation almost I have completed yesterday also I have been learning about the image generation and video but I have not touched the automation part yet.
+
+439
+00:23:12,770 --> 00:23:14,010
+Tanmay Bhowmick: So it's like.
+
+440
+00:23:14,010 --> 00:23:15,650
+Tanmay Bhowmick: It's a lot like I have to learn.
+
+441
+00:23:16,610 --> 00:23:21,490
+Tanmay Bhowmick: But I have few, but I. I do have few feedbacks for the process.
+
+442
+00:23:21,490 --> 00:23:21,970
+Tanmay Bhowmick: I'll.
+
+443
+00:23:22,450 --> 00:23:24,850
+Tanmay Bhowmick: I'll give the feedback by the end of this meeting.
+
+444
+00:23:24,850 --> 00:23:25,330
+Govind Lotlikar: Yeah.
+
+445
+00:23:25,330 --> 00:23:27,730
+Tanmay Bhowmick: And let's focus on the demo now.
+
+446
+00:23:28,210 --> 00:23:28,530
+Aditya Sriram M: Yeah.
+
+447
+00:23:28,530 --> 00:23:29,170
+Tanmay Bhowmick: Thanks so much.
+
+448
+00:23:29,170 --> 00:23:29,570
+Govind Lotlikar: Right.
+
+449
+00:23:30,370 --> 00:23:30,770
+Govind Lotlikar: Right.
+
+450
+00:23:31,090 --> 00:23:36,770
+Govind Lotlikar: So you know, of course the ui we'll see once I complete the, you know, the backend part.
+
+451
+00:23:37,180 --> 00:23:37,580
+Govind Lotlikar: Okay.
+
+452
+00:23:37,900 --> 00:23:40,300
+Govind Lotlikar: So Aditya, you.
+
+453
+00:23:40,300 --> 00:23:41,580
+Govind Lotlikar: You're clear with this, right?
+
+454
+00:23:42,060 --> 00:23:45,020
+Govind Lotlikar: So the customer name, the client names.
+
+455
+00:23:45,580 --> 00:23:46,060
+Govind Lotlikar: Okay.
+
+456
+00:23:46,060 --> 00:23:47,340
+Govind Lotlikar: And the type of document.
+
+457
+00:23:48,620 --> 00:23:49,060
+Govind Lotlikar: Okay.
+
+458
+00:23:49,060 --> 00:23:51,260
+Govind Lotlikar: Whether it's an agreement, it's an invoice.
+
+459
+00:23:52,380 --> 00:23:52,940
+Govind Lotlikar: Okay.
+
+460
+00:23:52,940 --> 00:23:58,900
+Govind Lotlikar: Even those which are related to any particular case will get uploaded over here.
+
+461
+00:23:58,900 --> 00:23:59,260
+Govind Lotlikar: Right?
+
+462
+00:23:59,740 --> 00:24:00,380
+Govind Lotlikar: Okay.
+
+463
+00:24:01,420 --> 00:24:01,820
+Govind Lotlikar: So.
+
+464
+00:24:04,150 --> 00:24:08,790
+Govind Lotlikar: So this is the feeder.
+
+465
+00:24:09,990 --> 00:24:10,550
+Govind Lotlikar: Okay.
+
+466
+00:24:11,110 --> 00:24:17,430
+Govind Lotlikar: And one second, my laptop's a little slow.
+
+467
+00:24:20,310 --> 00:24:20,950
+Govind Lotlikar: Okay.
+
+468
+00:24:21,430 --> 00:24:24,470
+Govind Lotlikar: So once this is run.
+
+469
+00:24:25,030 --> 00:24:27,030
+Govind Lotlikar: What you see in Pinecone is.
+
+470
+00:24:39,520 --> 00:24:40,160
+Tanmay Bhowmick: Pine cone.
+
+471
+00:24:40,160 --> 00:24:40,880
+Tanmay Bhowmick: Is what?
+
+472
+00:24:40,960 --> 00:24:41,840
+Tanmay Bhowmick: Database management.
+
+473
+00:24:41,920 --> 00:24:42,320
+Tanmay Bhowmick: What?
+
+474
+00:24:42,800 --> 00:24:43,480
+Govind Lotlikar: Yeah, it's.
+
+475
+00:24:43,480 --> 00:24:44,000
+Govind Lotlikar: It's a.
+
+476
+00:24:44,320 --> 00:24:45,920
+Govind Lotlikar: It's a vector database.
+
+477
+00:24:46,160 --> 00:24:46,800
+Aditya Sriram M: Okay.
+
+478
+00:24:50,560 --> 00:24:52,560
+Govind Lotlikar: So you remember customer name Govind.
+
+479
+00:24:53,120 --> 00:24:53,760
+Aditya Sriram M: Okay.
+
+480
+00:24:53,920 --> 00:24:56,080
+Govind Lotlikar: So we've mapped it to a namespace.
+
+481
+00:24:57,060 --> 00:24:57,380
+Govind Lotlikar: Okay.
+
+482
+00:24:57,380 --> 00:24:59,420
+Govind Lotlikar: All the files, okay.
+
+483
+00:24:59,420 --> 00:25:02,340
+Govind Lotlikar: Which will be tagged under client name Govind.
+
+484
+00:25:02,900 --> 00:25:04,740
+Govind Lotlikar: The records will go inside over here.
+
+485
+00:25:05,460 --> 00:25:06,100
+Aditya Sriram M: Okay.
+
+486
+00:25:06,660 --> 00:25:07,140
+Govind Lotlikar: Okay.
+
+487
+00:25:07,140 --> 00:25:10,980
+Govind Lotlikar: That way we can fetch information related to a particular client.
+
+488
+00:25:12,980 --> 00:25:13,540
+Aditya Sriram M: Okay.
+
+489
+00:25:13,700 --> 00:25:16,260
+Aditya Sriram M: One session or maybe one input.
+
+490
+00:25:16,980 --> 00:25:17,460
+Govind Lotlikar: Yeah.
+
+491
+00:25:18,900 --> 00:25:21,300
+Aditya Sriram M: Instead of the client name, right.
+
+492
+00:25:21,300 --> 00:25:25,210
+Aditya Sriram M: Is will give the case id.
+
+493
+00:25:27,530 --> 00:25:31,450
+Govind Lotlikar: So there is some information that is being sent through metadata also.
+
+494
+00:25:32,170 --> 00:25:33,050
+Govind Lotlikar: I'll show you.
+
+495
+00:25:46,890 --> 00:25:50,730
+Aditya Sriram M: So as part of the first process, we get a refined document.
+
+496
+00:25:51,990 --> 00:25:59,590
+Aditya Sriram M: So as part of the second process, we feed that refined document into the vector database.
+
+497
+00:26:00,390 --> 00:26:00,830
+Aditya Sriram M: Yeah.
+
+498
+00:26:00,830 --> 00:26:01,830
+Aditya Sriram M: Vector database.
+
+499
+00:26:01,990 --> 00:26:04,310
+Aditya Sriram M: And then we start using chat.
+
+500
+00:26:05,750 --> 00:26:06,230
+Govind Lotlikar: Yeah.
+
+501
+00:26:06,390 --> 00:26:09,430
+Govind Lotlikar: So under the client name, okay.
+
+502
+00:26:09,590 --> 00:26:11,590
+Govind Lotlikar: The client name was the namespace.
+
+503
+00:26:11,590 --> 00:26:11,910
+Govind Lotlikar: Right.
+
+504
+00:26:13,030 --> 00:26:14,070
+Govind Lotlikar: Which I showed you.
+
+505
+00:26:14,230 --> 00:26:14,790
+Govind Lotlikar: Okay.
+
+506
+00:26:14,950 --> 00:26:15,350
+Govind Lotlikar: The.
+
+507
+00:26:15,670 --> 00:26:18,600
+Govind Lotlikar: The file name also gets connected.
+
+508
+00:26:19,800 --> 00:26:20,440
+Aditya Sriram M: Okay.
+
+509
+00:26:21,000 --> 00:26:21,640
+Govind Lotlikar: Okay.
+
+510
+00:26:21,800 --> 00:26:28,360
+Govind Lotlikar: The file type gets connected and submitted at.
+
+511
+00:26:31,240 --> 00:26:31,800
+Govind Lotlikar: Okay.
+
+512
+00:26:32,120 --> 00:26:36,280
+Govind Lotlikar: And the id.
+
+513
+00:26:38,920 --> 00:26:39,560
+Aditya Sriram M: Okay.
+
+514
+00:26:40,760 --> 00:26:41,400
+Govind Lotlikar: Okay.
+
+515
+00:26:41,560 --> 00:26:45,000
+Govind Lotlikar: So these are things that get connected to that particular namespace.
+
+516
+00:26:45,290 --> 00:26:49,730
+Govind Lotlikar: A namespace is the highest level segregation that you can do in.
+
+517
+00:26:49,730 --> 00:26:50,890
+Govind Lotlikar: Over here, in.
+
+518
+00:26:50,890 --> 00:26:51,930
+Govind Lotlikar: In Pinecone.
+
+519
+00:26:52,330 --> 00:26:52,730
+Aditya Sriram M: Okay.
+
+520
+00:26:52,730 --> 00:26:53,130
+Govind Lotlikar: Okay.
+
+521
+00:26:53,370 --> 00:26:54,810
+Govind Lotlikar: So my.
+
+522
+00:26:54,890 --> 00:26:57,050
+Govind Lotlikar: My database name is Legal Aid.
+
+523
+00:26:58,810 --> 00:27:06,570
+Govind Lotlikar: So under Legal Aid, go with this one customer and then we can have 100 customers more.
+
+524
+00:27:06,890 --> 00:27:10,490
+Govind Lotlikar: And each customer will have all this metadata available.
+
+525
+00:27:11,430 --> 00:27:11,910
+Aditya Sriram M: Okay.
+
+526
+00:27:12,550 --> 00:27:15,510
+Govind Lotlikar: You know the file type, the file name submitted at.
+
+527
+00:27:16,310 --> 00:27:17,750
+Govind Lotlikar: This information will be here.
+
+528
+00:27:19,270 --> 00:27:19,910
+Govind Lotlikar: Okay.
+
+529
+00:27:20,310 --> 00:27:21,830
+Govind Lotlikar: So as a part of the.
+
+530
+00:27:21,830 --> 00:27:22,230
+Govind Lotlikar: The.
+
+531
+00:27:22,390 --> 00:27:23,430
+Aditya Sriram M: The reason why you.
+
+532
+00:27:23,750 --> 00:27:32,150
+Aditya Sriram M: Why you're saying the client name is important because the users will have concentrated charts, right?
+
+533
+00:27:33,990 --> 00:27:34,470
+Govind Lotlikar: Yes.
+
+534
+00:27:34,950 --> 00:27:38,220
+Govind Lotlikar: See, like for example, if I.
+
+535
+00:27:38,300 --> 00:27:40,300
+Govind Lotlikar: If I am your advocate.
+
+536
+00:27:40,380 --> 00:27:41,020
+Govind Lotlikar: Okay.
+
+537
+00:27:41,740 --> 00:27:43,580
+Govind Lotlikar: And I am Tanmay's advocate.
+
+538
+00:27:43,980 --> 00:27:47,500
+Govind Lotlikar: I don't want to have information from both the agreements.
+
+539
+00:27:47,740 --> 00:27:48,860
+Govind Lotlikar: Both of your agreements.
+
+540
+00:27:48,860 --> 00:27:52,700
+Govind Lotlikar: I only want information from Aditya's agreements.
+
+541
+00:27:53,100 --> 00:27:53,660
+Aditya Sriram M: Correct?
+
+542
+00:27:53,820 --> 00:27:54,300
+Aditya Sriram M: Yes.
+
+543
+00:27:54,380 --> 00:27:54,780
+Govind Lotlikar: Right.
+
+544
+00:27:55,740 --> 00:27:58,060
+Govind Lotlikar: I have to always mention that.
+
+545
+00:27:58,060 --> 00:28:01,500
+Govind Lotlikar: Please give me the information related to this particular client.
+
+546
+00:28:02,060 --> 00:28:02,820
+Govind Lotlikar: Because now I'm.
+
+547
+00:28:02,820 --> 00:28:08,490
+Govind Lotlikar: I'm studying or you know, now I'm preparing data for a case which is related to Aditya, not.
+
+548
+00:28:09,450 --> 00:28:14,570
+Aditya Sriram M: And what if that particular client has multiple cases involved?
+
+549
+00:28:15,530 --> 00:28:15,890
+Govind Lotlikar: Yeah.
+
+550
+00:28:15,890 --> 00:28:17,290
+Govind Lotlikar: So we call it.
+
+551
+00:28:17,290 --> 00:28:17,930
+Govind Lotlikar: We call it.
+
+552
+00:28:19,290 --> 00:28:22,970
+Govind Lotlikar: We can call it like, you know, Aditya Robbery, Aditya murder.
+
+553
+00:28:23,690 --> 00:28:24,850
+Govind Lotlikar: That's something that you know.
+
+554
+00:28:24,850 --> 00:28:29,130
+Govind Lotlikar: That's an identifier that we will have to state.
+
+555
+00:28:29,130 --> 00:28:29,530
+Govind Lotlikar: Right?
+
+556
+00:28:29,850 --> 00:28:34,690
+Govind Lotlikar: See, from the billing perspective it's going to be different, okay?
+
+557
+00:28:34,770 --> 00:28:35,890
+Govind Lotlikar: Because now.
+
+558
+00:28:37,010 --> 00:28:37,610
+Govind Lotlikar: Now there are.
+
+559
+00:28:37,610 --> 00:28:40,770
+Govind Lotlikar: There are two particular cases which Aditya has brought to me.
+
+560
+00:28:41,330 --> 00:28:47,650
+Govind Lotlikar: But when I want to segregate the documentation I have to keep it unique.
+
+561
+00:28:48,130 --> 00:28:48,690
+Govind Lotlikar: Okay?
+
+562
+00:28:49,890 --> 00:28:52,690
+Govind Lotlikar: Because one is related to murder, one is related to robbery.
+
+563
+00:28:54,850 --> 00:28:55,250
+Govind Lotlikar: Right?
+
+564
+00:28:57,170 --> 00:29:01,450
+Govind Lotlikar: So at the end of second we have a rag database.
+
+565
+00:29:01,530 --> 00:29:02,170
+Govind Lotlikar: Okay?
+
+566
+00:29:02,490 --> 00:29:04,970
+Govind Lotlikar: And then the third one, okay.
+
+567
+00:29:04,970 --> 00:29:07,450
+Govind Lotlikar: And this could be our wow factor also.
+
+568
+00:29:08,250 --> 00:29:08,810
+Govind Lotlikar: Okay?
+
+569
+00:29:10,170 --> 00:29:13,650
+Govind Lotlikar: This is fetching and telegram included.
+
+570
+00:29:13,650 --> 00:29:14,250
+Govind Lotlikar: Okay.
+
+571
+00:29:15,130 --> 00:29:22,490
+Govind Lotlikar: So like over here, you know, I can.
+
+572
+00:29:24,010 --> 00:29:24,410
+Govind Lotlikar: Like.
+
+573
+00:29:25,130 --> 00:29:30,620
+Govind Lotlikar: For example, I want to ask a question.
+
+574
+00:29:30,700 --> 00:29:32,300
+Govind Lotlikar: I'll just copy the same one.
+
+575
+00:29:32,780 --> 00:29:33,420
+Govind Lotlikar: Okay.
+
+576
+00:29:40,140 --> 00:29:42,260
+Govind Lotlikar: Let's say who are the incoming partners?
+
+577
+00:29:42,260 --> 00:29:45,020
+Govind Lotlikar: So there are existing partners and there are incoming partners.
+
+578
+00:29:45,500 --> 00:29:46,140
+Govind Lotlikar: Okay.
+
+579
+00:29:46,940 --> 00:29:48,860
+Govind Lotlikar: So I'm just sending this.
+
+580
+00:29:49,900 --> 00:29:50,460
+Govind Lotlikar: Okay.
+
+581
+00:29:50,700 --> 00:29:52,220
+Govind Lotlikar: See, it's.
+
+582
+00:29:55,990 --> 00:29:57,190
+Govind Lotlikar: It's executing the workflow.
+
+583
+00:29:57,190 --> 00:29:58,550
+Govind Lotlikar: Are you seeing this going through?
+
+584
+00:29:58,870 --> 00:29:59,430
+Aditya Sriram M: Yeah.
+
+585
+00:29:59,510 --> 00:30:01,350
+Govind Lotlikar: Not sure if you're able to see it, but.
+
+586
+00:30:03,830 --> 00:30:04,950
+Aditya Sriram M: No, I can see.
+
+587
+00:30:06,150 --> 00:30:06,790
+Govind Lotlikar: Okay.
+
+588
+00:30:08,070 --> 00:30:09,750
+Tanmay Bhowmick: I can see, but I can't understand.
+
+589
+00:30:09,830 --> 00:30:10,310
+Tanmay Bhowmick: Guys,
+
+590
+00:30:17,590 --> 00:30:22,040
+Aditya Sriram M: I think Tanmay will have to study a lot of content.
+
+591
+00:30:23,800 --> 00:30:26,120
+Tanmay Bhowmick: And I have a direction because I'll see the project.
+
+592
+00:30:26,200 --> 00:30:27,280
+Tanmay Bhowmick: I understand the project.
+
+593
+00:30:27,280 --> 00:30:31,480
+Tanmay Bhowmick: And then go back to the session and understand how it might be made.
+
+594
+00:30:32,360 --> 00:30:33,040
+Govind Lotlikar: Well, let's.
+
+595
+00:30:33,040 --> 00:30:33,400
+Govind Lotlikar: Let's.
+
+596
+00:30:33,400 --> 00:30:34,760
+Govind Lotlikar: Let's go by your strengths.
+
+597
+00:30:35,960 --> 00:30:37,320
+Govind Lotlikar: See, are you seeing this now?
+
+598
+00:30:37,880 --> 00:30:39,320
+Govind Lotlikar: See the incoming partners.
+
+599
+00:30:39,480 --> 00:30:40,080
+Govind Lotlikar: Okay.
+
+600
+00:30:40,080 --> 00:30:41,320
+Govind Lotlikar: Are these guys.
+
+601
+00:30:41,800 --> 00:30:42,600
+Aditya Sriram M: Oh, super.
+
+602
+00:30:43,480 --> 00:30:48,070
+Govind Lotlikar: Okay, so this information was fetched from there.
+
+603
+00:30:48,710 --> 00:30:49,270
+Govind Lotlikar: Okay.
+
+604
+00:30:49,510 --> 00:30:51,590
+Govind Lotlikar: But let's say that you know, the.
+
+605
+00:30:51,590 --> 00:30:52,270
+Govind Lotlikar: This is the.
+
+606
+00:30:52,270 --> 00:30:53,830
+Govind Lotlikar: The wow factor comes from here.
+
+607
+00:30:53,830 --> 00:30:58,070
+Govind Lotlikar: See, let's say that I am an advocate who's traveling to a customer's place.
+
+608
+00:30:58,630 --> 00:30:59,070
+Aditya Sriram M: Okay.
+
+609
+00:30:59,070 --> 00:31:01,590
+Govind Lotlikar: I have a client's place now I don't have my screen over here.
+
+610
+00:31:03,510 --> 00:31:03,910
+Govind Lotlikar: Right.
+
+611
+00:31:04,470 --> 00:31:06,070
+Govind Lotlikar: So what I'm.
+
+612
+00:31:10,390 --> 00:31:11,350
+Tanmay Bhowmick: How about go.
+
+613
+00:31:11,350 --> 00:31:13,610
+Tanmay Bhowmick: Just left the chat, I guess.
+
+614
+00:31:14,410 --> 00:31:17,850
+Aditya Sriram M: Yeah, but I can still see his.
+
+615
+00:31:17,850 --> 00:31:22,410
+Tanmay Bhowmick: Because he used his mobile for the mic and screen for the laptop.
+
+616
+00:31:22,410 --> 00:31:25,010
+Tanmay Bhowmick: I guess we have to.
+
+617
+00:31:25,010 --> 00:31:30,450
+Tanmay Bhowmick: We have to let him know that I think he's still showing the demo.
+
+618
+00:31:30,450 --> 00:31:31,530
+Tanmay Bhowmick: But we can't hear him.
+
+619
+00:31:34,090 --> 00:31:36,090
+Tanmay Bhowmick: Give him a call or something, man.
+
+620
+00:31:37,290 --> 00:31:38,170
+Aditya Sriram M: Okay, okay,
+
+621
+00:31:59,060 --> 00:32:00,260
+Tanmay Bhowmick: I have to give him a call.
+
+622
+00:32:02,180 --> 00:32:03,060
+Aditya Sriram M: No, no, that's fine.
+
+623
+00:32:03,060 --> 00:32:03,500
+Aditya Sriram M: That's fine.
+
+624
+00:32:03,500 --> 00:32:05,630
+Aditya Sriram M: I think he's still here showing up.
+
+625
+00:32:11,230 --> 00:32:12,110
+Aditya Sriram M: I'll ping him.
+
+626
+00:32:30,760 --> 00:32:32,120
+Aditya Sriram M: Okay, Let me call you.
+
+627
+00:32:46,360 --> 00:32:47,080
+Aditya Sriram M: Excuse me.
+
+628
+00:32:54,200 --> 00:32:54,600
+Govind Lotlikar: Yeah.
+
+629
+00:32:54,600 --> 00:32:55,560
+Govind Lotlikar: Did I get dropped?
+
+630
+00:32:55,720 --> 00:32:56,520
+Aditya Sriram M: Yeah, yeah.
+
+631
+00:32:57,720 --> 00:32:58,120
+Govind Lotlikar: Okay.
+
+632
+00:32:58,120 --> 00:32:59,960
+Govind Lotlikar: But, but you were able to see, right?
+
+633
+00:33:00,850 --> 00:33:05,730
+Aditya Sriram M: Yeah, but can you like try to elaborate it?
+
+634
+00:33:06,130 --> 00:33:08,850
+Aditya Sriram M: So yeah, one second you opened.
+
+635
+00:33:11,650 --> 00:33:12,010
+Govind Lotlikar: Yeah.
+
+636
+00:33:12,010 --> 00:33:13,570
+Govind Lotlikar: See this is the command that I gave, right?
+
+637
+00:33:14,770 --> 00:33:15,290
+Aditya Sriram M: Okay.
+
+638
+00:33:15,290 --> 00:33:16,850
+Govind Lotlikar: That were the incoming partners.
+
+639
+00:33:17,890 --> 00:33:18,290
+Govind Lotlikar: Okay.
+
+640
+00:33:18,290 --> 00:33:19,730
+Govind Lotlikar: And it gave me the same thing.
+
+641
+00:33:20,690 --> 00:33:23,570
+Govind Lotlikar: It says the message was sent automatically with any time.
+
+642
+00:33:24,450 --> 00:33:24,850
+Aditya Sriram M: Super.
+
+643
+00:33:27,100 --> 00:33:28,860
+Aditya Sriram M: Now going up.
+
+644
+00:33:29,180 --> 00:33:30,460
+Aditya Sriram M: This is super actually.
+
+645
+00:33:31,820 --> 00:33:33,940
+Aditya Sriram M: But actually during the demo day, how.
+
+646
+00:33:33,940 --> 00:33:35,660
+Aditya Sriram M: How should we demo this one?
+
+647
+00:33:37,180 --> 00:33:39,580
+Govind Lotlikar: Okay, so I'm going to tell you exactly how we are going to do it.
+
+648
+00:33:39,660 --> 00:33:43,500
+Govind Lotlikar: Because each of these steps not takes time, right?
+
+649
+00:33:43,980 --> 00:33:51,460
+Govind Lotlikar: So if you actually see this, the first process, okay, this.
+
+650
+00:33:51,460 --> 00:33:53,260
+Govind Lotlikar: This takes about two to three minutes.
+
+651
+00:33:54,180 --> 00:33:54,660
+Aditya Sriram M: Okay?
+
+652
+00:33:54,740 --> 00:33:57,540
+Govind Lotlikar: Okay, this takes about one minute.
+
+653
+00:33:59,140 --> 00:33:59,700
+Govind Lotlikar: Okay.
+
+654
+00:33:59,780 --> 00:34:04,340
+Govind Lotlikar: And this is on demand.
+
+655
+00:34:04,740 --> 00:34:06,860
+Govind Lotlikar: So this doesn't take much time.
+
+656
+00:34:06,860 --> 00:34:10,020
+Govind Lotlikar: But as how big the document is, it will based on that.
+
+657
+00:34:10,260 --> 00:34:12,420
+Govind Lotlikar: So right now document is about 10 pages.
+
+658
+00:34:13,380 --> 00:34:15,219
+Govind Lotlikar: So it's fetching from that.
+
+659
+00:34:16,179 --> 00:34:22,319
+Govind Lotlikar: But this is more or less, you know, very instant correct.
+
+660
+00:34:22,319 --> 00:34:24,639
+Govind Lotlikar: Okay, so let's.
+
+661
+00:34:24,639 --> 00:34:25,159
+Govind Lotlikar: Let me.
+
+662
+00:34:26,359 --> 00:34:29,958
+Govind Lotlikar: Let me change this to were the continuing partners.
+
+663
+00:34:34,839 --> 00:34:36,998
+Govind Lotlikar: I need to execute.
+
+664
+00:34:36,998 --> 00:34:38,319
+Aditya Sriram M: Do you need to give that client.
+
+665
+00:34:38,319 --> 00:34:39,399
+Tanmay Bhowmick: is equal to go in.
+
+666
+00:34:40,518 --> 00:34:43,639
+Govind Lotlikar: See, first time you have to give, right?
+
+667
+00:34:44,998 --> 00:34:47,159
+Govind Lotlikar: Second time onwards you don't have to give it.
+
+668
+00:34:48,620 --> 00:34:52,860
+Govind Lotlikar: The reason first time you have to give it is because AI needs to know, right.
+
+669
+00:34:52,860 --> 00:34:54,540
+Govind Lotlikar: Which client we are talking about.
+
+670
+00:34:55,260 --> 00:34:55,980
+Aditya Sriram M: Understood.
+
+671
+00:34:57,340 --> 00:34:59,020
+Govind Lotlikar: Second time you don't have to give it.
+
+672
+00:34:59,980 --> 00:35:03,180
+Govind Lotlikar: Okay, so let's just see this.
+
+673
+00:35:09,740 --> 00:35:16,920
+Govind Lotlikar: See these are the names, the continuing partners.
+
+674
+00:35:18,120 --> 00:35:20,600
+Aditya Sriram M: So what I was thinking, if you see.
+
+675
+00:35:20,600 --> 00:35:22,200
+Govind Lotlikar: If you see these names are different.
+
+676
+00:35:22,600 --> 00:35:25,080
+Govind Lotlikar: See there's Subhash over here, Deepak.
+
+677
+00:35:25,560 --> 00:35:26,040
+Govind Lotlikar: Okay.
+
+678
+00:35:26,040 --> 00:35:29,080
+Govind Lotlikar: And over here, there's Rajaram, there's Yashwan, there's Pushpa.
+
+679
+00:35:30,120 --> 00:35:31,880
+Aditya Sriram M: Okay, can you ask a different question?
+
+680
+00:35:32,360 --> 00:35:34,600
+Aditya Sriram M: Like what is the summary of his case?
+
+681
+00:35:36,120 --> 00:35:36,680
+Govind Lotlikar: Yeah.
+
+682
+00:36:00,980 --> 00:36:02,100
+Govind Lotlikar: Okay, it's triggered.
+
+683
+00:36:02,820 --> 00:36:03,940
+Govind Lotlikar: Let's see here.
+
+684
+00:36:07,200 --> 00:36:13,440
+Govind Lotlikar: Okay, this is summary of the agreement of client going related to partnership firm.
+
+685
+00:36:14,080 --> 00:36:18,080
+Govind Lotlikar: The agreement pertains to admission, retirement and reconstitution within the partnership.
+
+686
+00:36:18,080 --> 00:36:19,200
+Govind Lotlikar: So it's given that.
+
+687
+00:36:19,680 --> 00:36:20,320
+Aditya Sriram M: Okay,
+
+688
+00:36:23,600 --> 00:36:27,600
+Govind Lotlikar: so at the time of demo, okay, this is what we need to do.
+
+689
+00:36:27,760 --> 00:36:31,440
+Govind Lotlikar: Each process, okay, we need to open in a different window.
+
+690
+00:36:32,170 --> 00:36:36,650
+Govind Lotlikar: So first process, okay, we know we need to upload this file, right?
+
+691
+00:36:38,650 --> 00:36:39,010
+Govind Lotlikar: Right.
+
+692
+00:36:39,010 --> 00:36:40,410
+Govind Lotlikar: So we upload this file.
+
+693
+00:36:40,890 --> 00:36:41,410
+Govind Lotlikar: Okay.
+
+694
+00:36:41,410 --> 00:36:44,130
+Govind Lotlikar: And we say that, you know, now the processing is going to.
+
+695
+00:36:44,130 --> 00:36:44,810
+Govind Lotlikar: It has started.
+
+696
+00:36:45,450 --> 00:36:48,970
+Govind Lotlikar: This will take about two to three minutes since we don't have this much time.
+
+697
+00:36:49,130 --> 00:36:53,610
+Govind Lotlikar: Okay, let me show you what happens once the process is completed.
+
+698
+00:36:53,930 --> 00:36:55,130
+Govind Lotlikar: So on that next.
+
+699
+00:36:55,210 --> 00:36:58,340
+Govind Lotlikar: On the next tab, you have.
+
+700
+00:36:58,900 --> 00:37:00,740
+Govind Lotlikar: The process is already completed.
+
+701
+00:37:01,620 --> 00:37:02,180
+Aditya Sriram M: Okay.
+
+702
+00:37:02,580 --> 00:37:03,220
+Govind Lotlikar: Okay.
+
+703
+00:37:03,460 --> 00:37:05,420
+Govind Lotlikar: And you show from there that.
+
+704
+00:37:05,420 --> 00:37:09,540
+Govind Lotlikar: Now, see, now we've got the version one of the consolidated file.
+
+705
+00:37:10,180 --> 00:37:10,700
+Aditya Sriram M: Okay.
+
+706
+00:37:10,700 --> 00:37:14,020
+Govind Lotlikar: And in the version one, okay, these are the things that are available.
+
+707
+00:37:15,140 --> 00:37:15,780
+Aditya Sriram M: Okay.
+
+708
+00:37:16,180 --> 00:37:16,580
+Govind Lotlikar: Right.
+
+709
+00:37:16,580 --> 00:37:24,500
+Govind Lotlikar: You're saying that, you know, these are these are the mismatches that are available.
+
+710
+00:37:24,740 --> 00:37:26,740
+Govind Lotlikar: I can either accept and remove.
+
+711
+00:37:27,210 --> 00:37:27,530
+Govind Lotlikar: Okay.
+
+712
+00:37:27,530 --> 00:37:27,930
+Govind Lotlikar: I can.
+
+713
+00:37:27,930 --> 00:37:29,530
+Govind Lotlikar: If I want, I can edit this.
+
+714
+00:37:29,850 --> 00:37:30,370
+Govind Lotlikar: Okay.
+
+715
+00:37:30,370 --> 00:37:33,450
+Govind Lotlikar: And once I have done this, I will save and export.
+
+716
+00:37:33,770 --> 00:37:44,970
+Govind Lotlikar: Once I save and export, I am getting the final version of this file which will be fed into the, the rag.
+
+717
+00:37:45,370 --> 00:37:47,050
+Govind Lotlikar: Right, so you can actually.
+
+718
+00:37:48,970 --> 00:37:49,530
+Govind Lotlikar: Sorry.
+
+719
+00:37:49,770 --> 00:37:52,890
+Govind Lotlikar: See, so you can actually, you know, just click on this.
+
+720
+00:37:53,750 --> 00:37:54,230
+Govind Lotlikar: Okay.
+
+721
+00:37:55,350 --> 00:38:02,470
+Govind Lotlikar: Save and export and see, will actually show you downloading the files.
+
+722
+00:38:03,750 --> 00:38:04,110
+Govind Lotlikar: See?
+
+723
+00:38:04,110 --> 00:38:04,950
+Govind Lotlikar: Are you seeing this?
+
+724
+00:38:05,750 --> 00:38:07,590
+Aditya Sriram M: Yeah, that's what.
+
+725
+00:38:07,830 --> 00:38:14,230
+Aditya Sriram M: But in the web application, right, we should say save this document.
+
+726
+00:38:14,390 --> 00:38:15,270
+Aditya Sriram M: Something like that.
+
+727
+00:38:15,430 --> 00:38:18,230
+Aditya Sriram M: Once you click it, this document should go and sit in the.
+
+728
+00:38:19,120 --> 00:38:21,360
+Aditya Sriram M: Yeah, in the version history.
+
+729
+00:38:21,840 --> 00:38:22,320
+Govind Lotlikar: Yes.
+
+730
+00:38:22,720 --> 00:38:23,600
+Govind Lotlikar: So this will.
+
+731
+00:38:23,760 --> 00:38:24,760
+Govind Lotlikar: This, this as.
+
+732
+00:38:24,760 --> 00:38:26,400
+Govind Lotlikar: This file will go as version one.
+
+733
+00:38:26,880 --> 00:38:35,400
+Govind Lotlikar: And this particular file which gets downloaded over here, See, these two files got downloaded, right?
+
+734
+00:38:35,400 --> 00:38:37,600
+Govind Lotlikar: These three were downloaded just now.
+
+735
+00:38:38,480 --> 00:38:38,880
+Govind Lotlikar: Right.
+
+736
+00:38:38,960 --> 00:38:42,400
+Govind Lotlikar: These three will also need to go as version two and logs.
+
+737
+00:38:46,570 --> 00:38:52,810
+Govind Lotlikar: Got it now, okay, so this is one small change that you'll have to do in the ui.
+
+738
+00:38:53,290 --> 00:38:53,770
+Govind Lotlikar: Okay.
+
+739
+00:38:53,770 --> 00:38:54,250
+Govind Lotlikar: Okay.
+
+740
+00:38:55,370 --> 00:39:03,610
+Govind Lotlikar: Add a new feeder for the RAG input over here.
+
+741
+00:39:06,810 --> 00:39:07,210
+Govind Lotlikar: Right.
+
+742
+00:39:08,010 --> 00:39:10,010
+Govind Lotlikar: And do you want to.
+
+743
+00:39:11,370 --> 00:39:13,690
+Govind Lotlikar: You might want to add one more for the chat, right?
+
+744
+00:39:14,180 --> 00:39:16,820
+Govind Lotlikar: Because this is the N8 and chat.
+
+745
+00:39:18,580 --> 00:39:21,220
+Govind Lotlikar: So we need a chat over there also in the ui.
+
+746
+00:39:21,700 --> 00:39:22,180
+Aditya Sriram M: Yes.
+
+747
+00:39:22,500 --> 00:39:26,660
+Govind Lotlikar: So one feeder interface for RAG and one chat interface.
+
+748
+00:39:27,460 --> 00:39:28,100
+Aditya Sriram M: Okay.
+
+749
+00:39:29,300 --> 00:39:29,779
+Govind Lotlikar: Okay.
+
+750
+00:39:29,779 --> 00:39:33,380
+Govind Lotlikar: This is what we'll have to do Again, over here, I'll give a webhook.
+
+751
+00:39:33,700 --> 00:39:34,100
+Govind Lotlikar: Okay.
+
+752
+00:39:34,100 --> 00:39:41,600
+Govind Lotlikar: That webhook will drive the input directly to the chat over there in the ui.
+
+753
+00:39:41,840 --> 00:39:42,480
+Aditya Sriram M: Okay.
+
+754
+00:39:43,600 --> 00:39:47,040
+Aditya Sriram M: Do you have the webhook details as of now?
+
+755
+00:39:49,120 --> 00:39:50,240
+Govind Lotlikar: It's not very difficult.
+
+756
+00:39:50,240 --> 00:39:52,800
+Govind Lotlikar: I can, I can give it to you in 10, 15 minutes.
+
+757
+00:39:53,520 --> 00:39:55,440
+Govind Lotlikar: I'll give you one webhook over here.
+
+758
+00:39:55,599 --> 00:39:56,160
+Govind Lotlikar: Okay.
+
+759
+00:39:56,480 --> 00:39:58,400
+Govind Lotlikar: In fact, I can add it just now.
+
+760
+00:40:00,400 --> 00:40:02,680
+Aditya Sriram M: Okay, so if you can share those details.
+
+761
+00:40:02,680 --> 00:40:02,920
+Aditya Sriram M: Right.
+
+762
+00:40:02,920 --> 00:40:07,680
+Aditya Sriram M: What I was thinking is I can start integrating it and then.
+
+763
+00:40:07,680 --> 00:40:10,800
+Aditya Sriram M: Yeah, maybe we'll have another checkpoint today itself.
+
+764
+00:40:12,320 --> 00:40:13,200
+Govind Lotlikar: Yeah, no problem.
+
+765
+00:40:13,520 --> 00:40:23,040
+Aditya Sriram M: 10, 30 and 30pm yeah, or maybe 10pm and then we can sync up again.
+
+766
+00:40:23,920 --> 00:40:27,600
+Aditya Sriram M: We'll see how much of it is going as planned.
+
+767
+00:40:27,600 --> 00:40:32,400
+Govind Lotlikar: Yeah, See we now, you know, now we have a decent product to show.
+
+768
+00:40:33,290 --> 00:40:33,610
+Aditya Sriram M: Yes.
+
+769
+00:40:33,930 --> 00:40:47,050
+Govind Lotlikar: Okay, so if we, you know, try to refine it further, I think we'll be able to be in the race.
+
+770
+00:40:47,690 --> 00:40:53,290
+Govind Lotlikar: Okay, so what I did not show you over here was over here.
+
+771
+00:40:53,290 --> 00:40:55,450
+Govind Lotlikar: I can also give a voice command.
+
+772
+00:40:57,530 --> 00:40:59,450
+Govind Lotlikar: Okay, so if I give a voice command.
+
+773
+00:41:00,190 --> 00:41:04,750
+Govind Lotlikar: Okay, I'll give a voice command over here.
+
+774
+00:41:04,750 --> 00:41:05,710
+Govind Lotlikar: Let's see if it works.
+
+775
+00:41:10,110 --> 00:41:12,350
+Govind Lotlikar: Can you give me a summary of this agreement?
+
+776
+00:41:14,670 --> 00:41:17,630
+Govind Lotlikar: Oh, I forgot to activate the flow.
+
+777
+00:41:28,760 --> 00:41:32,000
+Govind Lotlikar: Once this becomes active now then I don't have to press it all the time.
+
+778
+00:41:32,000 --> 00:41:33,160
+Govind Lotlikar: Right now it's inactive.
+
+779
+00:41:34,360 --> 00:41:35,640
+Govind Lotlikar: Okay, that's why.
+
+780
+00:41:42,200 --> 00:41:44,600
+Govind Lotlikar: So see, if it is text, it will take this route.
+
+781
+00:41:44,920 --> 00:41:45,560
+Govind Lotlikar: This one.
+
+782
+00:41:45,800 --> 00:41:47,600
+Govind Lotlikar: If it is voice, it will take this route.
+
+783
+00:41:47,600 --> 00:41:49,080
+Govind Lotlikar: See, it's already taking this route.
+
+784
+00:41:49,320 --> 00:41:50,120
+Govind Lotlikar: Are you seeing this?
+
+785
+00:41:52,380 --> 00:41:55,340
+Govind Lotlikar: Okay, and then once it goes to the AI agent.
+
+786
+00:41:55,580 --> 00:41:57,340
+Govind Lotlikar: See this particular node over here?
+
+787
+00:41:57,340 --> 00:41:59,260
+Govind Lotlikar: Now this is capturing the client name.
+
+788
+00:41:59,580 --> 00:42:08,220
+Govind Lotlikar: Now I didn't have to tell the name of the client again, I've said that, you know, once I've given the client name that is fixed till a new client is specified.
+
+789
+00:42:10,540 --> 00:42:15,980
+Govind Lotlikar: Okay, so now it is processing this and it will send me the information over here.
+
+790
+00:42:19,590 --> 00:42:21,350
+Govind Lotlikar: See, this was the.
+
+791
+00:42:23,670 --> 00:42:30,710
+Govind Lotlikar: Okay, so it responds to voice and it responds to text.
+
+792
+00:42:33,110 --> 00:42:46,120
+Aditya Sriram M: Actually what you have done is within the vector DB you have created one single instance of namespace with multiple colonies of cases.
+
+793
+00:42:46,280 --> 00:42:47,000
+Aditya Sriram M: Case information.
+
+794
+00:42:47,640 --> 00:42:52,840
+Aditya Sriram M: So this guy is going and localized, doing a localized vector search.
+
+795
+00:42:52,920 --> 00:42:55,560
+Aditya Sriram M: Yes, yes, and retrieving all that information.
+
+796
+00:42:55,640 --> 00:42:56,280
+Aditya Sriram M: Excellent.
+
+797
+00:42:57,000 --> 00:43:02,520
+Aditya Sriram M: Okay, Nice.
+
+798
+00:43:03,000 --> 00:43:05,560
+Aditya Sriram M: I think that's how it should be like for one.
+
+799
+00:43:07,080 --> 00:43:12,740
+Aditya Sriram M: Now, for example, if you think of a scaled out scenario, right?
+
+800
+00:43:13,140 --> 00:43:24,420
+Aditya Sriram M: Say if I have hundred advocates who are using a thousand cases, all the information is still going into the same vector VB Yes.
+
+801
+00:43:27,140 --> 00:43:31,220
+Govind Lotlikar: And see, for Each advocate, okay.
+
+802
+00:43:32,100 --> 00:43:37,870
+Govind Lotlikar: We will have a different vector DP created.
+
+803
+00:43:37,870 --> 00:43:41,150
+Govind Lotlikar: Like in our case, we've created legal aid.
+
+804
+00:43:41,150 --> 00:43:41,470
+Govind Lotlikar: Right.
+
+805
+00:43:41,950 --> 00:43:47,950
+Govind Lotlikar: Now, tomorrow, let's say that, you know, if there are 10 advocates, okay.
+
+806
+00:43:47,950 --> 00:43:58,190
+Govind Lotlikar: Who are independent advocates, you know, if you remember, our target audience for phase one is either independent advocates or small advocate forms with two or three advocates.
+
+807
+00:43:58,750 --> 00:43:59,310
+Aditya Sriram M: Correct?
+
+808
+00:44:00,040 --> 00:44:00,280
+Govind Lotlikar: Right.
+
+809
+00:44:00,520 --> 00:44:10,000
+Govind Lotlikar: So for each individual advocate we create an, a separate vector db, okay.
+
+810
+00:44:10,000 --> 00:44:11,720
+Govind Lotlikar: So their data doesn't get mixed.
+
+811
+00:44:11,960 --> 00:44:15,160
+Govind Lotlikar: For each advocate we create a separate workflow.
+
+812
+00:44:18,360 --> 00:44:22,840
+Govind Lotlikar: So there will be a separate webhook which will be delivered for them.
+
+813
+00:44:23,800 --> 00:44:26,450
+Aditya Sriram M: Oh, okay.
+
+814
+00:44:26,690 --> 00:44:30,050
+Govind Lotlikar: So the mismatch is not gonna, is never gonna.
+
+815
+00:44:32,690 --> 00:44:33,410
+Aditya Sriram M: Understood.
+
+816
+00:44:36,130 --> 00:44:36,770
+Aditya Sriram M: Okay.
+
+817
+00:44:38,210 --> 00:44:38,850
+Aditya Sriram M: Okay.
+
+818
+00:44:39,330 --> 00:44:46,370
+Govind Lotlikar: And then comes the third kind of advocates, you know, who.
+
+819
+00:44:46,930 --> 00:44:49,090
+Govind Lotlikar: Or paper use kind of a thing.
+
+820
+00:44:51,020 --> 00:44:51,220
+Aditya Sriram M: Right.
+
+821
+00:44:51,220 --> 00:44:54,140
+Govind Lotlikar: So for them we have this particular.
+
+822
+00:44:56,060 --> 00:45:05,660
+Govind Lotlikar: But for them we'll have to kind of combine the name, the client name and the advocate name.
+
+823
+00:45:08,380 --> 00:45:13,100
+Govind Lotlikar: Are you getting me in the name space?
+
+824
+00:45:13,980 --> 00:45:14,500
+Govind Lotlikar: Okay.
+
+825
+00:45:14,500 --> 00:45:15,900
+Govind Lotlikar: Right now it's Go, right.
+
+826
+00:45:16,140 --> 00:45:18,380
+Govind Lotlikar: Considering Go is a customer of an advocate.
+
+827
+00:45:18,800 --> 00:45:19,200
+Aditya Sriram M: Okay.
+
+828
+00:45:19,200 --> 00:45:27,840
+Govind Lotlikar: But let's say if the advocate just wants to use paper use, he doesn't want to take the entire system.
+
+829
+00:45:28,880 --> 00:45:29,440
+Aditya Sriram M: Okay.
+
+830
+00:45:30,960 --> 00:45:35,520
+Govind Lotlikar: So you give him access as one user into our ui.
+
+831
+00:45:36,240 --> 00:45:36,880
+Aditya Sriram M: Okay.
+
+832
+00:45:37,440 --> 00:45:47,740
+Govind Lotlikar: And he will get identified by the namespace, which will be a combination of his name and the name of his club.
+
+833
+00:45:50,220 --> 00:45:50,700
+Aditya Sriram M: Okay?
+
+834
+00:45:50,700 --> 00:45:52,980
+Govind Lotlikar: Okay, got it.
+
+835
+00:45:52,980 --> 00:45:53,260
+Govind Lotlikar: Now.
+
+836
+00:45:59,020 --> 00:46:07,100
+Govind Lotlikar: That's a, that's a long way to go for considering the number of hours, you know, that we've put into it.
+
+837
+00:46:07,500 --> 00:46:20,240
+Govind Lotlikar: We are like last minute study kind of a thing if whatever UI you created was one day before our meetings.
+
+838
+00:46:21,040 --> 00:46:21,600
+Govind Lotlikar: Okay.
+
+839
+00:46:22,720 --> 00:46:28,960
+Govind Lotlikar: Now whatever this improvement that I did, we, you know, I had no intention of creating that rag.
+
+840
+00:46:29,200 --> 00:46:32,400
+Govind Lotlikar: The other day Sukin said that, you know, you need to create the rag.
+
+841
+00:46:32,480 --> 00:46:34,080
+Govind Lotlikar: I want to see a wow factor.
+
+842
+00:46:35,440 --> 00:46:39,790
+Govind Lotlikar: That's why then the rag came into the picture and this also came into the picture.
+
+843
+00:46:39,790 --> 00:46:41,030
+Govind Lotlikar: The telegram bot.
+
+844
+00:46:42,310 --> 00:46:43,030
+Aditya Sriram M: Excellent.
+
+845
+00:46:45,350 --> 00:46:45,750
+Aditya Sriram M: Sure.
+
+846
+00:46:51,990 --> 00:46:52,790
+Aditya Sriram M: Anything else?
+
+847
+00:46:53,270 --> 00:46:53,750
+Govind Lotlikar: Yeah.
+
+848
+00:46:53,990 --> 00:46:59,190
+Govind Lotlikar: So what I was saying was that we'll also take a look at the UI ones.
+
+849
+00:47:01,430 --> 00:47:06,710
+Govind Lotlikar: But now since Tanmay has done only up to videos.
+
+850
+00:47:07,160 --> 00:47:07,640
+Govind Lotlikar: Okay.
+
+851
+00:47:08,040 --> 00:47:12,440
+Govind Lotlikar: What we could do is, you know, have him create a couple of videos.
+
+852
+00:47:13,080 --> 00:47:13,560
+Govind Lotlikar: Okay.
+
+853
+00:47:13,560 --> 00:47:16,840
+Govind Lotlikar: Which we can put on the landing page.
+
+854
+00:47:18,680 --> 00:47:20,120
+Aditya Sriram M: That's what I was also thinking.
+
+855
+00:47:23,079 --> 00:47:26,360
+Tanmay Bhowmick: Okay, I'll try because I, I'll try.
+
+856
+00:47:26,600 --> 00:47:28,680
+Tanmay Bhowmick: How much time do we have for the videos?
+
+857
+00:47:32,760 --> 00:47:34,480
+Govind Lotlikar: We've got about four or five days.
+
+858
+00:47:34,480 --> 00:47:43,310
+Govind Lotlikar: But you know, video refinement is also something that, you know, you'll have to do two or three times in the first time.
+
+859
+00:47:43,310 --> 00:47:44,590
+Govind Lotlikar: It's not going to come accurate.
+
+860
+00:47:45,150 --> 00:47:50,990
+Tanmay Bhowmick: What we want for the video, like I also go through the classes and what exactly we need for the videos.
+
+861
+00:47:52,030 --> 00:47:57,070
+Govind Lotlikar: So something like you know, problem statements of the advocates.
+
+862
+00:47:57,790 --> 00:47:58,350
+Tanmay Bhowmick: Okay.
+
+863
+00:47:58,350 --> 00:47:58,910
+Govind Lotlikar: Okay.
+
+864
+00:47:59,390 --> 00:48:00,990
+Govind Lotlikar: So the.
+
+865
+00:48:00,990 --> 00:48:01,310
+Govind Lotlikar: The.
+
+866
+00:48:01,310 --> 00:48:04,700
+Govind Lotlikar: The problem statement is that currently the advocates are facing.
+
+867
+00:48:04,700 --> 00:48:05,140
+Govind Lotlikar: Okay.
+
+868
+00:48:05,140 --> 00:48:12,620
+Govind Lotlikar: Which is our base for doing this one was that you know these PDFs are not non searchable.
+
+869
+00:48:12,940 --> 00:48:13,580
+Tanmay Bhowmick: Okay.
+
+870
+00:48:14,220 --> 00:48:14,620
+Govind Lotlikar: Right.
+
+871
+00:48:14,780 --> 00:48:17,580
+Govind Lotlikar: You can't search to it because they are they photo images.
+
+872
+00:48:17,980 --> 00:48:18,580
+Govind Lotlikar: Uhhuh.
+
+873
+00:48:18,580 --> 00:48:19,020
+Govind Lotlikar: Okay.
+
+874
+00:48:19,500 --> 00:48:22,140
+Govind Lotlikar: Going through agreements takes a very long time.
+
+875
+00:48:23,020 --> 00:48:23,660
+Tanmay Bhowmick: Okay.
+
+876
+00:48:23,900 --> 00:48:25,180
+Govind Lotlikar: They have to rely on.
+
+877
+00:48:25,580 --> 00:48:27,660
+Govind Lotlikar: On their staff most of the times.
+
+878
+00:48:27,980 --> 00:48:28,540
+Aditya Sriram M: Okay.
+
+879
+00:48:28,540 --> 00:48:29,100
+Govind Lotlikar: Okay.
+
+880
+00:48:29,420 --> 00:48:32,860
+Govind Lotlikar: And since they have to rely on their staff, the accuracy is a concern.
+
+881
+00:48:32,940 --> 00:48:40,860
+Govind Lotlikar: Because juniors, although they have to be trained, they may not do it as diligently as.
+
+882
+00:48:40,860 --> 00:48:42,460
+Govind Lotlikar: As the person himself.
+
+883
+00:48:42,940 --> 00:48:43,580
+Aditya Sriram M: Okay?
+
+884
+00:48:43,980 --> 00:48:44,380
+Govind Lotlikar: Right.
+
+885
+00:48:44,700 --> 00:48:49,900
+Govind Lotlikar: Juniors have to be trained and after training sometimes they want to leave the job.
+
+886
+00:48:49,980 --> 00:48:51,740
+Govind Lotlikar: They want to go for better prospects.
+
+887
+00:48:51,740 --> 00:48:52,220
+Aditya Sriram M: Yes.
+
+888
+00:48:52,220 --> 00:48:53,660
+Govind Lotlikar: So training wasted.
+
+889
+00:48:56,470 --> 00:49:09,230
+Govind Lotlikar: And one more big issue that they're facing is see today you know, law firms are not restricted to a particular area, particular geography.
+
+890
+00:49:09,230 --> 00:49:09,510
+Govind Lotlikar: Right.
+
+891
+00:49:09,830 --> 00:49:19,590
+Govind Lotlikar: Like an advocate in Mumbai can get cases which are related to Bangalore also or maybe you know, even in Delhi.
+
+892
+00:49:20,400 --> 00:49:20,800
+Govind Lotlikar: Okay.
+
+893
+00:49:20,960 --> 00:49:22,160
+Govind Lotlikar: Delhi is still fine.
+
+894
+00:49:22,240 --> 00:49:27,920
+Govind Lotlikar: But when it comes to agreements in Bangalore they are written in Canada.
+
+895
+00:49:30,160 --> 00:49:30,800
+Govind Lotlikar: Okay.
+
+896
+00:49:32,160 --> 00:49:33,760
+Govind Lotlikar: Now they don't know how to read these.
+
+897
+00:49:34,320 --> 00:49:40,720
+Govind Lotlikar: And this is a practical problem that advocates even in Mumbai are facing is that the.
+
+898
+00:49:40,720 --> 00:49:41,840
+Govind Lotlikar: The new joine.
+
+899
+00:49:42,320 --> 00:49:43,680
+Govind Lotlikar: They don't know how to read mar.
+
+900
+00:49:46,010 --> 00:49:47,450
+Govind Lotlikar: Lot of them have come from North India.
+
+901
+00:49:48,330 --> 00:49:48,970
+Govind Lotlikar: Okay.
+
+902
+00:49:48,970 --> 00:49:51,690
+Govind Lotlikar: So they know Hindi but they don't know Marati.
+
+903
+00:49:52,730 --> 00:49:53,290
+Govind Lotlikar: Okay.
+
+904
+00:49:54,090 --> 00:49:56,810
+Govind Lotlikar: So our system is translating it into my.
+
+905
+00:49:56,810 --> 00:49:57,530
+Govind Lotlikar: Into English.
+
+906
+00:49:58,250 --> 00:49:58,890
+Tanmay Bhowmick: Okay.
+
+907
+00:50:00,330 --> 00:50:00,850
+Govind Lotlikar: Okay.
+
+908
+00:50:00,850 --> 00:50:02,890
+Govind Lotlikar: So the report will get generated in English.
+
+909
+00:50:03,690 --> 00:50:04,730
+Tanmay Bhowmick: Oh, makes sense.
+
+910
+00:50:06,410 --> 00:50:14,180
+Govind Lotlikar: You know, otherwise then they have to send it to one person who will read it, will summarize it will get you know, all the details and all.
+
+911
+00:50:14,740 --> 00:50:15,300
+Govind Lotlikar: Okay.
+
+912
+00:50:16,820 --> 00:50:20,500
+Govind Lotlikar: But instead if the document is clear, we.
+
+913
+00:50:20,580 --> 00:50:25,860
+Govind Lotlikar: We get a very good percentage of accuracy.
+
+914
+00:50:26,180 --> 00:50:26,540
+Govind Lotlikar: Yeah.
+
+915
+00:50:26,540 --> 00:50:27,700
+Tanmay Bhowmick: For that you know I.
+
+916
+00:50:27,700 --> 00:50:30,780
+Tanmay Bhowmick: When you have been telling me, I just want to add one more thing.
+
+917
+00:50:30,780 --> 00:50:31,380
+Govind Lotlikar: Go in.
+
+918
+00:50:31,860 --> 00:50:34,460
+Tanmay Bhowmick: So basically the accuracy was 70, right.
+
+919
+00:50:34,460 --> 00:50:36,500
+Tanmay Bhowmick: With the document which we have been seeing, right?
+
+920
+00:50:37,070 --> 00:50:37,270
+Govind Lotlikar: Yeah.
+
+921
+00:50:37,270 --> 00:50:37,630
+Govind Lotlikar: Yeah.
+
+922
+00:50:37,790 --> 00:50:43,470
+Tanmay Bhowmick: So when we are seeing accuracy, which means that Our system was 70% accurate to read the file, right?
+
+923
+00:50:44,030 --> 00:50:44,390
+Govind Lotlikar: Yeah.
+
+924
+00:50:44,390 --> 00:50:45,150
+Govind Lotlikar: The OCR.
+
+925
+00:50:45,150 --> 00:50:48,350
+Govind Lotlikar: The OCR part was 70 accurate.
+
+926
+00:50:48,670 --> 00:50:49,030
+Tanmay Bhowmick: Yeah.
+
+927
+00:50:49,030 --> 00:50:50,670
+Tanmay Bhowmick: It is our system accuracy, right?
+
+928
+00:50:50,670 --> 00:50:51,030
+Govind Lotlikar: Yes.
+
+929
+00:50:51,030 --> 00:50:51,470
+Govind Lotlikar: Yes.
+
+930
+00:50:51,550 --> 00:50:53,470
+Tanmay Bhowmick: So can we add one more feature?
+
+931
+00:50:53,470 --> 00:50:55,870
+Tanmay Bhowmick: The way you have added where you are writing.
+
+932
+00:50:56,670 --> 00:50:58,790
+Tanmay Bhowmick: These are the suggestion which needs to be corrected.
+
+933
+00:50:58,790 --> 00:51:00,110
+Tanmay Bhowmick: And this is the suggested one.
+
+934
+00:51:00,190 --> 00:51:01,950
+Tanmay Bhowmick: You can apply it on the go.
+
+935
+00:51:02,350 --> 00:51:07,530
+Tanmay Bhowmick: Can we also tell the user that which all 30% sections.
+
+936
+00:51:08,010 --> 00:51:11,210
+Tanmay Bhowmick: Maybe it's a stamp, maybe it's something else.
+
+937
+00:51:11,770 --> 00:51:16,210
+Tanmay Bhowmick: Can just highlight those sections so that they can also like proofread by their own eyes.
+
+938
+00:51:16,210 --> 00:51:16,890
+Tanmay Bhowmick: They have also.
+
+939
+00:51:17,050 --> 00:51:17,850
+Govind Lotlikar: Yes, that's.
+
+940
+00:51:18,090 --> 00:51:18,410
+Govind Lotlikar: That.
+
+941
+00:51:18,410 --> 00:51:19,530
+Govind Lotlikar: That's what's going to appear.
+
+942
+00:51:19,850 --> 00:51:20,450
+Govind Lotlikar: Wait, wait.
+
+943
+00:51:20,450 --> 00:51:20,890
+Govind Lotlikar: Let me.
+
+944
+00:51:21,050 --> 00:51:24,250
+Govind Lotlikar: Let me show you that I had sent one on.
+
+945
+00:51:24,570 --> 00:51:29,530
+Govind Lotlikar: I had sent a previous version to Aditya.
+
+946
+00:51:30,350 --> 00:51:30,750
+Govind Lotlikar: Okay.
+
+947
+00:51:32,830 --> 00:51:35,790
+Govind Lotlikar: So in that you'll see it later.
+
+948
+00:52:13,790 --> 00:52:14,590
+Govind Lotlikar: Are you seeing this?
+
+949
+00:52:14,990 --> 00:52:15,470
+Tanmay Bhowmick: Yes.
+
+950
+00:52:16,190 --> 00:52:18,830
+Govind Lotlikar: So see, this is what Mistral gave.
+
+951
+00:52:19,550 --> 00:52:21,390
+Govind Lotlikar: This is what PDF Vector gave.
+
+952
+00:52:22,100 --> 00:52:22,380
+Govind Lotlikar: Okay.
+
+953
+00:52:22,380 --> 00:52:25,940
+Govind Lotlikar: And it has automatically resolved it.
+
+954
+00:52:27,220 --> 00:52:27,740
+Govind Lotlikar: Huh?
+
+955
+00:52:27,740 --> 00:52:30,020
+Tanmay Bhowmick: Yeah, I. I understand about the resolution.
+
+956
+00:52:30,340 --> 00:52:34,820
+Tanmay Bhowmick: I was saying that the 30% lag in our accuracy.
+
+957
+00:52:35,300 --> 00:52:37,140
+Tanmay Bhowmick: If we can show that this was.
+
+958
+00:52:38,420 --> 00:52:38,940
+Tanmay Bhowmick: This is.
+
+959
+00:52:38,940 --> 00:52:40,860
+Tanmay Bhowmick: Please validate and confirm the correct way.
+
+960
+00:52:40,860 --> 00:52:41,700
+Tanmay Bhowmick: Yeah, makes sense.
+
+961
+00:52:41,700 --> 00:52:42,100
+Govind Lotlikar: Yeah.
+
+962
+00:52:42,100 --> 00:52:42,380
+Govind Lotlikar: See.
+
+963
+00:52:42,380 --> 00:52:43,060
+Tanmay Bhowmick: Yeah, this is.
+
+964
+00:52:43,060 --> 00:52:43,900
+Tanmay Bhowmick: Yeah, that's good.
+
+965
+00:52:43,900 --> 00:52:44,180
+Govind Lotlikar: Yeah.
+
+966
+00:52:44,180 --> 00:52:44,340
+Tanmay Bhowmick: In.
+
+967
+00:52:44,340 --> 00:52:44,740
+Govind Lotlikar: In the.
+
+968
+00:52:44,740 --> 00:52:45,940
+Govind Lotlikar: In the next version.
+
+969
+00:52:46,180 --> 00:52:47,180
+Govind Lotlikar: Okay, it.
+
+970
+00:52:47,180 --> 00:52:49,980
+Govind Lotlikar: It gives me a radio button over here.
+
+971
+00:52:49,980 --> 00:52:50,980
+Govind Lotlikar: Should I select this one?
+
+972
+00:52:50,980 --> 00:52:52,020
+Govind Lotlikar: Should I select this one?
+
+973
+00:52:52,260 --> 00:52:53,780
+Govind Lotlikar: Or there is a text box over here.
+
+974
+00:52:53,860 --> 00:52:56,660
+Govind Lotlikar: Should I just write my own statement?
+
+975
+00:52:57,780 --> 00:53:01,220
+Govind Lotlikar: Okay, so these are the ones that will.
+
+976
+00:53:02,100 --> 00:53:02,500
+Govind Lotlikar: That.
+
+977
+00:53:02,500 --> 00:53:04,820
+Govind Lotlikar: That are actually taking up that 30% of it.
+
+978
+00:53:06,260 --> 00:53:06,820
+Tanmay Bhowmick: Okay.
+
+979
+00:53:10,900 --> 00:53:14,980
+Tanmay Bhowmick: Do we have problem statement document or something related to that for this?
+
+980
+00:53:17,060 --> 00:53:17,940
+Govind Lotlikar: Yeah, we.
+
+981
+00:53:18,660 --> 00:53:20,180
+Govind Lotlikar: We had our paycheck.
+
+982
+00:53:20,890 --> 00:53:21,290
+Tanmay Bhowmick: Yeah.
+
+983
+00:53:21,290 --> 00:53:22,330
+Tanmay Bhowmick: Can you show me that?
+
+984
+00:53:22,330 --> 00:53:26,730
+Tanmay Bhowmick: I'll try to convert a script and try to create something.
+
+985
+00:53:27,050 --> 00:53:28,010
+Tanmay Bhowmick: Whatever I can.
+
+986
+00:53:28,570 --> 00:53:29,050
+Govind Lotlikar: Yeah.
+
+987
+00:53:29,210 --> 00:53:36,010
+Govind Lotlikar: So also once again, I'll also open that which kind enough to have shared.
+
+988
+00:53:36,010 --> 00:53:37,130
+Aditya Sriram M: the Pitch deck with you.
+
+989
+00:53:39,290 --> 00:53:40,330
+Aditya Sriram M: I can reshare.
+
+990
+00:53:40,490 --> 00:53:43,530
+Tanmay Bhowmick: Yeah, yeah.
+
+991
+00:53:43,530 --> 00:53:44,010
+Govind Lotlikar: Okay.
+
+992
+00:53:46,980 --> 00:53:48,500
+Tanmay Bhowmick: Is that outscale presentation?
+
+993
+00:53:49,060 --> 00:53:49,540
+Aditya Sriram M: Yes.
+
+994
+00:53:49,940 --> 00:53:50,420
+Tanmay Bhowmick: Okay.
+
+995
+00:53:50,420 --> 00:53:50,820
+Govind Lotlikar: Yes.
+
+996
+00:53:51,460 --> 00:53:52,660
+Govind Lotlikar: You see, this is the one.
+
+997
+00:53:57,300 --> 00:54:00,420
+Aditya Sriram M: This is Pitch plus demo deck, the recent one.
+
+998
+00:54:22,190 --> 00:54:22,390
+Govind Lotlikar: Yes.
+
+999
+00:54:22,390 --> 00:54:23,990
+Govind Lotlikar: So see, this is the one that I told you.
+
+1000
+00:54:23,990 --> 00:54:24,190
+Govind Lotlikar: Right.
+
+1001
+00:54:24,190 --> 00:54:26,990
+Govind Lotlikar: Legacy agreements, you can't search through them.
+
+1002
+00:54:27,870 --> 00:54:28,510
+Tanmay Bhowmick: Okay.
+
+1003
+00:54:29,790 --> 00:54:30,190
+Govind Lotlikar: Right.
+
+1004
+00:54:30,430 --> 00:54:32,350
+Govind Lotlikar: Manual review is very slow.
+
+1005
+00:54:32,910 --> 00:54:36,110
+Govind Lotlikar: It is error prone because you have to depend on juniors.
+
+1006
+00:54:37,240 --> 00:54:37,560
+Aditya Sriram M: Yes.
+
+1007
+00:54:38,200 --> 00:54:41,880
+Govind Lotlikar: People and juniors are trained.
+
+1008
+00:54:42,600 --> 00:54:43,560
+Govind Lotlikar: Juniors are trained.
+
+1009
+00:54:43,560 --> 00:54:44,360
+Govind Lotlikar: But then they.
+
+1010
+00:54:44,760 --> 00:54:45,720
+Govind Lotlikar: They leave the system.
+
+1011
+00:54:45,960 --> 00:54:50,680
+Govind Lotlikar: So now you have to train the new person, whereas our system is trained.
+
+1012
+00:54:51,320 --> 00:54:51,880
+Govind Lotlikar: Okay.
+
+1013
+00:54:52,040 --> 00:54:52,800
+Govind Lotlikar: Now if I.
+
+1014
+00:54:52,800 --> 00:55:02,280
+Govind Lotlikar: If I'm asking a new joinee to just go through this particular document and check the original document and confirm whether this is correct or this is correct.
+
+1015
+00:55:02,850 --> 00:55:03,130
+Govind Lotlikar: Okay.
+
+1016
+00:55:03,130 --> 00:55:04,810
+Govind Lotlikar: For that he doesn't need intelligence.
+
+1017
+00:55:04,810 --> 00:55:09,330
+Govind Lotlikar: Now I am putting all the intelligence into the system.
+
+1018
+00:55:11,170 --> 00:55:13,410
+Govind Lotlikar: He just has to, you know.
+
+1019
+00:55:13,570 --> 00:55:15,930
+Govind Lotlikar: Now in the new one we've got those buttons, right?
+
+1020
+00:55:15,930 --> 00:55:17,090
+Govind Lotlikar: Accept and move on.
+
+1021
+00:55:17,490 --> 00:55:31,260
+Govind Lotlikar: So once you create a click on accept and let's say I select Mr. And I say accept and confirm, this particular box will go off and this document becomes version two of the document.
+
+1022
+00:55:37,580 --> 00:55:38,060
+Tanmay Bhowmick: Yes.
+
+1023
+00:55:38,060 --> 00:55:38,620
+Aditya Sriram M: Okay.
+
+1024
+00:55:39,660 --> 00:55:44,940
+Govind Lotlikar: And One point over here that I told you was related to regional languages that is missing.
+
+1025
+00:55:45,900 --> 00:55:56,360
+Govind Lotlikar: But you can add that point over here and see how you can elaborate on the functionality.
+
+1026
+00:55:56,680 --> 00:55:57,120
+Govind Lotlikar: Okay.
+
+1027
+00:55:57,120 --> 00:55:59,720
+Govind Lotlikar: Now since you are from a marketing background.
+
+1028
+00:56:00,600 --> 00:56:01,240
+Govind Lotlikar: Okay.
+
+1029
+00:56:02,440 --> 00:56:06,640
+Govind Lotlikar: This is the one where you know, this is our primary audience.
+
+1030
+00:56:06,640 --> 00:56:07,000
+Govind Lotlikar: Right.
+
+1031
+00:56:08,040 --> 00:56:10,439
+Govind Lotlikar: So this is a primary audience that we are talking about.
+
+1032
+00:56:10,680 --> 00:56:12,120
+Govind Lotlikar: Independent practitioners.
+
+1033
+00:56:13,080 --> 00:56:13,600
+Govind Lotlikar: Okay.
+
+1034
+00:56:13,600 --> 00:56:14,840
+Govind Lotlikar: And small law firms.
+
+1035
+00:56:16,760 --> 00:56:17,320
+Govind Lotlikar: Correct.
+
+1036
+00:56:18,120 --> 00:56:21,240
+Govind Lotlikar: So you could probably, you know, have a marketing plan and.
+
+1037
+00:56:21,240 --> 00:56:23,080
+Govind Lotlikar: And talk about it for a minute or so.
+
+1038
+00:56:23,750 --> 00:56:24,030
+Tanmay Bhowmick: Perfect.
+
+1039
+00:56:24,030 --> 00:56:24,350
+Aditya Sriram M: Perfect.
+
+1040
+00:56:24,350 --> 00:56:24,790
+Tanmay Bhowmick: Perfect.
+
+1041
+00:56:24,790 --> 00:56:25,430
+Govind Lotlikar: Otherwise.
+
+1042
+00:56:25,590 --> 00:56:25,990
+Govind Lotlikar: Yeah.
+
+1043
+00:56:25,990 --> 00:56:27,990
+Govind Lotlikar: Otherwise you're just going to be standing over there.
+
+1044
+00:56:28,470 --> 00:56:29,750
+Tanmay Bhowmick: Yeah, I don't want to do that.
+
+1045
+00:56:30,230 --> 00:56:30,670
+Govind Lotlikar: Yeah.
+
+1046
+00:56:30,670 --> 00:56:30,990
+Govind Lotlikar: So.
+
+1047
+00:56:30,990 --> 00:56:31,510
+Tanmay Bhowmick: Yes.
+
+1048
+00:56:31,510 --> 00:56:35,030
+Govind Lotlikar: Then your value addition is not going to be seen.
+
+1049
+00:56:35,590 --> 00:56:47,510
+Govind Lotlikar: So if you can talk about the marketing plan on how we plan to, you know, take this to the market, you could talk about this slide.
+
+1050
+00:56:49,880 --> 00:56:55,160
+Tanmay Bhowmick: I'll try to create a strategy, kind of a 1 minute, 2 minute marketing go through.
+
+1051
+00:56:55,160 --> 00:56:59,480
+Tanmay Bhowmick: Like how you're going to position this product and how you're going to reach out to the audience.
+
+1052
+00:57:00,440 --> 00:57:01,000
+Govind Lotlikar: Correct.
+
+1053
+00:57:01,480 --> 00:57:07,480
+Govind Lotlikar: So again I. I'll be talking about these problem statements of the beginning.
+
+1054
+00:57:07,800 --> 00:57:08,440
+Govind Lotlikar: Okay.
+
+1055
+00:57:08,840 --> 00:57:13,560
+Govind Lotlikar: Then the demo part, the UI demo will be done by Aditya.
+
+1056
+00:57:14,690 --> 00:57:15,170
+Govind Lotlikar: Okay.
+
+1057
+00:57:15,490 --> 00:57:20,210
+Govind Lotlikar: So Aditya, you'll have to have all those screens ready.
+
+1058
+00:57:21,570 --> 00:57:22,130
+Aditya Sriram M: Yeah.
+
+1059
+00:57:22,690 --> 00:57:23,170
+Govind Lotlikar: Yeah.
+
+1060
+00:57:23,330 --> 00:57:26,610
+Govind Lotlikar: So we of course will practice the thing.
+
+1061
+00:57:26,610 --> 00:57:26,930
+Govind Lotlikar: Right.
+
+1062
+00:57:27,010 --> 00:57:27,490
+Govind Lotlikar: Yeah.
+
+1063
+00:57:27,650 --> 00:57:29,490
+Govind Lotlikar: Next week we'll need to spend more time.
+
+1064
+00:57:30,930 --> 00:57:31,330
+Aditya Sriram M: Sure.
+
+1065
+00:57:31,810 --> 00:57:32,370
+Govind Lotlikar: On this.
+
+1066
+00:57:33,330 --> 00:57:35,530
+Govind Lotlikar: So you'll have those screens ready and.
+
+1067
+00:57:35,530 --> 00:57:38,610
+Govind Lotlikar: And you'll show the UI for telegram.
+
+1068
+00:57:38,770 --> 00:57:52,290
+Govind Lotlikar: I may have to, you know, just come in again to show the how because the bot is, you know, has been captured into my this.
+
+1069
+00:57:53,890 --> 00:57:56,930
+Govind Lotlikar: But if you are comfortable showing the bot.
+
+1070
+00:57:57,569 --> 00:57:58,050
+Govind Lotlikar: Okay.
+
+1071
+00:57:58,050 --> 00:57:59,330
+Govind Lotlikar: I can add your.
+
+1072
+00:58:00,610 --> 00:58:05,570
+Govind Lotlikar: You know, you can give me the bot.
+
+1073
+00:58:05,890 --> 00:58:09,420
+Govind Lotlikar: And see it's.
+
+1074
+00:58:09,420 --> 00:58:10,860
+Govind Lotlikar: It's very easy to create a bot.
+
+1075
+00:58:10,860 --> 00:58:12,220
+Govind Lotlikar: You have to go into bot father.
+
+1076
+00:58:12,780 --> 00:58:13,340
+Govind Lotlikar: Okay.
+
+1077
+00:58:13,340 --> 00:58:16,220
+Govind Lotlikar: And just say that new bot.
+
+1078
+00:58:17,340 --> 00:58:17,900
+Govind Lotlikar: Okay.
+
+1079
+00:58:17,900 --> 00:58:19,500
+Govind Lotlikar: Then I gave it the name Leah.
+
+1080
+00:58:20,220 --> 00:58:24,300
+Govind Lotlikar: The reason why I gave it Leah was I wanted AI.
+
+1081
+00:58:25,020 --> 00:58:26,460
+Govind Lotlikar: You know, legal AI.
+
+1082
+00:58:27,180 --> 00:58:30,300
+Govind Lotlikar: So Leah was the name that came up.
+
+1083
+00:58:31,260 --> 00:58:39,130
+Govind Lotlikar: So what ChatGPT said is you can call it legal Intelligent assistant.
+
+1084
+00:58:41,450 --> 00:58:41,930
+Aditya Sriram M: Nice.
+
+1085
+00:58:43,930 --> 00:58:44,410
+Govind Lotlikar: Okay.
+
+1086
+00:58:44,410 --> 00:58:45,290
+Govind Lotlikar: That's how Leah.
+
+1087
+00:58:52,490 --> 00:58:54,570
+Govind Lotlikar: So this is where we are so far.
+
+1088
+00:58:59,860 --> 00:59:04,100
+Govind Lotlikar: So on the next steps, Aditya, I need to give you the webhooks.
+
+1089
+00:59:04,900 --> 00:59:05,380
+Aditya Sriram M: Yes.
+
+1090
+00:59:06,180 --> 00:59:06,580
+Govind Lotlikar: Right.
+
+1091
+00:59:07,460 --> 00:59:07,860
+Govind Lotlikar: And.
+
+1092
+00:59:15,700 --> 00:59:16,820
+Govind Lotlikar: One is the webhooks.
+
+1093
+00:59:16,820 --> 00:59:18,340
+Govind Lotlikar: And I need what else?
+
+1094
+00:59:24,340 --> 00:59:26,500
+Govind Lotlikar: I need to check the.
+
+1095
+00:59:27,460 --> 00:59:27,860
+Govind Lotlikar: The report.
+
+1096
+00:59:29,460 --> 00:59:29,940
+Aditya Sriram M: Yes.
+
+1097
+00:59:30,020 --> 00:59:34,180
+Govind Lotlikar: All those, all of those need to reflect over there whether it is.
+
+1098
+00:59:35,780 --> 00:59:40,980
+Govind Lotlikar: Whether it is auto resolved or whether it is an issue that human in the loop needs to confirm.
+
+1099
+00:59:41,300 --> 00:59:43,300
+Govind Lotlikar: All of them need to be shown over there.
+
+1100
+00:59:43,620 --> 00:59:45,300
+Govind Lotlikar: Let the human in the Loop confirm.
+
+1101
+00:59:46,260 --> 00:59:46,620
+Govind Lotlikar: Right.
+
+1102
+00:59:46,620 --> 00:59:49,620
+Govind Lotlikar: Because we are talking about accuracy.
+
+1103
+00:59:50,420 --> 00:59:54,500
+Govind Lotlikar: Once the human in the loop has confirmed, the document becomes 100% accurate.
+
+1104
+01:00:01,360 --> 01:00:01,560
+Govind Lotlikar: So.
+
+1105
+01:00:01,560 --> 01:00:10,080
+Govind Lotlikar: And we'll also have to add three or four clients.
+
+1106
+01:00:10,960 --> 01:00:11,600
+Govind Lotlikar: Okay.
+
+1107
+01:00:12,560 --> 01:00:14,640
+Govind Lotlikar: To show different kind of reports if.
+
+1108
+01:00:15,200 --> 01:00:16,400
+Govind Lotlikar: If they are asked for.
+
+1109
+01:00:16,960 --> 01:00:24,720
+Govind Lotlikar: This is again something that Sukhin suggested that you need to have three or four lines over there.
+
+1110
+01:00:24,960 --> 01:00:26,720
+Govind Lotlikar: Right now we just had one, right?
+
+1111
+01:00:27,760 --> 01:00:30,400
+Govind Lotlikar: Yeah, he said you need to have three or four lines.
+
+1112
+01:00:31,520 --> 01:00:32,320
+Govind Lotlikar: So we'll do that.
+
+1113
+01:00:32,320 --> 01:00:39,360
+Govind Lotlikar: I mean, we'll anyway have to run the entire workflow.
+
+1114
+01:00:41,440 --> 01:00:41,840
+Govind Lotlikar: Right.
+
+1115
+01:00:41,920 --> 01:00:46,320
+Govind Lotlikar: So when we do that, then it'll automatically.
+
+1116
+01:00:46,400 --> 01:00:48,230
+Govind Lotlikar: We'll have three or four entries over there.
+
+1117
+01:00:49,340 --> 01:00:53,580
+Aditya Sriram M: Yeah, yeah, should be fine.
+
+1118
+01:00:53,580 --> 01:00:54,060
+Aditya Sriram M: Okay.
+
+1119
+01:00:54,460 --> 01:00:59,180
+Govind Lotlikar: And Tanmay needs to work on the video creation.
+
+1120
+01:00:59,740 --> 01:01:03,340
+Govind Lotlikar: So the videos could include problem statements from lawyers.
+
+1121
+01:01:03,820 --> 01:01:04,540
+Govind Lotlikar: Okay.
+
+1122
+01:01:05,420 --> 01:01:13,580
+Govind Lotlikar: The videos could include solutions that we have identified that for this problem there's a solution.
+
+1123
+01:01:14,070 --> 01:01:14,510
+Govind Lotlikar: This problem.
+
+1124
+01:01:14,510 --> 01:01:15,030
+Govind Lotlikar: This is.
+
+1125
+01:01:15,750 --> 01:01:18,390
+Govind Lotlikar: I mean, you're the marketing guy, you understand better, right?
+
+1126
+01:01:18,550 --> 01:01:19,030
+Tanmay Bhowmick: Yes.
+
+1127
+01:01:20,630 --> 01:01:25,670
+Aditya Sriram M: When is it, when is this next review going to happen with chicken?
+
+1128
+01:01:27,510 --> 01:01:28,710
+Govind Lotlikar: Do we have anything today?
+
+1129
+01:01:30,630 --> 01:01:31,430
+Aditya Sriram M: No, I have.
+
+1130
+01:01:31,430 --> 01:01:34,470
+Aditya Sriram M: I did not see any message from Karthik.
+
+1131
+01:01:34,630 --> 01:01:35,190
+Govind Lotlikar: I think.
+
+1132
+01:01:37,670 --> 01:01:39,830
+Aditya Sriram M: they're giving us time to work on the products.
+
+1133
+01:01:41,570 --> 01:01:41,970
+Govind Lotlikar: Okay.
+
+1134
+01:01:42,450 --> 01:01:44,850
+Govind Lotlikar: So I don't think there is another.
+
+1135
+01:01:48,610 --> 01:01:49,810
+Aditya Sriram M: This is break weekend.
+
+1136
+01:01:50,530 --> 01:01:53,010
+Aditya Sriram M: Hope your preparations for the demo day are going good.
+
+1137
+01:01:53,170 --> 01:01:56,210
+Aditya Sriram M: Please note we do not have any planned session for this week.
+
+1138
+01:01:58,130 --> 01:01:58,530
+Govind Lotlikar: Right.
+
+1139
+01:02:02,610 --> 01:02:04,530
+Govind Lotlikar: So we've got exactly two weeks.
+
+1140
+01:02:05,570 --> 01:02:06,210
+Govind Lotlikar: Okay.
+
+1141
+01:02:06,470 --> 01:02:09,710
+Govind Lotlikar: To refine, improve, whatever.
+
+1142
+01:02:09,710 --> 01:02:15,430
+Govind Lotlikar: You know, See, one is that we need to create that hype.
+
+1143
+01:02:15,750 --> 01:02:16,390
+Govind Lotlikar: Okay.
+
+1144
+01:02:16,870 --> 01:02:18,870
+Govind Lotlikar: That, that wow factor needs to be seen.
+
+1145
+01:02:20,550 --> 01:02:21,190
+Govind Lotlikar: Okay.
+
+1146
+01:02:22,550 --> 01:02:23,590
+Govind Lotlikar: Right now I.
+
+1147
+01:02:24,550 --> 01:02:27,190
+Govind Lotlikar: We've got the voice commands enabled through Telegram.
+
+1148
+01:02:27,670 --> 01:02:28,190
+Govind Lotlikar: Okay.
+
+1149
+01:02:28,190 --> 01:02:32,750
+Govind Lotlikar: But I am also trying to see if there is something that we can do using with voice.
+
+1150
+01:02:35,070 --> 01:02:36,030
+Aditya Sriram M: Voice reply.
+
+1151
+01:02:37,390 --> 01:02:38,670
+Govind Lotlikar: Yeah, something like that.
+
+1152
+01:02:39,470 --> 01:02:40,590
+Govind Lotlikar: If I can do that.
+
+1153
+01:02:41,390 --> 01:02:41,950
+Govind Lotlikar: Okay.
+
+1154
+01:02:42,030 --> 01:02:57,950
+Govind Lotlikar: But for the voice interaction, okay, we need to have maybe a Python code running which is constantly monitoring the microphone.
+
+1155
+01:02:59,400 --> 01:02:59,760
+Govind Lotlikar: Okay.
+
+1156
+01:02:59,760 --> 01:03:02,440
+Govind Lotlikar: Because you need to activate it, right?
+
+1157
+01:03:05,320 --> 01:03:14,280
+Govind Lotlikar: So you need to activate the agent, you know, and it's.
+
+1158
+01:03:14,520 --> 01:03:17,480
+Govind Lotlikar: It's very difficult.
+
+1159
+01:03:18,920 --> 01:03:22,600
+Aditya Sriram M: No, no, don't worry about how to do it.
+
+1160
+01:03:23,400 --> 01:03:26,350
+Aditya Sriram M: Just tell AI what we need.
+
+1161
+01:03:26,750 --> 01:03:28,350
+Aditya Sriram M: It will figure out how to do it.
+
+1162
+01:03:33,150 --> 01:03:36,190
+Govind Lotlikar: Show you something that I tried.
+
+1163
+01:04:01,640 --> 01:04:03,080
+Govind Lotlikar: And Condo's gone into hang.
+
+1164
+01:04:04,200 --> 01:04:04,880
+Tanmay Bhowmick: Meanwhile, go.
+
+1165
+01:04:04,880 --> 01:04:12,360
+Tanmay Bhowmick: Can you also let me know that you just required a video or should I just start working on the marketing strategy for this product?
+
+1166
+01:04:12,360 --> 01:04:13,640
+Tanmay Bhowmick: Because, you know, I believe.
+
+1167
+01:04:14,440 --> 01:04:23,800
+Tanmay Bhowmick: See, you know, the smallest of the feature looks very good when you market it and show it in a very dramatic way, to be very honest.
+
+1168
+01:04:23,800 --> 01:04:24,120
+Govind Lotlikar: Right?
+
+1169
+01:04:24,200 --> 01:04:24,760
+Govind Lotlikar: Correct.
+
+1170
+01:04:24,760 --> 01:04:25,320
+Govind Lotlikar: Correct.
+
+1171
+01:04:25,560 --> 01:04:28,120
+Tanmay Bhowmick: So what I feel like the wow factor here.
+
+1172
+01:04:28,120 --> 01:04:34,800
+Tanmay Bhowmick: See being into this project but you haven't seen the demo and I can see that anyways the product is wow.
+
+1173
+01:04:34,800 --> 01:04:35,640
+Tanmay Bhowmick: I'm telling you.
+
+1174
+01:04:35,720 --> 01:04:41,860
+Tanmay Bhowmick: It's if there is nothing like that or maybe it's like that but it's very expensive in the market related to that.
+
+1175
+01:04:41,860 --> 01:04:44,180
+Tanmay Bhowmick: It is a good thing what we have created.
+
+1176
+01:04:44,180 --> 01:04:50,060
+Tanmay Bhowmick: I think that we just need to market it in a way that people also connect, right?
+
+1177
+01:04:50,300 --> 01:04:55,260
+Tanmay Bhowmick: So we have to feel like this is what it is going on and this is how it works.
+
+1178
+01:04:55,340 --> 01:04:56,860
+Tanmay Bhowmick: The pain point of advocate.
+
+1179
+01:04:57,660 --> 01:04:58,060
+Govind Lotlikar: Right.
+
+1180
+01:04:59,820 --> 01:05:03,740
+Govind Lotlikar: So there is one more thing, you know, which I was thinking about adding.
+
+1181
+01:05:03,820 --> 01:05:04,340
+Govind Lotlikar: Okay.
+
+1182
+01:05:04,340 --> 01:05:09,020
+Govind Lotlikar: And Aditya, you may not have to add anything in the ui.
+
+1183
+01:05:10,500 --> 01:05:14,980
+Govind Lotlikar: It's like see there are fixed kind of agreements, right?
+
+1184
+01:05:14,980 --> 01:05:24,260
+Govind Lotlikar: You know like there's a home loan agreement, there is a home purchase agreement, there's a lease agreement.
+
+1185
+01:05:24,580 --> 01:05:25,140
+Govind Lotlikar: Okay.
+
+1186
+01:05:25,460 --> 01:05:30,420
+Govind Lotlikar: These agreements are more or less, you know, the templates are fixed.
+
+1187
+01:05:30,900 --> 01:05:31,460
+Govind Lotlikar: Okay.
+
+1188
+01:05:31,940 --> 01:05:47,880
+Govind Lotlikar: So if we can have these agreements in let's say a database or maybe on Google Drive and a new client is coming for a home loan agreement.
+
+1189
+01:05:48,840 --> 01:05:49,400
+Govind Lotlikar: Okay.
+
+1190
+01:05:49,960 --> 01:05:58,520
+Govind Lotlikar: We just, you know, the Advocate takes those 5, 6 details that are required from the two parties.
+
+1191
+01:05:58,840 --> 01:06:08,770
+Govind Lotlikar: Like you know, the other card, the address, the age name, okay.
+
+1192
+01:06:09,170 --> 01:06:12,370
+Govind Lotlikar: And directly from Telegram, okay.
+
+1193
+01:06:12,370 --> 01:06:17,730
+Govind Lotlikar: It tells that please create a home loan agreement for this client.
+
+1194
+01:06:18,690 --> 01:06:19,250
+Govind Lotlikar: Okay.
+
+1195
+01:06:20,370 --> 01:06:34,020
+Govind Lotlikar: So then the AI will pick up that template and add the information of this particular client and send that agreement on mail.
+
+1196
+01:06:35,220 --> 01:06:39,260
+Tanmay Bhowmick: So basically you also want to create a kind of free tools.
+
+1197
+01:06:39,260 --> 01:06:46,740
+Tanmay Bhowmick: Not free tools, a tool where customer can you know, add in their details and we can share the agreement itself.
+
+1198
+01:06:47,460 --> 01:06:47,860
+Govind Lotlikar: Yeah.
+
+1199
+01:06:47,860 --> 01:06:55,630
+Govind Lotlikar: So that opens up your target audience to people who also want to have direct customer.
+
+1200
+01:06:55,630 --> 01:06:55,950
+Govind Lotlikar: Basically.
+
+1201
+01:06:55,950 --> 01:07:04,950
+Tanmay Bhowmick: D2C we are also going to see, Yeah, the B2B one are the advocates.
+
+1202
+01:07:05,590 --> 01:07:13,150
+Tanmay Bhowmick: And giving out these kind of products will reach out to the audience like the normal audience.
+
+1203
+01:07:13,150 --> 01:07:17,310
+Tanmay Bhowmick: Like a person who wants the rent agreement or a house agreement or anything to that.
+
+1204
+01:07:17,310 --> 01:07:17,590
+Tanmay Bhowmick: Right?
+
+1205
+01:07:18,320 --> 01:07:19,680
+Govind Lotlikar: Correct, Correct, correct.
+
+1206
+01:07:24,320 --> 01:07:26,560
+Tanmay Bhowmick: And also like just I wanted to know go.
+
+1207
+01:07:26,720 --> 01:07:33,040
+Tanmay Bhowmick: How much time it requires to create a rag based informational based chatbot.
+
+1208
+01:07:36,080 --> 01:07:48,100
+Govind Lotlikar: See if you have the experience to create ragbots, maybe three or four days is enough for a basic feature.
+
+1209
+01:07:48,340 --> 01:07:48,980
+Govind Lotlikar: Okay.
+
+1210
+01:07:49,060 --> 01:07:55,860
+Govind Lotlikar: But if you're talking about the entire UI that needs to get created along with the bot.
+
+1211
+01:07:56,340 --> 01:07:56,780
+Aditya Sriram M: Okay.
+
+1212
+01:07:56,780 --> 01:08:04,500
+Govind Lotlikar: And then you also want these other features like Telegram and all then very easily two weeks full time.
+
+1213
+01:08:05,220 --> 01:08:07,140
+Govind Lotlikar: Okay, Makes sense.
+
+1214
+01:08:08,020 --> 01:08:10,660
+Tanmay Bhowmick: You know, being a normal person is here.
+
+1215
+01:08:11,160 --> 01:08:12,000
+Tanmay Bhowmick: I understand that.
+
+1216
+01:08:12,000 --> 01:08:16,560
+Tanmay Bhowmick: I also doesn't know a lot about these agreements, these advocate terms, these.
+
+1217
+01:08:16,560 --> 01:08:17,399
+Tanmay Bhowmick: All of those things.
+
+1218
+01:08:20,279 --> 01:08:24,359
+Govind Lotlikar: You know, maybe a couple of videos you could create using.
+
+1219
+01:08:26,279 --> 01:08:30,920
+Govind Lotlikar: You know, educating how to use the system.
+
+1220
+01:08:31,560 --> 01:08:32,120
+Tanmay Bhowmick: Okay.
+
+1221
+01:08:32,279 --> 01:08:37,520
+Govind Lotlikar: Maybe in another two or three meetings you'll also understand what exactly is being done.
+
+1222
+01:08:37,520 --> 01:08:37,880
+Govind Lotlikar: Right.
+
+1223
+01:08:38,410 --> 01:08:38,810
+Tanmay Bhowmick: Okay.
+
+1224
+01:08:40,410 --> 01:08:48,010
+Tanmay Bhowmick: I also try to find out the tools which can make these videos properly and let me see how it's gonna go.
+
+1225
+01:08:49,130 --> 01:08:49,609
+Govind Lotlikar: Yeah.
+
+1226
+01:08:49,609 --> 01:08:53,050
+Govind Lotlikar: Since you've done videos, this is your chance to practice.
+
+1227
+01:08:53,450 --> 01:08:54,010
+Tanmay Bhowmick: Yep.
+
+1228
+01:08:54,410 --> 01:08:55,529
+Govind Lotlikar: Real life scenarios.
+
+1229
+01:08:56,250 --> 01:08:58,529
+Tanmay Bhowmick: Like I haven't totally done it, but yeah.
+
+1230
+01:08:58,529 --> 01:09:04,170
+Tanmay Bhowmick: I have learned the image generation and getting into what we should need to do next.
+
+1231
+01:09:04,380 --> 01:09:05,060
+Tanmay Bhowmick: Well, I. I'll.
+
+1232
+01:09:05,060 --> 01:09:05,700
+Tanmay Bhowmick: I'll do it, man.
+
+1233
+01:09:05,700 --> 01:09:07,100
+Tanmay Bhowmick: Anyways, I have to learn, right.
+
+1234
+01:09:07,100 --> 01:09:08,300
+Tanmay Bhowmick: So I'll do that.
+
+1235
+01:09:11,660 --> 01:09:13,100
+Govind Lotlikar: You want to show the ui?
+
+1236
+01:09:14,300 --> 01:09:14,779
+Aditya Sriram M: Yeah.
+
+1237
+01:09:16,220 --> 01:09:21,180
+Aditya Sriram M: Try to use the replic once they have introduced a new feature of creating videos.
+
+1238
+01:09:21,740 --> 01:09:22,260
+Tanmay Bhowmick: What tool?
+
+1239
+01:09:22,260 --> 01:09:23,580
+Govind Lotlikar: What tool replic.
+
+1240
+01:09:24,140 --> 01:09:24,580
+Tanmay Bhowmick: Can you.
+
+1241
+01:09:24,580 --> 01:09:26,300
+Tanmay Bhowmick: Can you share it on WhatsApp as well?
+
+1242
+01:09:26,620 --> 01:09:27,420
+Aditya Sriram M: Yeah, sure.
+
+1243
+01:09:33,770 --> 01:09:39,930
+Tanmay Bhowmick: The UI part a marketer see, you know, the UI is the only one.
+
+1244
+01:09:40,010 --> 01:09:42,410
+Tanmay Bhowmick: Only thing which a marketer want to see.
+
+1245
+01:09:46,170 --> 01:09:46,889
+Aditya Sriram M: Okay.
+
+1246
+01:10:21,610 --> 01:10:23,530
+Aditya Sriram M: So this is the current landing page.
+
+1247
+01:10:28,290 --> 01:10:32,570
+Aditya Sriram M: So here it shows the three steps that we are trying to do.
+
+1248
+01:10:32,570 --> 01:10:34,530
+Aditya Sriram M: I've asked AI to create this.
+
+1249
+01:10:35,250 --> 01:10:36,770
+Aditya Sriram M: He says see it in action.
+
+1250
+01:10:36,850 --> 01:10:38,210
+Aditya Sriram M: It gives the three steps.
+
+1251
+01:10:38,210 --> 01:10:41,330
+Aditya Sriram M: Crop the document A analyzes everything get validated.
+
+1252
+01:10:43,410 --> 01:10:44,530
+Aditya Sriram M: This will change now.
+
+1253
+01:10:44,770 --> 01:10:47,650
+Aditya Sriram M: This will be enhanced to whatever we are going to support now.
+
+1254
+01:10:49,380 --> 01:10:51,700
+Aditya Sriram M: Rescues advocates love what we do.
+
+1255
+01:10:51,780 --> 01:10:54,700
+Aditya Sriram M: Maybe somewhere here we can before this will.
+
+1256
+01:10:54,700 --> 01:10:55,780
+Aditya Sriram M: Before success stories.
+
+1257
+01:10:55,780 --> 01:11:07,380
+Aditya Sriram M: We can have the pain points that video comes in and then we can have what advocates have are talking about the current product and the pricing.
+
+1258
+01:11:07,860 --> 01:11:09,460
+Aditya Sriram M: This is again debatable.
+
+1259
+01:11:11,380 --> 01:11:18,030
+Aditya Sriram M: We can only for the sake of completeness this.
+
+1260
+01:11:18,990 --> 01:11:19,630
+Govind Lotlikar: Okay.
+
+1261
+01:11:20,350 --> 01:11:20,670
+Govind Lotlikar: Yeah.
+
+1262
+01:11:20,670 --> 01:11:20,830
+Govind Lotlikar: So.
+
+1263
+01:11:20,830 --> 01:11:25,070
+Govind Lotlikar: And one more thing was instead of start of the trial now that link is also broken.
+
+1264
+01:11:25,230 --> 01:11:25,630
+Govind Lotlikar: Right.
+
+1265
+01:11:26,510 --> 01:11:31,869
+Govind Lotlikar: So you'll need to add.
+
+1266
+01:11:31,869 --> 01:11:33,390
+Govind Lotlikar: No, add your name to wait list.
+
+1267
+01:11:34,030 --> 01:11:34,390
+Govind Lotlikar: Okay.
+
+1268
+01:11:34,390 --> 01:11:34,710
+Aditya Sriram M: Okay.
+
+1269
+01:11:34,710 --> 01:11:35,550
+Aditya Sriram M: Add your weight.
+
+1270
+01:11:37,790 --> 01:11:39,350
+Govind Lotlikar: You look at what Sukhin had created.
+
+1271
+01:11:39,350 --> 01:11:39,630
+Govind Lotlikar: Right.
+
+1272
+01:11:40,670 --> 01:11:42,110
+Govind Lotlikar: Add your name to wait list.
+
+1273
+01:11:42,350 --> 01:11:43,870
+Govind Lotlikar: Which takes you to the.
+
+1274
+01:11:45,020 --> 01:11:45,420
+Govind Lotlikar: The form.
+
+1275
+01:11:46,380 --> 01:11:48,860
+Govind Lotlikar: A name, number, email address.
+
+1276
+01:11:49,420 --> 01:11:49,980
+Govind Lotlikar: Yeah,
+
+1277
+01:11:52,300 --> 01:11:53,500
+Aditya Sriram M: this is sign in.
+
+1278
+01:12:01,980 --> 01:12:05,180
+Aditya Sriram M: So I've changed from green color to dark blue.
+
+1279
+01:12:05,900 --> 01:12:07,420
+Aditya Sriram M: Looks more professional now.
+
+1280
+01:12:08,940 --> 01:12:11,580
+Aditya Sriram M: And so this is the dashboard for the advocate.
+
+1281
+01:12:11,910 --> 01:12:14,550
+Aditya Sriram M: All the documents show up here.
+
+1282
+01:12:15,830 --> 01:12:23,510
+Govind Lotlikar: So over here, you know, over here what he had suggested was supreme had suggested was that see saying that when you go to chat GPT.
+
+1283
+01:12:24,070 --> 01:12:24,630
+Govind Lotlikar: Okay.
+
+1284
+01:12:24,870 --> 01:12:25,510
+Govind Lotlikar: Are you.
+
+1285
+01:12:26,550 --> 01:12:34,390
+Govind Lotlikar: Are you seeing a button where you know you have to click new chat then it goes to the new chat or do you see the.
+
+1286
+01:12:34,550 --> 01:12:36,710
+Govind Lotlikar: The chat window directly in front of you.
+
+1287
+01:12:36,710 --> 01:12:37,190
+Aditya Sriram M: Yes.
+
+1288
+01:12:38,050 --> 01:12:39,570
+Aditya Sriram M: And so you have to work on that.
+
+1289
+01:12:39,730 --> 01:12:40,130
+Govind Lotlikar: Yeah.
+
+1290
+01:12:40,130 --> 01:12:41,810
+Govind Lotlikar: So that is what needs to come over here.
+
+1291
+01:12:42,210 --> 01:12:42,570
+Govind Lotlikar: Okay.
+
+1292
+01:12:42,570 --> 01:12:44,610
+Govind Lotlikar: The dashboard can go on demand.
+
+1293
+01:12:45,250 --> 01:12:45,730
+Tanmay Bhowmick: Yeah.
+
+1294
+01:12:45,810 --> 01:12:47,650
+Tanmay Bhowmick: Can we also do one more thing for the video?
+
+1295
+01:12:47,650 --> 01:12:52,370
+Tanmay Bhowmick: But I just clicked on whenever a person is gonna see this dashboard.
+
+1296
+01:12:52,850 --> 01:13:07,260
+Tanmay Bhowmick: We can also show a kind of a tutorial video to create a gamification into the product that just watch the video or maybe a automated cursor by giving a kind of a step by step guide like click on Dashboard, then click here.
+
+1297
+01:13:07,260 --> 01:13:10,420
+Tanmay Bhowmick: A kind of a lesson which we do right in eight step.
+
+1298
+01:13:10,420 --> 01:13:13,660
+Tanmay Bhowmick: Click next, click next and completely the onboarding part.
+
+1299
+01:13:13,900 --> 01:13:15,740
+Tanmay Bhowmick: Can we create something like that as well?
+
+1300
+01:13:16,860 --> 01:13:17,220
+Aditya Sriram M: Okay.
+
+1301
+01:13:17,220 --> 01:13:17,540
+Govind Lotlikar: Yeah.
+
+1302
+01:13:17,540 --> 01:13:21,100
+Govind Lotlikar: If we can take screenshots into PowerPoint.
+
+1303
+01:13:21,660 --> 01:13:22,100
+Govind Lotlikar: Okay.
+
+1304
+01:13:22,100 --> 01:13:26,460
+Govind Lotlikar: And you save it as MP4 file.
+
+1305
+01:13:26,860 --> 01:13:27,260
+Govind Lotlikar: Okay.
+
+1306
+01:13:27,260 --> 01:13:28,940
+Govind Lotlikar: The video automatically gets created.
+
+1307
+01:13:30,430 --> 01:13:32,270
+Tanmay Bhowmick: Oh, which tool I can use for that?
+
+1308
+01:13:32,430 --> 01:13:33,070
+Govind Lotlikar: PowerPoint.
+
+1309
+01:13:33,070 --> 01:13:33,870
+Govind Lotlikar: PowerPoint.
+
+1310
+01:13:34,430 --> 01:13:35,030
+Tanmay Bhowmick: PowerPoint.
+
+1311
+01:13:35,030 --> 01:13:36,990
+Tanmay Bhowmick: Like you're saying that taking the screenshot.
+
+1312
+01:13:39,150 --> 01:13:39,750
+Govind Lotlikar: Okay.
+
+1313
+01:13:39,750 --> 01:13:44,590
+Govind Lotlikar: And you, you put labels, click here and go to the next.
+
+1314
+01:13:44,670 --> 01:13:48,910
+Govind Lotlikar: You know, once you click here, then you go to the next slide.
+
+1315
+01:13:49,230 --> 01:13:50,830
+Govind Lotlikar: Then you show the next slide.
+
+1316
+01:13:51,390 --> 01:13:52,310
+Govind Lotlikar: You say click here.
+
+1317
+01:13:52,310 --> 01:13:53,550
+Tanmay Bhowmick: We have all the slides.
+
+1318
+01:13:53,550 --> 01:13:53,950
+Aditya Sriram M: Go.
+
+1319
+01:13:53,950 --> 01:13:55,150
+Tanmay Bhowmick: Do we have all the slides?
+
+1320
+01:13:56,220 --> 01:13:56,940
+Govind Lotlikar: No, not yet.
+
+1321
+01:13:57,500 --> 01:14:03,100
+Govind Lotlikar: So once Aditya completes this, then we'll have it.
+
+1322
+01:14:03,980 --> 01:14:04,540
+Aditya Sriram M: Okay.
+
+1323
+01:14:06,540 --> 01:14:07,180
+Aditya Sriram M: Okay.
+
+1324
+01:14:09,980 --> 01:14:16,620
+Aditya Sriram M: So each advocate can have clients, multiple clients, cases and all the documents related here.
+
+1325
+01:14:17,340 --> 01:14:19,980
+Aditya Sriram M: So based on our earlier discussion, right.
+
+1326
+01:14:24,440 --> 01:14:33,800
+Aditya Sriram M: So using AI, I'll get all what is pending now for me to take up as an action item.
+
+1327
+01:14:34,040 --> 01:14:40,840
+Aditya Sriram M: I'll convert that into a requirement and feed it into my windser so that it'll start developing page wise.
+
+1328
+01:14:41,400 --> 01:14:41,960
+Govind Lotlikar: Yeah.
+
+1329
+01:14:42,360 --> 01:14:51,000
+Govind Lotlikar: So over here, you know when you click on that button now this screen that comes up now, this is supposed to be on the previous one.
+
+1330
+01:14:51,490 --> 01:14:52,210
+Govind Lotlikar: That's what he's saying.
+
+1331
+01:14:52,850 --> 01:14:56,890
+Govind Lotlikar: Because now you directly know what is to be done.
+
+1332
+01:14:56,890 --> 01:15:00,770
+Govind Lotlikar: The first thing that needs to be done is you need to drop.
+
+1333
+01:15:01,410 --> 01:15:05,170
+Govind Lotlikar: But from the dashboard you don't come to know what is the first thing that needs to be done.
+
+1334
+01:15:09,650 --> 01:15:15,970
+Aditya Sriram M: So you want a small, on the right hand side itself option to upload all the documents, right?
+
+1335
+01:15:16,370 --> 01:15:16,930
+Govind Lotlikar: No, no.
+
+1336
+01:15:16,930 --> 01:15:18,530
+Govind Lotlikar: Directly in front is saying.
+
+1337
+01:15:19,120 --> 01:15:20,800
+Govind Lotlikar: Oh yeah.
+
+1338
+01:15:21,440 --> 01:15:24,160
+Govind Lotlikar: That, that page itself has to be the first one.
+
+1339
+01:15:24,160 --> 01:15:28,880
+Govind Lotlikar: First page you can say welcome back advocate Rajesh Kumar.
+
+1340
+01:15:29,200 --> 01:15:30,400
+Govind Lotlikar: Okay, that is fine.
+
+1341
+01:15:31,120 --> 01:15:34,879
+Govind Lotlikar: Then on the, instead of this dashboard showing.
+
+1342
+01:15:35,360 --> 01:15:35,920
+Govind Lotlikar: Okay.
+
+1343
+01:15:36,080 --> 01:15:42,960
+Govind Lotlikar: See the relevance is that when will the advocate go to this particular site?
+
+1344
+01:15:44,490 --> 01:15:47,370
+Govind Lotlikar: When he wants to feed this his documents, right?
+
+1345
+01:15:47,610 --> 01:15:48,090
+Aditya Sriram M: Yes.
+
+1346
+01:15:48,330 --> 01:15:51,930
+Govind Lotlikar: He's not interested in seeing how many documents he has processed.
+
+1347
+01:15:53,370 --> 01:15:53,930
+Govind Lotlikar: Okay.
+
+1348
+01:15:54,090 --> 01:16:04,250
+Govind Lotlikar: So we need to reduce the number of clicks for this particular client in as few clicks as possible.
+
+1349
+01:16:04,330 --> 01:16:07,890
+Govind Lotlikar: So the first screen itself is like chat.
+
+1350
+01:16:07,890 --> 01:16:09,290
+Govind Lotlikar: GPT's chat window.
+
+1351
+01:16:10,420 --> 01:16:10,900
+Govind Lotlikar: Directly.
+
+1352
+01:16:10,900 --> 01:16:11,500
+Govind Lotlikar: Directly.
+
+1353
+01:16:11,500 --> 01:16:12,180
+Govind Lotlikar: Start chatting.
+
+1354
+01:16:12,180 --> 01:16:14,180
+Govind Lotlikar: So directly upload your file over here.
+
+1355
+01:16:14,740 --> 01:16:15,300
+Govind Lotlikar: Okay.
+
+1356
+01:16:15,700 --> 01:16:19,220
+Govind Lotlikar: And then once he's uploaded, okay.
+
+1357
+01:16:19,700 --> 01:16:22,980
+Govind Lotlikar: And you take him to the screen where you, where he says that.
+
+1358
+01:16:23,220 --> 01:16:23,660
+Govind Lotlikar: Okay.
+
+1359
+01:16:23,660 --> 01:16:24,260
+Govind Lotlikar: Start process.
+
+1360
+01:16:27,060 --> 01:16:27,700
+Govind Lotlikar: Okay.
+
+1361
+01:16:28,260 --> 01:16:29,700
+Govind Lotlikar: So that's the second screen.
+
+1362
+01:16:29,860 --> 01:16:33,620
+Govind Lotlikar: And when he clicks on, after he clicks on, process.
+
+1363
+01:16:34,740 --> 01:16:35,460
+Govind Lotlikar: Okay.
+
+1364
+01:16:36,030 --> 01:16:40,430
+Govind Lotlikar: Over here, instead of showing these many tabs, okay.
+
+1365
+01:16:40,590 --> 01:16:45,710
+Govind Lotlikar: You show the report directly over here.
+
+1366
+01:16:46,270 --> 01:16:46,910
+Aditya Sriram M: Okay.
+
+1367
+01:16:48,750 --> 01:16:49,390
+Govind Lotlikar: Okay.
+
+1368
+01:16:49,630 --> 01:16:52,310
+Govind Lotlikar: And so you see that person gets to see.
+
+1369
+01:16:52,310 --> 01:16:54,110
+Govind Lotlikar: Okay, the current accuracy is 69.
+
+1370
+01:16:54,990 --> 01:16:57,630
+Govind Lotlikar: So he needs to work on the remaining.
+
+1371
+01:16:59,230 --> 01:17:02,430
+Govind Lotlikar: So on that second tab you can have only two tabs over here.
+
+1372
+01:17:03,130 --> 01:17:08,090
+Govind Lotlikar: One is showing you the report and the second tab is to improve the accuracy.
+
+1373
+01:17:08,410 --> 01:17:09,450
+Govind Lotlikar: Human in the loop.
+
+1374
+01:17:12,010 --> 01:17:29,130
+Govind Lotlikar: So when he goes to that tab over here, you need to show him side by side this PDF and on the other side he needs to see the document that has been created along with the mismatches.
+
+1375
+01:17:31,290 --> 01:17:31,770
+Govind Lotlikar: Okay.
+
+1376
+01:17:32,250 --> 01:17:37,370
+Govind Lotlikar: So while he approves those mismatches one side, he can see this document.
+
+1377
+01:17:38,570 --> 01:17:39,210
+Aditya Sriram M: Okay.
+
+1378
+01:17:39,690 --> 01:17:40,130
+Govind Lotlikar: Okay.
+
+1379
+01:17:40,130 --> 01:17:45,610
+Govind Lotlikar: And then you'll probably need to have some button like full screen mode.
+
+1380
+01:17:45,770 --> 01:17:50,810
+Govind Lotlikar: So because this left hand and the right hand side is of no relevance.
+
+1381
+01:17:50,810 --> 01:17:51,050
+Govind Lotlikar: Right.
+
+1382
+01:17:51,050 --> 01:17:57,460
+Govind Lotlikar: When he's, he needs as much space as he can to go through these documents side by side.
+
+1383
+01:17:58,420 --> 01:17:58,980
+Aditya Sriram M: Okay.
+
+1384
+01:18:01,380 --> 01:18:02,020
+Aditya Sriram M: Okay.
+
+1385
+01:18:05,780 --> 01:18:08,820
+Aditya Sriram M: Let me see how wind will take it.
+
+1386
+01:18:10,020 --> 01:18:10,500
+Govind Lotlikar: Yeah.
+
+1387
+01:18:10,899 --> 01:18:15,860
+Aditya Sriram M: So I, I feel that we are in a crucial state from here.
+
+1388
+01:18:15,860 --> 01:18:20,700
+Aditya Sriram M: Every change that goes in should be stable so that we can.
+
+1389
+01:18:20,700 --> 01:18:21,140
+Govind Lotlikar: Yes.
+
+1390
+01:18:21,720 --> 01:18:26,440
+Aditya Sriram M: Revert back to the like previous known state.
+
+1391
+01:18:27,160 --> 01:18:28,200
+Govind Lotlikar: Yes, yes.
+
+1392
+01:18:28,280 --> 01:18:30,360
+Aditya Sriram M: We should not mess up things now.
+
+1393
+01:18:30,840 --> 01:18:33,760
+Govind Lotlikar: You know, this is actually what happened with me yesterday.
+
+1394
+01:18:33,760 --> 01:18:36,520
+Govind Lotlikar: My, my perplexity.
+
+1395
+01:18:37,079 --> 01:18:37,640
+Govind Lotlikar: Okay.
+
+1396
+01:18:39,080 --> 01:18:45,320
+Govind Lotlikar: Before one year expiry, it started telling me that, you know, you've already exhausted your usage for the whole year.
+
+1397
+01:18:49,000 --> 01:18:49,480
+Aditya Sriram M: Yeah.
+
+1398
+01:18:50,510 --> 01:18:52,230
+Govind Lotlikar: I was like, you know, what do I do now?
+
+1399
+01:18:52,230 --> 01:19:04,270
+Govind Lotlikar: Because publicity was giving me some good troubleshooting using the sonnet.
+
+1400
+01:19:06,190 --> 01:19:06,830
+Govind Lotlikar: Okay.
+
+1401
+01:19:07,550 --> 01:19:14,430
+Govind Lotlikar: But this chat GPT is not as good as for troubleshooting.
+
+1402
+01:19:15,240 --> 01:19:16,200
+Govind Lotlikar: Strategy is bad.
+
+1403
+01:19:17,080 --> 01:19:18,040
+Govind Lotlikar: Claude is good.
+
+1404
+01:19:18,440 --> 01:19:18,880
+Aditya Sriram M: Yes.
+
+1405
+01:19:18,880 --> 01:19:20,840
+Govind Lotlikar: So then I, I reached out to Karthik.
+
+1406
+01:19:21,720 --> 01:19:22,680
+Govind Lotlikar: What can I do?
+
+1407
+01:19:23,400 --> 01:19:27,080
+Govind Lotlikar: Karthik replied by saying that I'm in a session, I can't talk right now.
+
+1408
+01:19:28,200 --> 01:19:31,480
+Govind Lotlikar: Then I, then I logged into Claude.
+
+1409
+01:19:33,080 --> 01:19:33,600
+Govind Lotlikar: Okay.
+
+1410
+01:19:33,600 --> 01:19:35,920
+Govind Lotlikar: And started using Claude.
+
+1411
+01:19:35,920 --> 01:19:47,370
+Govind Lotlikar: So after every 15, 20 minutes, Claude was telling me that, okay, you've exhausted your usage now you can again chat after three hours.
+
+1412
+01:19:47,930 --> 01:19:55,770
+Govind Lotlikar: So then I logged in with my other email id so I had three email IDs I you know I was going through each email id just to complete this.
+
+1413
+01:19:58,410 --> 01:19:58,890
+Aditya Sriram M: thanks.
+
+1414
+01:20:01,690 --> 01:20:41,720
+Govind Lotlikar: a little hectic yesterday but yeah at least now we have a way forward try to streamline the things okay and as Tanmay mentioned more than the technical part okay More than the functionality if we can market the product okay that will get us more visibility yeah right okay so when do we meet next so if.
+
+1415
+01:20:41,720 --> 01:20:44,920
+Aditya Sriram M: I have these things the webhooks.
+
+1416
+01:20:44,920 --> 01:20:46,120
+Govind Lotlikar: right I'll give you.
+
+1417
+01:20:46,120 --> 01:21:02,490
+Aditya Sriram M: I'll give you now then tonight 10 o' clock at least in the chat I'll update what is the status where we are if it is a good enough then we can meet otherwise tomorrow same time we can sync up.
+
+1418
+01:21:03,690 --> 01:21:06,410
+Govind Lotlikar: okay okay yeah.
+
+1419
+01:21:09,770 --> 01:21:11,690
+Aditya Sriram M: cool thank you guys.
+
+1420
+01:21:11,690 --> 01:21:15,530
+Govind Lotlikar: okay thanks guys any points you want to say.
+
+1421
+01:21:23,930 --> 01:21:24,650
+Aditya Sriram M: I'm ready.
+
+1422
+01:21:28,740 --> 01:21:33,140
+Aditya Sriram M: Okay I think he dropped by Gohin.
+

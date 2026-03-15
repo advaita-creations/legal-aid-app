@@ -33,3 +33,22 @@ export interface CaseCreateRequest {
 }
 
 export interface CaseUpdateRequest extends Partial<CaseCreateRequest> {}
+
+export type CaseEventType =
+  | 'created'
+  | 'status_change'
+  | 'document_added'
+  | 'document_processed'
+  | 'note'
+  | 'hearing'
+  | 'milestone';
+
+export interface CaseEvent {
+  id: number;
+  event_type: CaseEventType;
+  title: string;
+  description: string;
+  metadata: Record<string, unknown>;
+  created_by_name: string;
+  created_at: string;
+}

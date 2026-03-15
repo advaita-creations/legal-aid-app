@@ -39,3 +39,52 @@ class Case(models.Model):
 
     def __str__(self) -> str:
         return f"{self.case_number} — {self.title}"
+
+
+class CaseEvent(models.Model):
+    """Timeline event for a case.
+
+    Tracks key milestones, status changes, document uploads,
+    and manual notes added by the advocate.
+    """
+
+    EVENT_TYPE_CHOICES = [
+        ('created', 'Case Created'),
+        ('status_change', 'Status Changed'),
+        ('document_added', 'Document Added'),
+        ('document_processed', 'Document Processed'),
+        ('note', 'Note Added'),
+        ('hearing', 'Hearing Scheduled'),
+        ('milestone', 'Milestone'),
+    ]
+
+    case = models.ForeignKey(
+        Case,
+        on_delete=models.CASCADE,
+        related_name='events',
+    )
+    event_type = models.CharField(max_length=20, choices=EVENT_TYPE_CHOICES)
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    metadata = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text='Extra context: old_status, new_status, document_id, etc.',
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='case_events',
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['case', '-created_at']),
+        ]
+
+    def __str__(self) -> str:
+        return f"[{self.event_type}] {self.title}"

@@ -458,8 +458,8 @@ function SectionAccordion({
             >
               {copied ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                  <span className="text-green-600">Copied</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-500" />
+                  <span className="text-blue-600">Copied</span>
                 </>
               ) : (
                 <>

@@ -13,7 +13,7 @@ import type { CaseStatus } from '../types';
 const PAGE_SIZE = 10;
 
 const statusColors: Record<CaseStatus, string> = {
-  active: 'bg-green-100 text-green-700',
+  active: 'bg-blue-100 text-blue-700',
   closed: 'bg-gray-100 text-gray-700',
   archived: 'bg-amber-100 text-amber-700',
 };
@@ -68,7 +68,7 @@ export function CaseList() {
         </div>
         <Link
           to="/cases/new"
-          className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Case
@@ -84,13 +84,13 @@ export function CaseList() {
               placeholder="Search cases..."
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
+              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
             />
           </div>
           <select
             value={statusFilter}
             onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
           >
             <option value="all">All Status</option>
             <option value="active">Active</option>
@@ -107,7 +107,7 @@ export function CaseList() {
           <p className="text-gray-600 mb-4">Create your first legal case to get started.</p>
           <Link
             to="/cases/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Add Case
@@ -120,11 +120,11 @@ export function CaseList() {
               <Link
                 key={caseItem.id}
                 to={`/cases/${caseItem.id}`}
-                className="flex items-center justify-between bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-green-600 transition-all"
+                className="flex items-center justify-between bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-blue-600 transition-all"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
-                    <Briefcase className="w-5 h-5 text-green-600" />
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                    <Briefcase className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">{caseItem.title}</h3>

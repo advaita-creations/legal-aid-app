@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "apps.cases",
     "apps.documents",
     "apps.webhooks",
+    "apps.search",
 ]
 
 MIDDLEWARE = [

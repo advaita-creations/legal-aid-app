@@ -10,13 +10,15 @@ import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import { ProcessingStatus } from './ProcessingStatus';
 import { ProcessedResults } from './ProcessedResults';
+import { ReviewPanel } from '@/features/review';
+import { isFeatureEnabled } from '@/lib/feature-flags';
 import type { DocumentStatus, DocumentStatusEntry } from '../types';
 
 const statusColors: Record<DocumentStatus, string> = {
   uploaded: 'bg-gray-100 text-gray-700',
   ready_to_process: 'bg-amber-100 text-amber-700',
   in_progress: 'bg-blue-100 text-blue-700',
-  processed: 'bg-green-100 text-green-700',
+  processed: 'bg-blue-100 text-blue-700',
 };
 
 const statusLabels: Record<DocumentStatus, string> = {
@@ -231,6 +233,11 @@ export function DocumentDetail() {
             <ProcessedResults doc={doc} />
           )}
 
+          {/* Human-in-the-Loop Review Panel */}
+          {isProcessed && isFeatureEnabled('DOCUMENT_REVIEW') && id && (
+            <ReviewPanel documentId={id} />
+          )}
+
           {/* Original file preview (always shown, collapsible when processed) */}
           {fileUrl && (
             <details open={!isProcessed || !hasProcessedResults}>
@@ -267,7 +274,7 @@ export function DocumentDetail() {
               <div>
                 <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider">Case</dt>
                 <dd className="mt-1">
-                  <Link to={`/cases/${doc.case_id}`} className="text-sm text-green-600 hover:underline">
+                  <Link to={`/cases/${doc.case_id}`} className="text-sm text-blue-600 hover:underline">
                     {doc.case_title}
                   </Link>
                 </dd>
@@ -275,7 +282,7 @@ export function DocumentDetail() {
               <div>
                 <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider">Client</dt>
                 <dd className="mt-1">
-                  <Link to={`/clients/${doc.client_id}`} className="text-sm text-green-600 hover:underline">
+                  <Link to={`/clients/${doc.client_id}`} className="text-sm text-blue-600 hover:underline">
                     {doc.client_name}
                   </Link>
                 </dd>
@@ -323,14 +330,14 @@ export function DocumentDetail() {
                     if (ok) statusMutation.mutate(next);
                   }}
                   disabled={statusMutation.isPending}
-                  className="w-full mt-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full mt-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   {statusMutation.isPending ? 'Updating...' : nextStatusLabel[doc.status]}
                 </button>
               )}
 
               {doc.status === 'processed' && (
-                <p className="text-xs text-green-600 text-center font-medium">Document fully processed</p>
+                <p className="text-xs text-blue-600 text-center font-medium">Document fully processed</p>
               )}
             </div>
           </div>
@@ -344,7 +351,7 @@ export function DocumentDetail() {
                 {doc.status_history.map((entry: DocumentStatusEntry) => (
                   <div key={entry.id} className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className="w-2 h-2 rounded-full bg-green-600 mt-1.5" />
+                      <div className="w-2 h-2 rounded-full bg-blue-600 mt-1.5" />
                       <div className="flex-1 w-px bg-gray-200" />
                     </div>
                     <div className="pb-3">

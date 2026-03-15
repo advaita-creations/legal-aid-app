@@ -8,11 +8,13 @@ import { casesApi } from '../api/casesApi';
 import { documentsApi } from '@/features/documents/api/documentsApi';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm-dialog';
+import { CaseTimeline } from './CaseTimeline';
+import { isFeatureEnabled } from '@/lib/feature-flags';
 import type { CaseStatus } from '../types';
 import type { DocumentStatus } from '@/features/documents/types';
 
 const statusColors: Record<CaseStatus, string> = {
-  active: 'bg-green-100 text-green-700',
+  active: 'bg-blue-100 text-blue-700',
   closed: 'bg-gray-100 text-gray-700',
   archived: 'bg-amber-100 text-amber-700',
 };
@@ -21,7 +23,7 @@ const docStatusColors: Record<DocumentStatus, string> = {
   uploaded: 'bg-gray-100 text-gray-700',
   ready_to_process: 'bg-amber-100 text-amber-700',
   in_progress: 'bg-blue-100 text-blue-700',
-  processed: 'bg-green-100 text-green-700',
+  processed: 'bg-blue-100 text-blue-700',
 };
 
 const docStatusLabels: Record<DocumentStatus, string> = {
@@ -169,12 +171,19 @@ export function CaseDetail() {
         </div>
       )}
 
+      {/* Case Timeline */}
+      {isFeatureEnabled('CASE_TIMELINE') && id && (
+        <div className="mb-6">
+          <CaseTimeline caseId={id} />
+        </div>
+      )}
+
       <div className="bg-white rounded-xl border border-gray-200 p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold text-gray-900">Documents</h3>
           <Link
             to="/documents/new"
-            className="text-sm text-green-600 hover:underline font-medium"
+            className="text-sm text-blue-600 hover:underline font-medium"
           >
             + Upload Document
           </Link>

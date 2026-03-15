@@ -58,7 +58,7 @@ export function ClientList() {
         </div>
         <Link
           to="/clients/new"
-          className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Client
@@ -74,7 +74,7 @@ export function ClientList() {
               placeholder="Search clients..."
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
+              className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
             />
           </div>
         </div>
@@ -87,7 +87,7 @@ export function ClientList() {
           <p className="text-gray-600 mb-4">Get started by adding your first client.</p>
           <Link
             to="/clients/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Add Client
@@ -100,11 +100,11 @@ export function ClientList() {
               <Link
                 key={client.id}
                 to={`/clients/${client.id}`}
-                className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-green-600 transition-all"
+                className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-blue-600 transition-all"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center">
-                    <Users className="w-6 h-6 text-green-600" />
+                  <div className="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center">
+                    <Users className="w-6 h-6 text-blue-600" />
                   </div>
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">{client.full_name}</h3>

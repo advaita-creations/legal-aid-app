@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api/client';
-import type { Case, CaseCreateRequest } from '../types';
+import type { Case, CaseCreateRequest, CaseEvent } from '../types';
 
 export const casesApi = {
   getAll: async (): Promise<Case[]> => {
@@ -24,5 +24,18 @@ export const casesApi = {
 
   delete: async (id: string): Promise<void> => {
     await apiClient.delete(`/cases/${id}/`);
+  },
+
+  getEvents: async (caseId: string): Promise<CaseEvent[]> => {
+    const response = await apiClient.get<CaseEvent[]>(`/cases/${caseId}/events/`);
+    return response.data;
+  },
+
+  addEvent: async (
+    caseId: string,
+    data: { event_type: string; title: string; description?: string },
+  ): Promise<CaseEvent> => {
+    const response = await apiClient.post<CaseEvent>(`/cases/${caseId}/events/`, data);
+    return response.data;
   },
 };
