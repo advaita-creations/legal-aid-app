@@ -64,6 +64,9 @@ const LandingPageRoute = lazy(() =>
 const ForgotPasswordPage = lazy(() =>
   import('./routes/ForgotPasswordPage').then((m) => ({ default: m.ForgotPasswordPage })),
 );
+const WaitlistPage = lazy(() =>
+  import('./routes/WaitlistPage').then((m) => ({ default: m.WaitlistPage })),
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -97,6 +100,7 @@ function App() {
               <Route path="/" element={<LandingPageRoute />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/waitlist" element={<WaitlistPage />} />
               <Route path="/unauthorized" element={<UnauthorizedPage />} />
               <Route
                 element={

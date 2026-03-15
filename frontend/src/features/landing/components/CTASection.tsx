@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
-import { WaitlistForm } from './WaitlistForm';
-import { isFeatureEnabled } from '@/lib/feature-flags';
 
 export function CTASection() {
   return (
@@ -39,30 +37,24 @@ export function CTASection() {
             Your first 14 days are completely free — no credit card, no strings attached.
           </p>
 
-          {isFeatureEnabled('WAITLIST') ? (
-            <div className="mx-auto max-w-md">
-              <WaitlistForm variant="inline" />
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a
-                href="#pricing"
-                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-10 py-4 text-base font-bold text-white shadow-xl shadow-blue-600/25 transition-all hover:shadow-blue-600/40 hover:brightness-110"
-              >
-                Start Your Free Trial
-                <ArrowRight
-                  size={18}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </a>
-              <a
-                href="#demo"
-                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-10 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all hover:border-white/30 hover:bg-white/10"
-              >
-                Watch Demo
-              </a>
-            </div>
-          )}
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="/waitlist"
+              className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-10 py-4 text-base font-bold text-white shadow-xl shadow-blue-600/25 transition-all hover:shadow-blue-600/40 hover:brightness-110"
+            >
+              Add Your Name to Waitlist
+              <ArrowRight
+                size={18}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </a>
+            <a
+              href="#demo"
+              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-10 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all hover:border-white/30 hover:bg-white/10"
+            >
+              Watch Demo
+            </a>
+          </div>
 
           {/* Trust signals */}
           <motion.div

@@ -10,6 +10,7 @@ import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import { ProcessingStatus } from './ProcessingStatus';
 import { ProcessedResults } from './ProcessedResults';
+import { DocumentDiffView } from './DocumentDiffView';
 import { ReviewPanel } from '@/features/review';
 import { isFeatureEnabled } from '@/lib/feature-flags';
 import type { DocumentStatus, DocumentStatusEntry } from '../types';
@@ -228,7 +229,12 @@ export function DocumentDetail() {
             <ProcessingStatus status={doc.status} name={doc.name} />
           )}
 
-          {/* Processed results with 3 tabs */}
+          {/* Side-by-side diff: Original vs Processed V1 */}
+          {isProcessed && hasProcessedResults && doc.processed_html_url && fileUrl && (
+            <DocumentDiffView doc={doc} />
+          )}
+
+          {/* Processed results tabs (report, validated doc, structured data) */}
           {isProcessed && hasProcessedResults && (
             <ProcessedResults doc={doc} />
           )}
@@ -238,14 +244,9 @@ export function DocumentDetail() {
             <ReviewPanel documentId={id} />
           )}
 
-          {/* Original file preview (always shown, collapsible when processed) */}
-          {fileUrl && (
-            <details open={!isProcessed || !hasProcessedResults}>
-              <summary className="text-sm font-medium text-gray-600 cursor-pointer hover:text-gray-900 mb-2">
-                {isProcessed ? 'Original Document' : 'Document Preview'}
-              </summary>
-              <FilePreview fileUrl={fileUrl} fileType={doc.file_type} name={doc.name} />
-            </details>
+          {/* Original file preview (shown when not yet processed) */}
+          {fileUrl && !isProcessed && (
+            <FilePreview fileUrl={fileUrl} fileType={doc.file_type} name={doc.name} />
           )}
 
           <div className="bg-white rounded-xl border border-gray-200 p-5">
