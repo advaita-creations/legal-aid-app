@@ -19,6 +19,7 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
   const [localMessages, setLocalMessages] = useState<ChatMessage[]>([]);
   const [suggestionText, setSuggestionText] = useState('');
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
+  const [selectedCaseId, setSelectedCaseId] = useState<number | null>(null);
 
   const { data: historyMessages } = useChatHistory(conversationId);
   const sendMutation = useSendMessage(conversationId);
@@ -41,7 +42,7 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
       setLocalMessages((prev) => [...prev, tempUserMsg]);
 
       sendMutation.mutate(
-        { message, conversation_id: conversationId, client_id: selectedClientId },
+        { message, conversation_id: conversationId, client_id: selectedClientId, case_id: selectedCaseId },
         {
           onSuccess: (data) => {
             if (!conversationId) {
@@ -55,7 +56,7 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
         },
       );
     },
-    [conversationId, sendMutation, selectedClientId],
+    [conversationId, sendMutation, selectedClientId, selectedCaseId],
   );
 
   const handleSuggestionClick = useCallback((text: string) => {
@@ -88,6 +89,8 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
               onClose={onClose}
               selectedClientId={selectedClientId}
               onClientChange={setSelectedClientId}
+              selectedCaseId={selectedCaseId}
+              onCaseChange={setSelectedCaseId}
             />
 
             {hasMessages ? (

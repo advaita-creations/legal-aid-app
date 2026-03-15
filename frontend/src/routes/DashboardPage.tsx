@@ -1,11 +1,12 @@
 import { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Briefcase, FileText, Image, File, Clock, CheckCircle, AlertTriangle, Loader, Upload, X, Zap } from 'lucide-react';
+import { Users, Briefcase, FileText, Image, File, Clock, CheckCircle, AlertTriangle, Loader, Upload, X, Zap, Sparkles, ArrowRight, FileImage, FileScan } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useDropzone } from 'react-dropzone';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
 
@@ -50,11 +51,12 @@ const uploadSchema = z.object({
 
 type UploadValues = z.infer<typeof uploadSchema>;
 
-function CompactUpload() {
+function HeroUpload() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const { data: cases, isLoading: casesLoading } = useQuery({
     queryKey: ['cases'],
@@ -69,6 +71,7 @@ function CompactUpload() {
   const onDrop = useCallback(
     (accepted: File[]) => {
       setFileError(null);
+      setUploadSuccess(false);
       if (accepted.length === 0) return;
       const file = accepted[0];
       if (!Object.keys(ACCEPTED_TYPES).includes(file.type)) {
@@ -105,9 +108,11 @@ function CompactUpload() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
-      toast('Document uploaded successfully');
+      toast('Document uploaded successfully!');
       setSelectedFile(null);
+      setUploadSuccess(true);
       reset();
+      setTimeout(() => setUploadSuccess(false), 3000);
     },
   });
 
@@ -120,96 +125,166 @@ function CompactUpload() {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 mb-6">
-      <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
-          <Upload className="w-4 h-4 text-white" />
-        </div>
-        <h3 className="text-sm font-semibold text-gray-900">Quick Upload</h3>
-      </div>
+    <div className="relative mb-8 overflow-hidden rounded-2xl">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0E27] via-[#131842] to-[#1a1f4e]" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-blue-500/20 blur-[80px]" />
+      <div className="pointer-events-none absolute -left-10 -bottom-10 h-56 w-56 rounded-full bg-purple-600/20 blur-[80px]" />
+      <div className="pointer-events-none absolute right-1/3 top-1/2 h-40 w-40 rounded-full bg-cyan-500/10 blur-[60px]" />
 
-      {mutation.error && (
-        <div className="rounded-lg bg-red-50 border border-red-200 p-2.5 mb-3">
-          <p className="text-xs text-red-800">Upload failed. Please try again.</p>
+      <div className="relative z-10 p-6 lg:p-8">
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-5">
+          <div className="flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="text-[11px] font-semibold text-cyan-300 uppercase tracking-wider">AI-Powered Upload</span>
+          </div>
         </div>
-      )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 items-start">
-          {/* Drop zone */}
+        <div className="grid gap-6 lg:grid-cols-2 items-start">
+          {/* Left — dropzone */}
           <div>
-            {!selectedFile ? (
-              <div
-                {...getRootProps()}
-                className={cn(
-                  'border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors h-[72px] flex flex-col items-center justify-center',
-                  isDragActive
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-300 hover:border-gray-400 bg-gray-50',
-                )}
-              >
-                <input {...getInputProps()} />
-                <Upload className="w-5 h-5 text-gray-400 mb-1" />
-                <p className="text-xs text-gray-500">
-                  {isDragActive ? 'Drop here' : 'Drop file or click'}
-                </p>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 p-3 h-[72px]">
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium text-gray-900 truncate">{selectedFile.name}</p>
-                  <p className="text-[10px] text-gray-500">{formatFileSize(selectedFile.size)}</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => { setSelectedFile(null); setValue('name', ''); }}
-                  className="p-1 rounded hover:bg-gray-200 transition-colors shrink-0"
+            <h3 className="text-xl font-bold text-white mb-1">
+              Upload &amp; Process Documents
+            </h3>
+            <p className="text-sm text-gray-400 mb-4">
+              Drop your legal documents here. Our AI will OCR, validate, and structure them automatically.
+            </p>
+
+            <AnimatePresence mode="wait">
+              {uploadSuccess ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center"
                 >
-                  <X className="w-3.5 h-3.5 text-gray-500" />
-                </button>
-              </div>
-            )}
-            {fileError && <p className="mt-1 text-[10px] text-red-600">{fileError}</p>}
+                  <CheckCircle className="w-8 h-8 text-emerald-400 shrink-0" />
+                  <div className="text-left">
+                    <p className="text-sm font-bold text-emerald-300">Uploaded!</p>
+                    <p className="text-xs text-emerald-400/70">Mark it ready to start AI processing.</p>
+                  </div>
+                </motion.div>
+              ) : !selectedFile ? (
+                <motion.div
+                  key="dropzone"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <div
+                    {...getRootProps()}
+                    className={cn(
+                      'group relative cursor-pointer rounded-xl border-2 border-dashed p-8 text-center transition-all',
+                      isDragActive
+                        ? 'border-cyan-400 bg-cyan-500/10 scale-[1.01]'
+                        : 'border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/[0.07]',
+                    )}
+                  >
+                    <input {...getInputProps()} />
+                    <div className="flex justify-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                        <FileImage className="w-5 h-5 text-blue-400" />
+                      </div>
+                      <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center">
+                        <FileScan className="w-5 h-5 text-red-400" />
+                      </div>
+                    </div>
+                    <p className="text-sm font-semibold text-white mb-1">
+                      {isDragActive ? 'Drop it here!' : 'Drag & drop your document'}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      JPG, PNG, or PDF — up to 20 MB
+                    </p>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="file-preview"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="rounded-xl border border-white/20 bg-white/5 p-4"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center shrink-0">
+                      {selectedFile.type.startsWith('image/') ? (
+                        <FileImage className="w-6 h-6 text-blue-300" />
+                      ) : (
+                        <FileScan className="w-6 h-6 text-red-300" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">{selectedFile.name}</p>
+                      <p className="text-xs text-gray-400">{formatFileSize(selectedFile.size)}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedFile(null); setValue('name', ''); }}
+                      className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                    >
+                      <X className="w-4 h-4 text-gray-400" />
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            {fileError && <p className="mt-2 text-xs text-red-400">{fileError}</p>}
+            {mutation.error && <p className="mt-2 text-xs text-red-400">Upload failed. Please try again.</p>}
           </div>
 
-          {/* Case selector */}
-          <div>
-            {casesLoading ? (
-              <div className="h-[72px] flex items-center justify-center text-xs text-gray-500">Loading...</div>
-            ) : (
-              <select
-                {...register('case_id')}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-              >
-                <option value="">Select a case</option>
-                {cases?.map((c) => (
-                  <option key={c.id} value={c.id}>{c.title} ({c.case_number})</option>
-                ))}
-              </select>
-            )}
-            {errors.case_id && <p className="mt-1 text-[10px] text-red-600">{errors.case_id.message}</p>}
-          </div>
+          {/* Right — form fields */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 pt-8 lg:pt-0">
+            <div>
+              <label className="block text-xs font-medium text-gray-400 mb-1.5">Case</label>
+              {casesLoading ? (
+                <div className="h-10 rounded-lg bg-white/5 animate-pulse" />
+              ) : (
+                <select
+                  {...register('case_id')}
+                  className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400 [&_option]:text-gray-900"
+                >
+                  <option value="">Select a case</option>
+                  {cases?.map((c) => (
+                    <option key={c.id} value={c.id}>{c.title} ({c.case_number})</option>
+                  ))}
+                </select>
+              )}
+              {errors.case_id && <p className="mt-1 text-[10px] text-red-400">{errors.case_id.message}</p>}
+            </div>
 
-          {/* Name */}
-          <div>
-            <input
-              {...register('name')}
-              placeholder="Document name"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-            />
-            {errors.name && <p className="mt-1 text-[10px] text-red-600">{errors.name.message}</p>}
-          </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-400 mb-1.5">Document Name</label>
+              <input
+                {...register('name')}
+                placeholder="e.g. Sale Agreement - Page 1"
+                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              />
+              {errors.name && <p className="mt-1 text-[10px] text-red-400">{errors.name.message}</p>}
+            </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={mutation.isPending}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {mutation.isPending ? 'Uploading...' : 'Upload'}
-          </button>
+            <button
+              type="submit"
+              disabled={mutation.isPending || !selectedFile}
+              className="group w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            >
+              {mutation.isPending ? (
+                <>
+                  <Loader className="w-4 h-4 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload className="w-4 h-4" />
+                  Upload Document
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                </>
+              )}
+            </button>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
@@ -273,8 +348,8 @@ export function DashboardPage() {
           </div>
         </div>
 
-        {/* 1. Quick Upload — top of dashboard */}
-        <CompactUpload />
+        {/* 1. Hero Upload — main feature, stands out */}
+        <HeroUpload />
 
         {/* 2. Summary stats */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-6">
@@ -321,35 +396,7 @@ export function DashboardPage() {
           ))}
         </div>
 
-        {/* 3. Quick Actions */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Link
-              to="/clients/new"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-blue-600 hover:bg-blue-50/50 transition-colors"
-            >
-              <Users className="w-5 h-5 text-blue-600" />
-              <span className="font-medium text-gray-900">Add Client</span>
-            </Link>
-            <Link
-              to="/cases/new"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-blue-600 hover:bg-blue-50/50 transition-colors"
-            >
-              <Briefcase className="w-5 h-5 text-blue-600" />
-              <span className="font-medium text-gray-900">Add Case</span>
-            </Link>
-            <Link
-              to="/documents"
-              className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 text-left hover:border-blue-600 hover:bg-blue-50/50 transition-colors"
-            >
-              <FileText className="w-5 h-5 text-blue-600" />
-              <span className="font-medium text-gray-900">All Documents</span>
-            </Link>
-          </div>
-        </div>
-
-        {/* 4. Recent Documents with "Mark Ready" action */}
+        {/* 3. Recent Documents with "Mark Ready" action */}
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
             <div className="flex items-center gap-3">

@@ -100,19 +100,36 @@ class DocumentViewSet(viewsets.ModelViewSet):
                 file_path=document.file_path,
                 case_title=document.case.title,
                 advocate_email=request.user.email,
+                client_name=document.case.client.full_name if document.case.client else '',
+                case_id=document.case_id,
             )
             if result is not None:
-                document.status = 'in_progress'
-                document.save(update_fields=['status', 'updated_at'])
-                DocumentStatusHistory.objects.create(
-                    document=document,
-                    from_status='ready_to_process',
-                    to_status='in_progress',
-                    changed_by=None,
-                    notes='Auto-transitioned: n8n acknowledged processing request',
-                )
-            # MVP: Start polling Google Drive for processed output files
-            start_drive_poller(document.id)
+                # Check if n8n returned files directly (new flow)
+                files_stored = result.get('files_stored', {})
+                if files_stored:
+                    # Files came back — mark as processed
+                    document.refresh_from_db()
+                    document.status = 'processed'
+                    document.save(update_fields=['status', 'updated_at'])
+                    DocumentStatusHistory.objects.create(
+                        document=document,
+                        from_status='ready_to_process',
+                        to_status='processed',
+                        changed_by=None,
+                        notes=f'Processed by n8n OCR: {len(files_stored)} file(s) returned',
+                    )
+                else:
+                    # n8n acknowledged but no files yet — mark in_progress, start poller
+                    document.status = 'in_progress'
+                    document.save(update_fields=['status', 'updated_at'])
+                    DocumentStatusHistory.objects.create(
+                        document=document,
+                        from_status='ready_to_process',
+                        to_status='in_progress',
+                        changed_by=None,
+                        notes='Auto-transitioned: n8n acknowledged processing request',
+                    )
+                    start_drive_poller(document.id)
 
         doc = Document.objects.select_related('case', 'case__client').prefetch_related(
             'status_history', 'status_history__changed_by',

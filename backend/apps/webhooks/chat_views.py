@@ -42,6 +42,7 @@ class ChatRequestSerializer(serializers.Serializer):
     message = serializers.CharField(max_length=4000)
     conversation_id = serializers.UUIDField(required=False)
     client_id = serializers.IntegerField(required=False, allow_null=True)
+    case_id = serializers.IntegerField(required=False, allow_null=True)
 
 
 def _resolve_client_name(client_id: int, advocate) -> Optional[str]:
@@ -62,6 +63,7 @@ def _relay_to_n8n(
     conversation_id: str,
     client_id: Optional[int] = None,
     client_name: Optional[str] = None,
+    case_id: Optional[int] = None,
 ) -> Optional[str]:
     """Forward the chat message to n8n.
 
@@ -97,9 +99,13 @@ def _relay_to_n8n(
     if client_name:
         payload['client_name'] = client_name
         payload['client_id'] = client_id
-        logger.info("Routing to RAG webhook for client '%s'", client_name)
+        if case_id:
+            payload['case_id'] = case_id
+        logger.info("Routing to RAG webhook for client '%s' case=%s", client_name, case_id)
     else:
         payload['client_id'] = client_id
+        if case_id:
+            payload['case_id'] = case_id
 
     try:
         resp = requests.post(webhook_url, json=payload, headers=headers, timeout=30)
@@ -129,6 +135,7 @@ def chat_relay(request: Request) -> Response:
     message = serializer.validated_data['message']
     conversation_id = serializer.validated_data.get('conversation_id') or uuid.uuid4()
     client_id = serializer.validated_data.get('client_id')
+    case_id = serializer.validated_data.get('case_id')
 
     # Persist the user message
     user_msg = ChatMessage.objects.create(
@@ -151,6 +158,7 @@ def chat_relay(request: Request) -> Response:
         conversation_id=str(conversation_id),
         client_id=client_id,
         client_name=client_name,
+        case_id=case_id,
     )
 
     if ai_response is None:

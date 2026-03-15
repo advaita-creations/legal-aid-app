@@ -71,3 +71,14 @@ export interface DocumentStatusUpdateRequest {
   status: DocumentStatus;
   notes?: string;
 }
+
+export interface DocumentVersion {
+  id: number;
+  document: number;
+  version_number: number;
+  html_path: string;
+  json_path: string;
+  created_by: string | null;
+  notes: string;
+  created_at: string;
+}

@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, Briefcase, FileText, Shield, Sparkles } from 'lucide-react';
+import { NavLink, Link } from 'react-router-dom';
+import { LayoutDashboard, Users, Briefcase, FileText, Shield, Sparkles, UserPlus, FolderPlus, Upload } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/features/auth';
@@ -10,6 +10,12 @@ const navItems = [
   { to: '/clients', label: 'Clients', icon: Users },
   { to: '/cases', label: 'Cases', icon: Briefcase },
   { to: '/documents', label: 'Documents', icon: FileText },
+];
+
+const quickActions = [
+  { to: '/clients/new', label: 'Add Client', icon: UserPlus },
+  { to: '/cases/new', label: 'Add Case', icon: FolderPlus },
+  { to: '/documents/new', label: 'Upload Doc', icon: Upload },
 ];
 
 export function Sidebar() {
@@ -23,7 +29,7 @@ export function Sidebar() {
         <span className="text-lg font-bold text-gray-900">Legal<span className="text-blue-600">AiD</span></span>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -101,6 +107,23 @@ export function Sidebar() {
           </>
         )}
       </nav>
+
+      {/* Quick Actions */}
+      <div className="border-t border-gray-200 px-3 py-3">
+        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Quick Actions</p>
+        <div className="space-y-0.5">
+          {quickActions.map((action) => (
+            <Link
+              key={action.to}
+              to={action.to}
+              className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+            >
+              <action.icon className="w-3.5 h-3.5" />
+              {action.label}
+            </Link>
+          ))}
+        </div>
+      </div>
     </aside>
   );
 }
