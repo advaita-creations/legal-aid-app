@@ -21,8 +21,8 @@ class Document(models.Model):
     VALID_TRANSITIONS = {
         'uploaded': ['ready_to_process'],
         'ready_to_process': ['in_progress'],
-        'in_progress': ['processed'],
-        'processed': [],
+        'in_progress': ['processed', 'ready_to_process'],
+        'processed': ['ready_to_process'],
     }
 
     case = models.ForeignKey(

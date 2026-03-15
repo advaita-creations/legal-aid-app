@@ -97,6 +97,15 @@ class DocumentViewSet(viewsets.ModelViewSet):
         )
 
         if new_status == 'ready_to_process':
+            # Clear stale processed paths on retry so files can be re-stored
+            if old_status in ('in_progress', 'processed'):
+                document.processed_html_path = None
+                document.processed_json_path = None
+                document.processed_report_path = None
+                document.save(update_fields=[
+                    'processed_html_path', 'processed_json_path', 'processed_report_path', 'updated_at',
+                ])
+                logger.info("Cleared processed paths for doc %s (retry from %s)", document.id, old_status)
 
             result = notify_n8n_ready_to_process(
                 document_id=document.id,

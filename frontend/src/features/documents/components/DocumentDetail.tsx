@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import {
   ArrowLeft, Image, File, Trash2, ArrowRight, Send,
-  ChevronDown, ChevronRight, Terminal, Activity,
+  ChevronDown, ChevronRight, Terminal, Activity, RotateCcw,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -237,8 +237,28 @@ export function DocumentDetail() {
             </button>
           )}
 
+          {/* Retry Processing — for stuck in_progress or re-processing */}
+          {(doc.status === 'in_progress' || doc.status === 'processed') && (
+            <button
+              onClick={async () => {
+                const ok = await confirm({
+                  title: 'Retry Processing',
+                  description: 'Re-send this document to the OCR pipeline? Previous processed files will be cleared.',
+                  confirmLabel: 'Retry',
+                  variant: 'info',
+                });
+                if (ok) statusMutation.mutate('ready_to_process');
+              }}
+              disabled={statusMutation.isPending}
+              className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700 hover:bg-amber-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <RotateCcw className="w-4 h-4" />
+              {statusMutation.isPending ? 'Retrying...' : 'Retry Processing'}
+            </button>
+          )}
+
           {/* Status advance button */}
-          {next && (
+          {next && doc.status !== 'in_progress' && (
             <button
               onClick={async () => {
                 const ok = await confirm({
