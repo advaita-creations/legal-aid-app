@@ -1,18 +1,19 @@
 """Webhook views for n8n integration.
 
-Inbound endpoint receives processing results from n8n with up to 3 output files.
-Supports three input modes per file:
-  1. Multipart file upload (output_html, output_json, output_report)
-  2. Google Drive / external URL (output_html_url, output_json_url, output_report_url)
-  3. Pre-stored Supabase path (output_html_path, output_json_path, output_report_path)
+Inbound endpoint receives processing results from n8n.
+Accepts files via:
+  - Multipart file upload (any field name — auto-classified as HTML or report)
+  - JSON body with file content (inline or base64)
+  - External URLs
+  - Pre-stored Supabase paths
 """
+import base64
 import logging
 import os
-from io import BytesIO
 from typing import Optional
 
 import httpx
-from django.core.files.uploadedfile import InMemoryUploadedFile, SimpleUploadedFile
+from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes, permission_classes
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
@@ -23,38 +24,17 @@ from apps.documents.models import Document, DocumentStatusHistory
 
 logger = logging.getLogger(__name__)
 
-CONTENT_TYPE_MAP = {
-    'output_html': 'text/html',
-    'output_json': 'application/json',
-    'output_report': 'text/plain',
-}
 
-
-def _download_from_url(url: str, field_name: str) -> Optional[SimpleUploadedFile]:
-    """Download a file from an external URL (e.g. Google Drive) and return as UploadedFile."""
-    try:
-        # Handle Google Drive links — convert to direct download URL
-        if 'drive.google.com' in url:
-            if '/file/d/' in url:
-                file_id = url.split('/file/d/')[1].split('/')[0]
-                url = f"https://drive.google.com/uc?export=download&id={file_id}"
-            elif 'id=' in url:
-                file_id = url.split('id=')[1].split('&')[0]
-                url = f"https://drive.google.com/uc?export=download&id={file_id}"
-
-        with httpx.Client(timeout=60.0, follow_redirects=True) as client:
-            response = client.get(url)
-
-        if response.status_code != 200:
-            logger.error("Download failed for %s (%s): %s", field_name, url, response.status_code)
-            return None
-
-        content_type = CONTENT_TYPE_MAP.get(field_name, 'application/octet-stream')
-        filename = f"{field_name}.{content_type.split('/')[-1]}"
-        return SimpleUploadedFile(filename, response.content, content_type=content_type)
-    except Exception:
-        logger.exception("Failed to download %s from %s", field_name, url)
-        return None
+def _classify_field(name: str) -> Optional[str]:
+    """Classify a field name as 'html', 'report', or None."""
+    low = name.lower()
+    if any(tok in low for tok in ('html', 'v1', 'processed', 'document', 'output_html')):
+        return 'html'
+    if any(tok in low for tok in ('report', 'txt', 'validation', 'summary', 'output_report')):
+        return 'report'
+    if any(tok in low for tok in ('json', 'structured', 'output_json')):
+        return 'json'
+    return None
 
 
 def _store_processed_file(
@@ -69,10 +49,17 @@ def _store_processed_file(
     backend = get_storage_backend()
     try:
         stored_path = backend.upload(file_obj, relative_path)
+        logger.info("Stored processed file: %s (%s)", suffix, stored_path)
         return stored_path
     except Exception:
         logger.exception("Failed to store processed file %s for document %s", suffix, document.id)
         return None
+
+
+def _store_bytes(content: bytes, content_type: str, document: Document, suffix: str) -> Optional[str]:
+    """Store raw bytes as a processed file."""
+    file_obj = SimpleUploadedFile(suffix, content, content_type=content_type)
+    return _store_processed_file(file_obj, document, suffix)
 
 
 @api_view(['POST'])
@@ -81,16 +68,22 @@ def _store_processed_file(
 def n8n_webhook_view(request):
     """Inbound webhook from n8n for document processing results.
 
-    Accepts:
-        - document_id (required): ID of the document being processed.
-        - status (optional): New status, defaults to 'processed'.
-        - output_html / output_json / output_report (file): Direct file uploads.
-        - output_html_url / output_json_url / output_report_url (str): External URLs to download.
-        - output_html_path / output_json_path / output_report_path (str): Pre-stored paths.
+    Flexible: accepts files with any field name. Files are auto-classified
+    as HTML, report, or JSON based on field name and content sniffing.
     """
+    # Log everything for debugging
+    logger.info(
+        "n8n inbound webhook: method=%s content-type=%s data-keys=%s files-keys=%s",
+        request.method,
+        request.content_type,
+        list(request.data.keys()) if hasattr(request.data, 'keys') else type(request.data).__name__,
+        list(request.FILES.keys()) if request.FILES else '[]',
+    )
+
     secret = request.headers.get('X-Webhook-Secret', '')
     expected = os.environ.get('N8N_WEBHOOK_SECRET', '')
     if expected and secret != expected:
+        logger.warning("n8n webhook: secret mismatch (got '%s', expected '%s')", secret[:4], expected[:4])
         return Response(
             {"error": "Unauthorized"},
             status=status.HTTP_401_UNAUTHORIZED,
@@ -98,6 +91,7 @@ def n8n_webhook_view(request):
 
     document_id = request.data.get('document_id')
     if not document_id:
+        logger.error("n8n webhook: missing document_id. Data keys: %s", list(request.data.keys()) if hasattr(request.data, 'keys') else request.data)
         return Response(
             {"error": "document_id is required"},
             status=status.HTTP_400_BAD_REQUEST,
@@ -106,41 +100,111 @@ def n8n_webhook_view(request):
     try:
         document = Document.objects.select_related('case').get(id=document_id)
     except Document.DoesNotExist:
+        logger.error("n8n webhook: document %s not found", document_id)
         return Response(
             {"error": "Document not found"},
             status=status.HTTP_404_NOT_FOUND,
         )
 
-    file_map = {
-        'output_html': ('processed_html_path', 'output_final.html'),
-        'output_json': ('processed_json_path', 'output_consolidated.json'),
-        'output_report': ('processed_report_path', 'output_validation_report.txt'),
-    }
+    stored_count = 0
+    prefix = os.path.splitext(document.name)[0].replace(' ', '_')
 
-    for field_name, (model_field, default_suffix) in file_map.items():
-        # Priority 1: Direct file upload
-        file_obj = request.FILES.get(field_name)
-        if file_obj:
-            path = _store_processed_file(file_obj, document, default_suffix)
+    # --- Strategy 1: Multipart file uploads (any field name) ---
+    for field_name, file_obj in request.FILES.items():
+        file_type = _classify_field(field_name) or _classify_field(file_obj.name or '')
+        # Sniff content if classification failed
+        if not file_type:
+            content_preview = file_obj.read(500)
+            file_obj.seek(0)
+            if b'<html' in content_preview.lower() or content_preview.strip().startswith(b'<'):
+                file_type = 'html'
+            else:
+                file_type = 'report'
+
+        if file_type == 'html' and not document.processed_html_path:
+            path = _store_processed_file(file_obj, document, f'{prefix}_v1.html')
             if path:
-                setattr(document, model_field, path)
+                document.processed_html_path = path
+                stored_count += 1
+        elif file_type == 'report' and not document.processed_report_path:
+            path = _store_processed_file(file_obj, document, f'{prefix}_report.txt')
+            if path:
+                document.processed_report_path = path
+                stored_count += 1
+        elif file_type == 'json' and not document.processed_json_path:
+            path = _store_processed_file(file_obj, document, f'{prefix}_consolidated.json')
+            if path:
+                document.processed_json_path = path
+                stored_count += 1
+        else:
+            logger.info("n8n webhook: skipping file '%s' (type=%s, already stored)", field_name, file_type)
+
+    # --- Strategy 2: JSON body with inline / base64 content ---
+    for key in list(request.data.keys()):
+        if key in ('document_id', 'status', 'callback_url', 'csrfmiddlewaretoken'):
             continue
 
-        # Priority 2: External URL (Google Drive, etc.)
-        url_value = request.data.get(f'{field_name}_url')
-        if url_value:
-            downloaded = _download_from_url(url_value, field_name)
-            if downloaded:
-                path = _store_processed_file(downloaded, document, default_suffix)
-                if path:
-                    setattr(document, model_field, path)
+        val = request.data.get(key)
+        if not val or not isinstance(val, str) or len(val) < 30:
             continue
 
-        # Priority 3: Pre-stored path
-        path_value = request.data.get(f'{field_name}_path')
-        if path_value:
-            setattr(document, model_field, path_value)
+        file_type = _classify_field(key)
+        if not file_type:
+            continue
 
+        # Try base64 decode
+        raw_bytes: Optional[bytes] = None
+        try:
+            raw_bytes = base64.b64decode(val, validate=True)
+            if len(raw_bytes) < 20:
+                raw_bytes = None
+        except Exception:
+            pass
+
+        if raw_bytes is None:
+            raw_bytes = val.encode('utf-8')
+
+        if file_type == 'html' and not document.processed_html_path:
+            path = _store_bytes(raw_bytes, 'text/html', document, f'{prefix}_v1.html')
+            if path:
+                document.processed_html_path = path
+                stored_count += 1
+        elif file_type == 'report' and not document.processed_report_path:
+            path = _store_bytes(raw_bytes, 'text/plain', document, f'{prefix}_report.txt')
+            if path:
+                document.processed_report_path = path
+                stored_count += 1
+
+    # --- Strategy 3: Pre-stored paths ---
+    for suffix in ('html', 'json', 'report'):
+        for key_pattern in (f'output_{suffix}_path', f'{suffix}_path', f'processed_{suffix}_path'):
+            path_val = request.data.get(key_pattern)
+            if path_val and isinstance(path_val, str):
+                model_field = f'processed_{suffix}_path'
+                if not getattr(document, model_field, None):
+                    setattr(document, model_field, path_val)
+                    stored_count += 1
+
+    # --- Strategy 4: URL references ---
+    for suffix in ('html', 'report'):
+        for key_pattern in (f'output_{suffix}_url', f'{suffix}_url'):
+            url_val = request.data.get(key_pattern)
+            if url_val and isinstance(url_val, str) and url_val.startswith('http'):
+                try:
+                    with httpx.Client(timeout=60.0, follow_redirects=True) as client:
+                        resp = client.get(url_val)
+                    if resp.status_code == 200 and len(resp.content) > 20:
+                        ct = 'text/html' if suffix == 'html' else 'text/plain'
+                        model_field = f'processed_{suffix}_path'
+                        if not getattr(document, model_field, None):
+                            path = _store_bytes(resp.content, ct, document, f'{prefix}_{suffix}.{"html" if suffix == "html" else "txt"}')
+                            if path:
+                                setattr(document, model_field, path)
+                                stored_count += 1
+                except Exception:
+                    logger.exception("n8n webhook: failed to download %s from %s", suffix, url_val)
+
+    # Update status
     new_status = request.data.get('status', 'processed')
     old_status = document.status
     document.status = new_status
@@ -151,18 +215,25 @@ def n8n_webhook_view(request):
         from_status=old_status,
         to_status=new_status,
         changed_by=None,
-        notes='Processed by n8n workflow',
+        notes=f'n8n callback: {stored_count} file(s) stored',
     )
 
-    logger.info("n8n webhook: document %s updated to %s", document.id, new_status)
+    logger.info(
+        "n8n webhook: document %s updated %s → %s, stored %d files (html=%s, report=%s, json=%s)",
+        document.id, old_status, new_status, stored_count,
+        bool(document.processed_html_path),
+        bool(document.processed_report_path),
+        bool(document.processed_json_path),
+    )
 
     return Response({
         "ok": True,
         "document_id": str(document.id),
         "updated_status": document.status,
+        "files_stored": stored_count,
         "processed_files": {
             "html": bool(document.processed_html_path),
-            "json": bool(document.processed_json_path),
             "report": bool(document.processed_report_path),
+            "json": bool(document.processed_json_path),
         },
     })

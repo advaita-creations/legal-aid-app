@@ -67,50 +67,122 @@ def _extract_response_files(response: requests.Response, prefix: str) -> dict[st
     """Extract output files from n8n webhook response.
 
     n8n may return files as:
-    1. Multipart response (each part is a file)
-    2. JSON with base64-encoded file content
-    3. JSON with direct file URLs
-    4. Binary response (single file — the HTML)
+    1. JSON with inline string content (various key names)
+    2. JSON with base64-encoded binary data (n8n binary format)
+    3. JSON with nested 'binary' / 'files' / 'data' keys
+    4. Direct HTML response
+    5. Plain text response
+    6. Binary / octet-stream response
 
     Returns dict mapping suffix -> bytes, e.g. {'report.txt': b'...', 'v1.html': b'...'}.
     """
+    import base64
+
     content_type = response.headers.get('Content-Type', '')
     files: dict[str, bytes] = {}
 
-    # Case 1: JSON response with file content or URLs
-    if 'application/json' in content_type:
+    # Log the raw response for debugging
+    raw_preview = response.content[:2000].decode('utf-8', errors='replace')
+    logger.info(
+        "n8n response: status=%s content-type='%s' size=%d preview='%s'",
+        response.status_code, content_type, len(response.content), raw_preview,
+    )
+
+    def _classify_file(key: str, data_bytes: bytes) -> None:
+        """Classify a file as HTML or report based on its key name or content."""
+        key_lower = key.lower()
+        if any(tok in key_lower for tok in ('report', 'txt', 'validation', 'summary')):
+            files.setdefault('report.txt', data_bytes)
+        elif any(tok in key_lower for tok in ('html', 'v1', 'output', 'processed', 'document')):
+            files.setdefault('v1.html', data_bytes)
+        elif data_bytes[:50].strip().startswith(b'<') or b'<html' in data_bytes[:500].lower():
+            files.setdefault('v1.html', data_bytes)
+        else:
+            files.setdefault('report.txt', data_bytes)
+
+    def _decode_value(val) -> bytes | None:
+        """Try to decode a value as base64 or return as UTF-8 bytes."""
+        if isinstance(val, bytes):
+            return val
+        if isinstance(val, str):
+            # Try base64 first (n8n binary format)
+            try:
+                decoded = base64.b64decode(val, validate=True)
+                if len(decoded) > 10:
+                    return decoded
+            except Exception:
+                pass
+            return val.encode('utf-8')
+        return None
+
+    # Case 1: JSON response
+    if 'application/json' in content_type or 'json' in content_type:
         try:
             data = response.json()
-            # Handle array response from n8n (common pattern)
-            if isinstance(data, list) and len(data) > 0:
-                data = data[0]
+            logger.info("n8n JSON response type: %s keys: %s",
+                        type(data).__name__,
+                        list(data.keys()) if isinstance(data, dict) else f'array[{len(data)}]' if isinstance(data, list) else 'other')
 
-            # Look for report and html in various response shapes
-            for key in ('report', 'report_txt', f'{prefix}_report', 'output_report'):
-                if key in data and data[key]:
-                    val = data[key]
-                    if isinstance(val, str):
-                        files['report.txt'] = val.encode('utf-8')
-                    break
+            # Unwrap n8n array envelope
+            if isinstance(data, list):
+                for item in data:
+                    if isinstance(item, dict):
+                        data = item
+                        break
 
-            for key in ('html', 'v1_html', f'{prefix}_v1', 'output_html'):
-                if key in data and data[key]:
-                    val = data[key]
-                    if isinstance(val, str):
-                        files['v1.html'] = val.encode('utf-8')
-                    break
+            if isinstance(data, dict):
+                # n8n binary format: { "binary": { "data_0": { "data": "base64", "fileName": "..." } } }
+                binary_section = data.get('binary', {})
+                if isinstance(binary_section, dict):
+                    for bkey, bval in binary_section.items():
+                        if isinstance(bval, dict) and 'data' in bval:
+                            decoded = _decode_value(bval['data'])
+                            if decoded:
+                                fname = bval.get('fileName', bkey)
+                                logger.info("Extracted binary file '%s' from key '%s' (%d bytes)", fname, bkey, len(decoded))
+                                _classify_file(fname, decoded)
 
-            # Also check nested 'files' key
-            if 'files' in data and isinstance(data['files'], dict):
-                for k, v in data['files'].items():
-                    if 'report' in k.lower():
-                        files['report.txt'] = v.encode('utf-8') if isinstance(v, str) else v
-                    elif 'html' in k.lower() or 'v1' in k.lower():
-                        files['v1.html'] = v.encode('utf-8') if isinstance(v, str) else v
+                # n8n "json" nested key: { "json": { "html": "...", "report": "..." } }
+                json_section = data.get('json', data)
+                if isinstance(json_section, dict):
+                    # Scan all keys for file-like content
+                    for key, val in json_section.items():
+                        if val is None or isinstance(val, (bool, int, float)):
+                            continue
+                        if isinstance(val, dict):
+                            # Nested object with 'data' or 'content' key
+                            inner = val.get('data') or val.get('content') or val.get('body')
+                            if inner:
+                                decoded = _decode_value(inner)
+                                if decoded and len(decoded) > 20:
+                                    fname = val.get('fileName', key)
+                                    _classify_file(fname, decoded)
+                            continue
+                        decoded = _decode_value(val)
+                        if decoded and len(decoded) > 20:
+                            _classify_file(key, decoded)
+
+                # Also check nested 'files' or 'data' key
+                for container_key in ('files', 'data', 'output', 'result', 'results'):
+                    container = data.get(container_key)
+                    if isinstance(container, dict):
+                        for k, v in container.items():
+                            decoded = _decode_value(v)
+                            if decoded and len(decoded) > 20:
+                                _classify_file(k, decoded)
+                    elif isinstance(container, list):
+                        for item in container:
+                            if isinstance(item, dict):
+                                fname = item.get('fileName', item.get('name', ''))
+                                content = item.get('data') or item.get('content')
+                                if content:
+                                    decoded = _decode_value(content)
+                                    if decoded:
+                                        _classify_file(fname or f'file_{len(files)}', decoded)
 
             logger.info("Extracted %d files from JSON response: %s", len(files), list(files.keys()))
-        except (json.JSONDecodeError, KeyError, TypeError):
-            logger.exception("Failed to parse JSON response from n8n")
+        except (json.JSONDecodeError, KeyError, TypeError, AttributeError) as exc:
+            logger.exception("Failed to parse JSON response from n8n: %s", exc)
 
     # Case 2: HTML response (n8n returned the processed HTML directly)
     elif 'text/html' in content_type:
@@ -122,10 +194,19 @@ def _extract_response_files(response: requests.Response, prefix: str) -> dict[st
         files['report.txt'] = response.content
         logger.info("Got plain text response (%d bytes)", len(response.content))
 
-    # Case 4: Binary / octet-stream — assume it's the HTML
-    elif response.content and len(response.content) > 100:
-        files['v1.html'] = response.content
-        logger.info("Got binary response, treating as HTML (%d bytes)", len(response.content))
+    # Case 4: Binary / octet-stream — sniff HTML vs text
+    elif response.content and len(response.content) > 50:
+        if b'<html' in response.content[:500].lower() or response.content[:50].strip().startswith(b'<'):
+            files['v1.html'] = response.content
+        else:
+            files['report.txt'] = response.content
+        logger.info("Got binary response (%d bytes), classified as %s", len(response.content), list(files.keys()))
+
+    if not files:
+        logger.warning(
+            "No files extracted from n8n response! content-type='%s' size=%d body='%s'",
+            content_type, len(response.content), raw_preview[:500],
+        )
 
     return files
 

@@ -1,4 +1,6 @@
 """Document views for API."""
+import logging
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -12,6 +14,8 @@ from utils.storage import get_storage_backend
 from .models import Document, DocumentStatusHistory
 from .serializers import DocumentSerializer, DocumentCreateSerializer, DocumentStatusSerializer
 from apps.webhooks.outbound import notify_n8n_ready_to_process
+
+logger = logging.getLogger(__name__)
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -93,6 +97,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         )
 
         if new_status == 'ready_to_process':
+
             result = notify_n8n_ready_to_process(
                 document_id=document.id,
                 document_name=document.name,
@@ -102,11 +107,17 @@ class DocumentViewSet(viewsets.ModelViewSet):
                 client_name=document.case.client.full_name if document.case.client else '',
                 case_id=document.case_id,
             )
+
+            logger.info(
+                "n8n OCR result for doc %s: %s",
+                document.id,
+                result if result else 'None (timeout or error)',
+            )
+
             if result is not None:
-                # Check if n8n returned files directly (new flow)
                 files_stored = result.get('files_stored', {})
                 if files_stored:
-                    # Files came back — mark as processed
+                    # Files came back in synchronous response — mark as processed
                     document.refresh_from_db()
                     document.status = 'processed'
                     document.save(update_fields=['status', 'updated_at'])
@@ -115,10 +126,10 @@ class DocumentViewSet(viewsets.ModelViewSet):
                         from_status='ready_to_process',
                         to_status='processed',
                         changed_by=None,
-                        notes=f'Processed by n8n OCR: {len(files_stored)} file(s) returned',
+                        notes=f'Processed by n8n OCR: {len(files_stored)} file(s) returned directly',
                     )
                 else:
-                    # n8n acknowledged but no files yet — mark in_progress, wait for callback
+                    # n8n responded 200 but no files extracted — mark in_progress, wait for callback
                     document.status = 'in_progress'
                     document.save(update_fields=['status', 'updated_at'])
                     DocumentStatusHistory.objects.create(
@@ -126,8 +137,19 @@ class DocumentViewSet(viewsets.ModelViewSet):
                         from_status='ready_to_process',
                         to_status='in_progress',
                         changed_by=None,
-                        notes='Processing started (waiting for n8n webhook callback)',
+                        notes='n8n acknowledged (200) but no files in response — waiting for async callback',
                     )
+            else:
+                # Request failed (timeout, network error, etc.) — still mark in_progress
+                document.status = 'in_progress'
+                document.save(update_fields=['status', 'updated_at'])
+                DocumentStatusHistory.objects.create(
+                    document=document,
+                    from_status='ready_to_process',
+                    to_status='in_progress',
+                    changed_by=None,
+                    notes='n8n request failed or timed out — waiting for async callback',
+                )
 
         doc = Document.objects.select_related('case', 'case__client').prefetch_related(
             'status_history', 'status_history__changed_by',
