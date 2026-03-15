@@ -115,6 +115,55 @@ def _extract_response_files(response: requests.Response, prefix: str) -> dict[st
             return val.encode('utf-8')
         return None
 
+    def _process_dict_item(item_data: dict) -> None:
+        """Process a single dict item from n8n response (may contain binary or json keys)."""
+        # n8n binary format: { "binary": { "file": { "data": "base64", "fileName": "..." } } }
+        binary_section = item_data.get('binary', {})
+        if isinstance(binary_section, dict):
+            for bkey, bval in binary_section.items():
+                if isinstance(bval, dict) and 'data' in bval:
+                    decoded = _decode_value(bval['data'])
+                    if decoded:
+                        fname = bval.get('fileName', bkey)
+                        logger.info("Extracted binary file '%s' from key '%s' (%d bytes)", fname, bkey, len(decoded))
+                        _classify_file(fname, decoded)
+
+        # n8n "json" nested key: { "json": { "html": "...", "report": "..." } }
+        json_section = item_data.get('json', item_data)
+        if isinstance(json_section, dict):
+            for key, val in json_section.items():
+                if key == 'binary' or val is None or isinstance(val, (bool, int, float)):
+                    continue
+                if isinstance(val, dict):
+                    inner = val.get('data') or val.get('content') or val.get('body')
+                    if inner:
+                        decoded = _decode_value(inner)
+                        if decoded and len(decoded) > 20:
+                            fname = val.get('fileName', key)
+                            _classify_file(fname, decoded)
+                    continue
+                decoded = _decode_value(val)
+                if decoded and len(decoded) > 20:
+                    _classify_file(key, decoded)
+
+        # Check nested container keys
+        for container_key in ('files', 'data', 'output', 'result', 'results'):
+            container = item_data.get(container_key)
+            if isinstance(container, dict):
+                for k, v in container.items():
+                    decoded = _decode_value(v)
+                    if decoded and len(decoded) > 20:
+                        _classify_file(k, decoded)
+            elif isinstance(container, list):
+                for ci in container:
+                    if isinstance(ci, dict):
+                        fname = ci.get('fileName', ci.get('name', ''))
+                        content = ci.get('data') or ci.get('content')
+                        if content:
+                            decoded = _decode_value(content)
+                            if decoded:
+                                _classify_file(fname or f'file_{len(files)}', decoded)
+
     # Case 1: JSON response
     if 'application/json' in content_type or 'json' in content_type:
         try:
@@ -123,62 +172,14 @@ def _extract_response_files(response: requests.Response, prefix: str) -> dict[st
                         type(data).__name__,
                         list(data.keys()) if isinstance(data, dict) else f'array[{len(data)}]' if isinstance(data, list) else 'other')
 
-            # Unwrap n8n array envelope
+            # n8n array: process EVERY item (each may carry one binary file)
             if isinstance(data, list):
-                for item in data:
+                for idx, item in enumerate(data):
                     if isinstance(item, dict):
-                        data = item
-                        break
-
-            if isinstance(data, dict):
-                # n8n binary format: { "binary": { "data_0": { "data": "base64", "fileName": "..." } } }
-                binary_section = data.get('binary', {})
-                if isinstance(binary_section, dict):
-                    for bkey, bval in binary_section.items():
-                        if isinstance(bval, dict) and 'data' in bval:
-                            decoded = _decode_value(bval['data'])
-                            if decoded:
-                                fname = bval.get('fileName', bkey)
-                                logger.info("Extracted binary file '%s' from key '%s' (%d bytes)", fname, bkey, len(decoded))
-                                _classify_file(fname, decoded)
-
-                # n8n "json" nested key: { "json": { "html": "...", "report": "..." } }
-                json_section = data.get('json', data)
-                if isinstance(json_section, dict):
-                    # Scan all keys for file-like content
-                    for key, val in json_section.items():
-                        if val is None or isinstance(val, (bool, int, float)):
-                            continue
-                        if isinstance(val, dict):
-                            # Nested object with 'data' or 'content' key
-                            inner = val.get('data') or val.get('content') or val.get('body')
-                            if inner:
-                                decoded = _decode_value(inner)
-                                if decoded and len(decoded) > 20:
-                                    fname = val.get('fileName', key)
-                                    _classify_file(fname, decoded)
-                            continue
-                        decoded = _decode_value(val)
-                        if decoded and len(decoded) > 20:
-                            _classify_file(key, decoded)
-
-                # Also check nested 'files' or 'data' key
-                for container_key in ('files', 'data', 'output', 'result', 'results'):
-                    container = data.get(container_key)
-                    if isinstance(container, dict):
-                        for k, v in container.items():
-                            decoded = _decode_value(v)
-                            if decoded and len(decoded) > 20:
-                                _classify_file(k, decoded)
-                    elif isinstance(container, list):
-                        for item in container:
-                            if isinstance(item, dict):
-                                fname = item.get('fileName', item.get('name', ''))
-                                content = item.get('data') or item.get('content')
-                                if content:
-                                    decoded = _decode_value(content)
-                                    if decoded:
-                                        _classify_file(fname or f'file_{len(files)}', decoded)
+                        logger.info("Processing array item %d: keys=%s", idx, list(item.keys()))
+                        _process_dict_item(item)
+            elif isinstance(data, dict):
+                _process_dict_item(data)
 
             logger.info("Extracted %d files from JSON response: %s", len(files), list(files.keys()))
         except (json.JSONDecodeError, KeyError, TypeError, AttributeError) as exc:
