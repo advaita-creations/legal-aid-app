@@ -212,14 +212,35 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
         )
         resp.raise_for_status()
 
-        # Parse response
-        try:
-            rag_result = resp.json()
-            rag_message = rag_result.get('response') or rag_result.get('message') or 'Success'
-        except Exception:
-            rag_message = resp.text[:200]
+        # Parse response — n8n may return plain text or JSON
+        ct = resp.headers.get('Content-Type', '')
+        logger.info(
+            "RAG finalize raw response: status=%s ct='%s' size=%d body='%s'",
+            resp.status_code, ct, len(resp.content), resp.text[:300],
+        )
 
-        logger.info("RAG finalize response: %s", rag_message)
+        if 'application/json' in ct:
+            try:
+                rag_result = resp.json()
+                # Handle n8n wrappers: { "json": { ... } } or direct keys
+                inner = rag_result.get('json', rag_result) if isinstance(rag_result, dict) else rag_result
+                if isinstance(inner, dict):
+                    rag_message = (
+                        inner.get('response') or inner.get('message')
+                        or inner.get('output') or inner.get('text')
+                        or inner.get('status') or str(inner)
+                    )
+                elif isinstance(inner, str):
+                    rag_message = inner
+                else:
+                    rag_message = str(rag_result)
+            except Exception:
+                rag_message = resp.text[:300]
+        else:
+            # Plain text response (e.g. "File uploaded successfully")
+            rag_message = resp.text.strip()[:300] or 'Success'
+
+        logger.info("RAG finalize result: %s", rag_message)
 
         return Response({
             'ok': True,

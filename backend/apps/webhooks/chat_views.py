@@ -110,8 +110,43 @@ def _relay_to_n8n(
     try:
         resp = requests.post(webhook_url, json=payload, headers=headers, timeout=30)
         resp.raise_for_status()
-        data = resp.json()
-        return data.get('response') or data.get('message') or data.get('answer') or data.get('output', '')
+
+        ct = resp.headers.get('Content-Type', '')
+        logger.info(
+            "n8n chat response: status=%s ct='%s' size=%d body='%s'",
+            resp.status_code, ct, len(resp.content), resp.text[:300],
+        )
+
+        # n8n "First Incoming Item" sends the item's JSON directly
+        if 'application/json' in ct:
+            try:
+                data = resp.json()
+
+                # n8n may wrap in array: [ { "json": { ... }, "binary": { ... } } ]
+                if isinstance(data, list) and data:
+                    data = data[0]
+
+                # n8n may nest under "json" key: { "json": { "output": "..." } }
+                if isinstance(data, dict):
+                    inner = data.get('json', data)
+                    if isinstance(inner, dict):
+                        return (
+                            inner.get('response') or inner.get('message')
+                            or inner.get('answer') or inner.get('output')
+                            or inner.get('text') or inner.get('reply')
+                            or str(inner)
+                        )
+                    elif isinstance(inner, str):
+                        return inner
+
+                # Fallback: stringify
+                return str(data)[:2000]
+            except Exception:
+                return resp.text[:2000]
+        else:
+            # Plain text response
+            return resp.text.strip()[:2000] or None
+
     except requests.RequestException:
         logger.exception("Failed to relay chat message to n8n")
         return None
