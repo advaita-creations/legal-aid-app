@@ -117,7 +117,18 @@ def _extract_response_files(response: requests.Response, prefix: str) -> dict[st
 
     def _process_dict_item(item_data: dict) -> None:
         """Process a single dict item from n8n response (may contain binary or json keys)."""
-        # n8n binary format: { "binary": { "file": { "data": "base64", "fileName": "..." } } }
+
+        # Pattern 0: flat file object { "data": "base64", "fileName": "...", "mimeType": "..." }
+        # Produced by n8n Code node converting binary → JSON
+        if 'data' in item_data and ('fileName' in item_data or 'mimeType' in item_data):
+            fname = item_data.get('fileName') or item_data.get('mimeType', 'file')
+            decoded = _decode_value(item_data['data'])
+            if decoded and len(decoded) > 20:
+                logger.info("Extracted flat file object '%s' (%d bytes)", fname, len(decoded))
+                _classify_file(fname, decoded)
+            return  # handled — don't double-process
+
+        # Pattern 1: n8n binary format: { "binary": { "file": { "data": "base64", "fileName": "..." } } }
         binary_section = item_data.get('binary', {})
         if isinstance(binary_section, dict):
             for bkey, bval in binary_section.items():
@@ -128,9 +139,18 @@ def _extract_response_files(response: requests.Response, prefix: str) -> dict[st
                         logger.info("Extracted binary file '%s' from key '%s' (%d bytes)", fname, bkey, len(decoded))
                         _classify_file(fname, decoded)
 
-        # n8n "json" nested key: { "json": { "html": "...", "report": "..." } }
+        # Pattern 2: n8n "json" nested key: { "json": { "html": "...", "report": "..." } }
         json_section = item_data.get('json', item_data)
         if isinstance(json_section, dict):
+            # Check for flat file object inside json wrapper
+            if 'data' in json_section and ('fileName' in json_section or 'mimeType' in json_section):
+                fname = json_section.get('fileName') or json_section.get('mimeType', 'file')
+                decoded = _decode_value(json_section['data'])
+                if decoded and len(decoded) > 20:
+                    logger.info("Extracted json-wrapped flat file '%s' (%d bytes)", fname, len(decoded))
+                    _classify_file(fname, decoded)
+                return
+
             for key, val in json_section.items():
                 if key == 'binary' or val is None or isinstance(val, (bool, int, float)):
                     continue
