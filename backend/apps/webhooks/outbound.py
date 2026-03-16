@@ -88,6 +88,20 @@ def _extract_response_files(response: requests.Response, prefix: str) -> dict[st
         response.status_code, content_type, len(response.content), raw_preview,
     )
 
+    def _fetch_url(url: str, label: str) -> Optional[bytes]:
+        """Download file content from a URL (e.g. Google Drive download link)."""
+        try:
+            with httpx.Client(timeout=60.0, follow_redirects=True) as client:
+                resp = client.get(url)
+            if resp.status_code == 200 and len(resp.content) > 20:
+                logger.info("Downloaded '%s' from URL (%d bytes)", label, len(resp.content))
+                return resp.content
+            logger.warning("URL download failed '%s': status=%s size=%d", label, resp.status_code, len(resp.content))
+            return None
+        except Exception:
+            logger.exception("Failed to fetch URL for '%s': %s", label, url)
+            return None
+
     def _classify_file(key: str, data_bytes: bytes) -> None:
         """Classify a file as HTML or report based on its key name or content."""
         key_lower = key.lower()
@@ -150,6 +164,25 @@ def _extract_response_files(response: requests.Response, prefix: str) -> dict[st
                     logger.info("Extracted json-wrapped flat file '%s' (%d bytes)", fname, len(decoded))
                     _classify_file(fname, decoded)
                 return
+
+            # Pattern 2a: URL values — e.g. { html_download: "https://...", txt_download: "https://..." }
+            # Process *_download keys first (direct download), skip *_link (viewer URLs)
+            url_keys = {
+                k: v for k, v in json_section.items()
+                if isinstance(v, str) and v.startswith('http')
+            }
+            if url_keys:
+                # Prefer *_download URLs; skip *_link viewer URLs
+                for key, val in url_keys.items():
+                    key_lower = key.lower()
+                    if key_lower.endswith('_link'):
+                        logger.info("Skipping viewer link key '%s'", key)
+                        continue
+                    logger.info("Downloading from URL key '%s': %s", key, val[:80])
+                    content = _fetch_url(val, key)
+                    if content:
+                        _classify_file(key, content)
+                return  # handled as URL response — don't double-process
 
             for key, val in json_section.items():
                 if key == 'binary' or val is None or isinstance(val, (bool, int, float)):
