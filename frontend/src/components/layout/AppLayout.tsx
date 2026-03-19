@@ -10,13 +10,16 @@ import { isFeatureEnabled } from '@/lib/feature-flags';
 
 export function AppLayout() {
   const [chatOpen, setChatOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const chatEnabled = isFeatureEnabled('CHAT');
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Sidebar />
+      <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
       <Topbar />
-      <main className="ml-60 pt-0">
+      <main className={`transition-all duration-300 ease-in-out pt-0 ${
+        sidebarCollapsed ? 'ml-16' : 'ml-60'
+      }`}>
         <div className="mx-auto max-w-7xl px-6 py-8">
           <Outlet />
         </div>
