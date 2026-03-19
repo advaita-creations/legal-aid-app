@@ -6,7 +6,11 @@ import { useAuth } from '@/features/auth';
 import { SearchCommand } from '@/features/search';
 import { isFeatureEnabled } from '@/lib/feature-flags';
 
-export function Topbar() {
+interface TopbarProps {
+  sidebarCollapsed?: boolean;
+}
+
+export function Topbar({ sidebarCollapsed = false }: TopbarProps) {
   const { profile, signOut } = useAuth();
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -35,7 +39,9 @@ export function Topbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-20 h-14 bg-white border-b border-gray-200 flex items-center justify-between px-6 ml-60">
+      <header className={`sticky top-0 z-20 h-14 bg-white border-b border-gray-200 flex items-center justify-between px-6 transition-all duration-300 ease-in-out ${
+          sidebarCollapsed ? 'ml-16' : 'ml-60'
+        }`}>
         {/* Search trigger */}
         <div>
           {searchEnabled && (

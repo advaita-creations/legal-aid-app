@@ -16,7 +16,7 @@ export function AppLayout() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
-      <Topbar />
+      <Topbar sidebarCollapsed={sidebarCollapsed} />
       <main className={`transition-all duration-300 ease-in-out pt-0 ${
         sidebarCollapsed ? 'ml-16' : 'ml-60'
       }`}>

@@ -85,7 +85,7 @@ export function ProcessedResults({ doc }: ProcessedResultsProps) {
 
 /* ── Tab 1: Validated Document (HTML iframe) ─────────────── */
 
-function ValidatedDocTab({ url, name }: { url: string; name: string }) {
+function ValidatedDocTab({ url }: { url: string; name: string }) {
   const { data: htmlContent, isLoading } = useQuery({
     queryKey: ['processed-html', url],
     queryFn: async () => {
@@ -112,7 +112,8 @@ function ValidatedDocTab({ url, name }: { url: string; name: string }) {
         </span>
         <a
           href={url}
-          download={`${name}_validated.html`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 transition-colors"
         >
           <Download className="w-3.5 h-3.5" />
@@ -165,7 +166,7 @@ function parseReportMetrics(text: string) {
   };
 }
 
-function ValidationReportTab({ url, name }: { url: string; name: string }) {
+function ValidationReportTab({ url }: { url: string; name: string }) {
   const { data: reportText, isLoading } = useQuery({
     queryKey: ['processed-report', url],
     queryFn: async () => {
@@ -191,7 +192,8 @@ function ValidationReportTab({ url, name }: { url: string; name: string }) {
         <h3 className="text-sm font-semibold text-gray-900">Validation Report</h3>
         <a
           href={url}
-          download={`${name}_report.txt`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 transition-colors"
         >
           <Download className="w-3.5 h-3.5" />

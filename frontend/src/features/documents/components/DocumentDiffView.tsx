@@ -98,12 +98,21 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
 
   if (!fileUrl || !htmlUrl) return null;
 
-  const panelH = expanded ? 'h-[80vh]' : 'h-[520px]';
+  const panelH = expanded ? 'h-[calc(100vh-120px)]' : 'h-[520px]';
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+    <div className={cn(
+      'bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm',
+      expanded && 'fixed inset-4 z-50 rounded-xl shadow-2xl',
+    )}>
+      {expanded && (
+        <div className="fixed inset-0 z-40 bg-black/40" onClick={() => setExpanded(false)} />
+      )}
       {/* Header toolbar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+      <div className={cn(
+        'flex items-center justify-between px-4 py-2.5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white',
+        expanded && 'relative z-50',
+      )}>
         <div className="flex items-center gap-3">
           <Columns2 className="w-4 h-4 text-blue-600" />
           <span className="text-sm font-semibold text-gray-900">
@@ -186,7 +195,8 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
             <span className="text-xs font-semibold text-red-700">Original Document</span>
             <a
               href={fileUrl}
-              download={doc.name}
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-1 rounded hover:bg-red-100 transition-colors"
               title="Download original"
             >
@@ -228,7 +238,8 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
             </div>
             <a
               href={htmlUrl}
-              download={`${doc.name}_v${latestVersion}.html`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-1 rounded hover:bg-blue-100 transition-colors"
               title="Download processed HTML"
             >
