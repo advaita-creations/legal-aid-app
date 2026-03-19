@@ -113,74 +113,74 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
     Sends client_name, case_id, and the latest version HTML to the RAG webhook.
     n8n inserts the content into the Pinecone vector DB.
     """
-    doc = _get_document_for_user(pk, request.user)
-
-    if doc.status != 'processed':
-        return Response(
-            {'error': 'Document must be processed before finalization.'},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
-
-    # Get latest version info
-    latest = doc.versions.order_by('-version_number').first()
-    version_number = latest.version_number if latest else 1
-
-    # Download the latest HTML from storage
-    from utils.storage import get_storage_backend
-    import httpx as httpx_client
-
-    backend = get_storage_backend()
-    html_url = backend.get_url(doc.processed_html_path)
-    report_url = backend.get_url(doc.processed_report_path) if doc.processed_report_path else None
-
-    html_content = b''
-    report_content = b''
-
-    if html_url:
-        try:
-            with httpx_client.Client(timeout=30.0, follow_redirects=True) as client:
-                resp = client.get(html_url)
-            if resp.status_code == 200:
-                html_content = resp.content
-        except Exception:
-            logger.exception("Failed to download HTML for RAG finalization")
-
-    if report_url:
-        try:
-            with httpx_client.Client(timeout=30.0, follow_redirects=True) as client:
-                resp = client.get(report_url)
-            if resp.status_code == 200:
-                report_content = resp.content
-        except Exception:
-            logger.exception("Failed to download report for RAG finalization")
-
-    # Build history log
-    versions = doc.versions.order_by('version_number').all()
-    history_lines = [f"Document: {doc.name}", f"Total versions: {version_number}", "---"]
-    for v in versions:
-        history_lines.append(
-            f"v{v.version_number} — {v.created_at.strftime('%Y-%m-%d %H:%M')} "
-            f"by {v.created_by.email if v.created_by else 'system'}: {v.notes}"
-        )
-    history_log = '\n'.join(history_lines).encode('utf-8')
-
-    # Send to RAG webhook
-    rag_url = os.environ.get('N8N_RAG_WEBHOOK_URL', '')
-    if not rag_url:
-        return Response(
-            {'error': 'RAG webhook not configured.'},
-            status=status.HTTP_503_SERVICE_UNAVAILABLE,
-        )
-
-    client_name = doc.case.client.full_name if doc.case and doc.case.client else ''
-    prefix = os.path.splitext(doc.name)[0].replace(' ', '_')
-
-    secret = os.environ.get('N8N_WEBHOOK_SECRET', '')
-    headers = {}
-    if secret:
-        headers['X-Webhook-Secret'] = secret
-
     try:
+        doc = _get_document_for_user(pk, request.user)
+
+        if doc.status != 'processed':
+            return Response(
+                {'error': 'Document must be processed before finalization.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Get latest version info
+        latest = doc.versions.order_by('-version_number').first()
+        version_number = latest.version_number if latest else 1
+
+        # Download the latest HTML from storage
+        from utils.storage import get_storage_backend
+        import httpx as httpx_client
+
+        backend = get_storage_backend()
+        html_url = backend.get_url(doc.processed_html_path)
+        report_url = backend.get_url(doc.processed_report_path) if doc.processed_report_path else None
+
+        html_content = b''
+        report_content = b''
+
+        if html_url:
+            try:
+                with httpx_client.Client(timeout=30.0, follow_redirects=True) as client:
+                    resp = client.get(html_url)
+                if resp.status_code == 200:
+                    html_content = resp.content
+            except Exception:
+                logger.exception("Failed to download HTML for RAG finalization")
+
+        if report_url:
+            try:
+                with httpx_client.Client(timeout=30.0, follow_redirects=True) as client:
+                    resp = client.get(report_url)
+                if resp.status_code == 200:
+                    report_content = resp.content
+            except Exception:
+                logger.exception("Failed to download report for RAG finalization")
+
+        # Build history log
+        versions = doc.versions.order_by('version_number').all()
+        history_lines = [f"Document: {doc.name}", f"Total versions: {version_number}", "---"]
+        for v in versions:
+            history_lines.append(
+                f"v{v.version_number} — {v.created_at.strftime('%Y-%m-%d %H:%M')} "
+                f"by {v.created_by.email if v.created_by else 'system'}: {v.notes}"
+            )
+        history_log = '\n'.join(history_lines).encode('utf-8')
+
+        # Send to RAG webhook
+        rag_url = os.environ.get('N8N_RAG_WEBHOOK_URL', '')
+        if not rag_url:
+            return Response(
+                {'error': 'RAG webhook not configured.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        client_name = doc.case.client.full_name if doc.case and doc.case.client else ''
+        prefix = os.path.splitext(doc.name)[0].replace(' ', '_')
+
+        secret = os.environ.get('N8N_WEBHOOK_SECRET', '')
+        headers = {}
+        if secret:
+            headers['X-Webhook-Secret'] = secret
+
         files = {}
         form_data = {
             'client_name': client_name,
@@ -249,10 +249,16 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
         })
 
     except requests.RequestException as exc:
-        logger.error("RAG finalize failed for document %s: %s", doc.id, exc)
+        logger.error("RAG finalize failed for document %s: %s", pk, exc)
         return Response(
             {'error': f'RAG webhook failed: {str(exc)}'},
             status=status.HTTP_502_BAD_GATEWAY,
+        )
+    except Exception as exc:
+        logger.exception("Unexpected error in RAG finalize for document %s", pk)
+        return Response(
+            {'error': f'Internal error: {str(exc)}'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
 
