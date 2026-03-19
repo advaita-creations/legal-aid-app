@@ -117,10 +117,20 @@ def _relay_to_n8n(
             resp.status_code, ct, len(resp.content), resp.text[:300],
         )
 
+        # Handle empty body — n8n acknowledged but hasn't responded yet
+        if not resp.content or len(resp.content.strip()) == 0:
+            logger.warning("n8n returned empty body for chat — likely async processing")
+            return "I'm processing your request. Please try again in a moment."
+
         # n8n "First Incoming Item" sends the item's JSON directly
         if 'application/json' in ct:
             try:
                 data = resp.json()
+
+                # Empty JSON object/array
+                if data in (None, {}, [], [{}]):
+                    logger.warning("n8n returned empty JSON for chat: %s", data)
+                    return "I'm processing your request. Please try again in a moment."
 
                 # n8n may wrap in array: [ { "json": { ... }, "binary": { ... } } ]
                 if isinstance(data, list) and data:
@@ -130,12 +140,12 @@ def _relay_to_n8n(
                 if isinstance(data, dict):
                     inner = data.get('json', data)
                     if isinstance(inner, dict):
-                        return (
+                        result = (
                             inner.get('response') or inner.get('message')
                             or inner.get('answer') or inner.get('output')
                             or inner.get('text') or inner.get('reply')
-                            or str(inner)
                         )
+                        return result or str(inner)
                     elif isinstance(inner, str):
                         return inner
 
@@ -145,7 +155,7 @@ def _relay_to_n8n(
                 return resp.text[:2000]
         else:
             # Plain text response
-            return resp.text.strip()[:2000] or None
+            return resp.text.strip()[:2000] or "I'm processing your request. Please try again in a moment."
 
     except requests.RequestException:
         logger.exception("Failed to relay chat message to n8n")
