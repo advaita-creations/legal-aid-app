@@ -190,11 +190,22 @@ def chat_relay(request: Request) -> Response:
         content=message,
         client_id=client_id,
     )
+    logger.info(
+        "Chat message created: conversation=%s user=%s client_id=%s message_len=%d",
+        conversation_id, request.user.email, client_id, len(message),
+    )
 
     # Resolve client name for RAG scoping
     client_name = None
     if client_id:
         client_name = _resolve_client_name(client_id, request.user)
+
+    # Log chat routing
+    webhook_type = 'RAG' if client_name else 'Chat'
+    logger.info(
+        "Routing chat to %s webhook: client_name=%s case_id=%s",
+        webhook_type, client_name, case_id,
+    )
 
     # Relay to n8n (RAG webhook if client selected, general chat otherwise)
     ai_response = _relay_to_n8n(
@@ -210,6 +221,15 @@ def chat_relay(request: Request) -> Response:
         ai_response = (
             "I'm being set up and will be fully operational soon. "
             "In the meantime, you can review your documents and cases directly."
+        )
+        logger.warning(
+            "Chat webhook returned None for conversation %s — using fallback response",
+            conversation_id,
+        )
+    else:
+        logger.info(
+            "Chat response received: conversation=%s response_len=%d",
+            conversation_id, len(ai_response),
         )
 
     # Persist the AI response

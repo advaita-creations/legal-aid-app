@@ -202,9 +202,20 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
                 f'{prefix}_history.log', history_log, 'text/plain',
             )
 
+        # Log RAG file upload details
+        file_details = ', '.join([f"{k}({len(v[1])} bytes)" for k, v in files.items()])
         logger.info(
-            "Sending RAG finalize for doc %s v%d (client=%s, case=%s, %d files)",
-            doc.id, version_number, client_name, doc.case_id, len(files),
+            "Sending RAG finalize for doc %s v%d (client=%s, case=%s, files=%s)",
+            doc.id, version_number, client_name, doc.case_id, file_details,
+        )
+        
+        # Record in status history for user visibility
+        DocumentStatusHistory.objects.create(
+            document=doc,
+            from_status=doc.status,
+            to_status=doc.status,
+            changed_by=request.user,
+            notes=f"RAG finalize: Uploading {len(files)} files to n8n ({file_details})",
         )
 
         resp = requests.post(
@@ -217,6 +228,15 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
         logger.info(
             "RAG finalize raw response: status=%s ct='%s' size=%d body='%s'",
             resp.status_code, ct, len(resp.content), resp.text[:300],
+        )
+        
+        # Record response in status history
+        DocumentStatusHistory.objects.create(
+            document=doc,
+            from_status=doc.status,
+            to_status=doc.status,
+            changed_by=request.user,
+            notes=f"RAG response: {resp.status_code} — {resp.text[:200]}",
         )
 
         if 'application/json' in ct:
