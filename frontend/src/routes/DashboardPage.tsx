@@ -22,6 +22,7 @@ const statusColors: Record<DocumentStatus, string> = {
   ready_to_process: 'bg-amber-100 text-amber-700',
   in_progress: 'bg-blue-100 text-blue-700',
   processed: 'bg-blue-100 text-blue-700',
+  finalized: 'bg-emerald-100 text-emerald-700',
 };
 
 const statusLabels: Record<DocumentStatus, string> = {
@@ -29,6 +30,7 @@ const statusLabels: Record<DocumentStatus, string> = {
   ready_to_process: 'Ready',
   in_progress: 'In Progress',
   processed: 'Processed',
+  finalized: 'Finalized',
 };
 
 function formatFileSize(bytes: number): string {

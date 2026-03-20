@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Columns2, ZoomIn, ZoomOut, Download, Maximize2, Minimize2,
-  Save, CheckCircle, Loader, Pencil, Eye, Send, History, RotateCcw,
+  Save, CheckCircle, Loader, Pencil, Eye, Send, History, RotateCcw, FileOutput,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -67,6 +67,16 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
     },
   });
 
+  const generatePdfMutation = useMutation({
+    mutationFn: () => documentsApi.generatePdf(doc.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['documents', doc.id] });
+      queryClient.invalidateQueries({ queryKey: ['document', doc.id] });
+      queryClient.invalidateQueries({ queryKey: ['processing-logs', doc.id] });
+      toast('PDF generated and document finalized!');
+    },
+  });
+
   const revertMutation = useMutation({
     mutationFn: (versionId: number) => documentsApi.revertVersion(doc.id, versionId),
     onSuccess: (data) => {
@@ -91,6 +101,14 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
     }
     finalizeMutation.mutate();
   }, [finalizeMutation, hasUnsavedChanges, toast]);
+
+  const handleGeneratePdf = useCallback(() => {
+    if (hasUnsavedChanges) {
+      toast('Please save your changes before generating PDF.');
+      return;
+    }
+    generatePdfMutation.mutate();
+  }, [generatePdfMutation, hasUnsavedChanges, toast]);
 
   const handleEditorInput = useCallback(() => {
     setHasUnsavedChanges(true);
@@ -188,7 +206,7 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
       </div>
 
       {/* Side-by-side panels */}
-      <div className="grid grid-cols-2 divide-x divide-gray-200">
+      <div className={cn('grid grid-cols-2 divide-x divide-gray-200', expanded && 'relative z-[45] flex-1')}>
         {/* Left: Original Document */}
         <div className="flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-red-50 border-b border-gray-200">
@@ -277,7 +295,7 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
       </div>
 
       {/* Footer: version list with revert + FINALIZE */}
-      <div className="border-t border-gray-200 bg-gray-50">
+      <div className={cn('border-t border-gray-200 bg-gray-50', expanded && 'relative z-[45]')}>
         {/* Version list */}
         {versions && versions.length > 0 && (
           <div className="px-4 py-2 border-b border-gray-100">
@@ -332,7 +350,7 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
           </div>
         )}
 
-        {/* Finalize row */}
+        {/* Action row */}
         <div className="flex items-center justify-between px-4 py-3">
           <span className="text-xs text-gray-500">
             {versions && versions.length > 0
@@ -340,33 +358,65 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
               : 'Version 1 (AI output)'}
           </span>
 
-          <button
-            onClick={handleFinalize}
-            disabled={finalizeMutation.isPending || hasUnsavedChanges}
-            className={cn(
-              'flex items-center gap-2 rounded-lg px-5 py-2 text-sm font-bold transition-all',
-              finalizeMutation.isSuccess
-                ? 'bg-emerald-600 text-white'
-                : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:shadow-lg hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed',
-            )}
-          >
-            {finalizeMutation.isPending ? (
-              <>
-                <Loader className="w-4 h-4 animate-spin" />
-                Finalizing...
-              </>
-            ) : finalizeMutation.isSuccess ? (
-              <>
-                <CheckCircle className="w-4 h-4" />
-                Finalized
-              </>
-            ) : (
-              <>
-                <Send className="w-4 h-4" />
-                Finalize &amp; Push to RAG
-              </>
-            )}
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Save & Generate PDF — primary action */}
+            <button
+              onClick={handleGeneratePdf}
+              disabled={generatePdfMutation.isPending || hasUnsavedChanges}
+              className={cn(
+                'flex items-center gap-2 rounded-lg px-5 py-2 text-sm font-bold transition-all',
+                generatePdfMutation.isSuccess
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md hover:shadow-lg hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed',
+              )}
+            >
+              {generatePdfMutation.isPending ? (
+                <>
+                  <Loader className="w-4 h-4 animate-spin" />
+                  Generating PDF...
+                </>
+              ) : generatePdfMutation.isSuccess ? (
+                <>
+                  <CheckCircle className="w-4 h-4" />
+                  PDF Generated
+                </>
+              ) : (
+                <>
+                  <FileOutput className="w-4 h-4" />
+                  Save &amp; Generate PDF
+                </>
+              )}
+            </button>
+
+            {/* Finalize & Push to RAG — secondary action */}
+            <button
+              onClick={handleFinalize}
+              disabled={finalizeMutation.isPending || hasUnsavedChanges}
+              className={cn(
+                'flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all',
+                finalizeMutation.isSuccess
+                  ? 'bg-blue-600 text-white'
+                  : 'border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 disabled:opacity-40 disabled:cursor-not-allowed',
+              )}
+            >
+              {finalizeMutation.isPending ? (
+                <>
+                  <Loader className="w-4 h-4 animate-spin" />
+                  Pushing...
+                </>
+              ) : finalizeMutation.isSuccess ? (
+                <>
+                  <CheckCircle className="w-4 h-4" />
+                  RAG Done
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Push to RAG
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>

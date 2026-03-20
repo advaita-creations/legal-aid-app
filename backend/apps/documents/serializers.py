@@ -44,6 +44,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     processed_html_url = serializers.SerializerMethodField()
     processed_json_url = serializers.SerializerMethodField()
     processed_report_url = serializers.SerializerMethodField()
+    extracted_pdf_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Document
@@ -70,6 +71,8 @@ class DocumentSerializer(serializers.ModelSerializer):
             'processed_html_url',
             'processed_json_url',
             'processed_report_url',
+            'extracted_pdf_path',
+            'extracted_pdf_url',
             'created_at',
             'updated_at',
             'status_history',
@@ -77,7 +80,8 @@ class DocumentSerializer(serializers.ModelSerializer):
         read_only_fields = [
             'id', 'advocate', 'case_id', 'case_title', 'client_name', 'client_id',
             'file_url', 'processed_html_url', 'processed_json_url',
-            'processed_report_url', 'created_at', 'updated_at', 'status_history',
+            'processed_report_url', 'extracted_pdf_url',
+            'created_at', 'updated_at', 'status_history',
         ]
 
     def _get_storage_url(self, path: Optional[str]) -> Optional[str]:
@@ -104,6 +108,10 @@ class DocumentSerializer(serializers.ModelSerializer):
     def get_processed_report_url(self, obj) -> Optional[str]:
         """Build URL for the validation report."""
         return self._get_storage_url(obj.processed_report_path)
+
+    def get_extracted_pdf_url(self, obj) -> Optional[str]:
+        """Build URL for the extracted/generated PDF."""
+        return self._get_storage_url(obj.extracted_pdf_path)
 
 
 class DocumentCreateSerializer(serializers.Serializer):

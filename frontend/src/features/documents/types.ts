@@ -1,4 +1,4 @@
-export type DocumentStatus = 'uploaded' | 'ready_to_process' | 'in_progress' | 'processed';
+export type DocumentStatus = 'uploaded' | 'ready_to_process' | 'in_progress' | 'processed' | 'finalized';
 export type DocumentFileType = 'image' | 'pdf';
 
 export interface Document {
@@ -18,6 +18,7 @@ export interface Document {
   processed_html_url: string | null;
   processed_json_url: string | null;
   processed_report_url: string | null;
+  extracted_pdf_url: string | null;
   created_at: string;
   updated_at: string;
   status_history?: DocumentStatusEntry[];

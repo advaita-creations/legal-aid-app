@@ -105,6 +105,144 @@ def save_version(request: Request, pk: int) -> Response:
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+def generate_pdf(request: Request, pk: int) -> Response:
+    """Generate a PDF from the current HTML and finalize the document.
+
+    POST /api/v2/documents/<pk>/generate-pdf/
+
+    Takes the latest processed HTML, converts it to PDF using xhtml2pdf,
+    stores the PDF in Supabase, transitions document to 'finalized',
+    and returns the PDF URL.
+    """
+    doc = _get_document_for_user(pk, request.user)
+
+    if doc.status != 'processed':
+        return Response(
+            {'error': 'Document must be processed before generating PDF.'},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    if not doc.processed_html_path:
+        return Response(
+            {'error': 'No processed HTML available to generate PDF from.'},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    try:
+        # Download the latest HTML from storage
+        from utils.storage import get_storage_backend
+        import httpx as httpx_client
+
+        backend = get_storage_backend()
+        html_url = backend.get_url(doc.processed_html_path)
+
+        html_content = b''
+        if html_url:
+            with httpx_client.Client(timeout=30.0, follow_redirects=True) as client:
+                resp = client.get(html_url)
+            if resp.status_code == 200:
+                html_content = resp.content
+
+        if not html_content:
+            return Response(
+                {'error': 'Failed to download HTML content.'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+        # Wrap in proper HTML document for xhtml2pdf
+        html_text = html_content.decode('utf-8', errors='replace')
+        if '<html' not in html_text.lower():
+            html_text = f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+body {{ font-family: Helvetica, Arial, sans-serif; font-size: 11px; line-height: 1.5; margin: 30px; }}
+h1 {{ font-size: 18px; font-weight: bold; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 15px; }}
+h2 {{ font-size: 14px; font-weight: bold; color: #444; margin-top: 20px; }}
+table {{ border-collapse: collapse; width: 100%; margin: 10px 0; }}
+td, th {{ border: 1px solid #ccc; padding: 6px 8px; text-align: left; font-size: 10px; }}
+th {{ background-color: #f0f0f0; font-weight: bold; }}
+mark {{ background-color: #ffeb3b; padding: 1px 3px; }}
+</style>
+</head>
+<body>
+{html_text}
+</body>
+</html>"""
+
+        # Generate PDF using xhtml2pdf
+        import io
+        from xhtml2pdf import pisa
+
+        pdf_buffer = io.BytesIO()
+        pisa_status = pisa.CreatePDF(
+            io.StringIO(html_text),
+            dest=pdf_buffer,
+            encoding='utf-8',
+        )
+
+        if pisa_status.err:
+            logger.error("xhtml2pdf error generating PDF for doc %s: %s", pk, pisa_status.err)
+            return Response(
+                {'error': 'PDF generation failed.'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+        pdf_bytes = pdf_buffer.getvalue()
+        logger.info("Generated PDF for doc %s: %d bytes", pk, len(pdf_bytes))
+
+        # Store PDF in Supabase
+        from django.core.files.uploadedfile import SimpleUploadedFile
+
+        prefix = os.path.splitext(doc.name)[0].replace(' ', '_')
+        pdf_filename = f'{prefix}_extracted.pdf'
+        relative_path = f"{doc.advocate_id}/{doc.case_id}/processed/{doc.id}_{pdf_filename}"
+
+        file_obj = SimpleUploadedFile(pdf_filename, pdf_bytes, 'application/pdf')
+        stored_path = backend.upload(file_obj, relative_path)
+
+        # Update document: set extracted PDF path and transition to finalized
+        old_status = doc.status
+        doc.extracted_pdf_path = stored_path
+        doc.status = 'finalized'
+        doc.save(update_fields=['extracted_pdf_path', 'status', 'updated_at'])
+
+        # Log status history
+        DocumentStatusHistory.objects.create(
+            document=doc,
+            from_status=old_status,
+            to_status='finalized',
+            changed_by=request.user,
+            notes=f"PDF generated ({len(pdf_bytes)} bytes) and document finalized.",
+        )
+
+        logger.info(
+            "Document %s finalized: PDF stored at %s (%d bytes) by %s",
+            doc.id, stored_path, len(pdf_bytes), request.user.email,
+        )
+
+        # Return the PDF URL
+        pdf_url = backend.get_url(stored_path)
+
+        return Response({
+            'ok': True,
+            'pdf_url': pdf_url,
+            'pdf_path': stored_path,
+            'pdf_size': len(pdf_bytes),
+            'status': 'finalized',
+        })
+
+    except Exception as exc:
+        logger.exception("Failed to generate PDF for document %s", pk)
+        return Response(
+            {'error': f'PDF generation failed: {str(exc)}'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def finalize_to_rag(request: Request, pk: int) -> Response:
     """Finalize document and push to RAG webhook for vector indexing.
 

@@ -16,13 +16,15 @@ class Document(models.Model):
         ('ready_to_process', 'Ready to Process'),
         ('in_progress', 'In Progress'),
         ('processed', 'Processed'),
+        ('finalized', 'Finalized'),
     ]
 
     VALID_TRANSITIONS = {
         'uploaded': ['ready_to_process'],
         'ready_to_process': ['in_progress'],
         'in_progress': ['processed', 'ready_to_process'],
-        'processed': ['ready_to_process'],
+        'processed': ['ready_to_process', 'finalized'],
+        'finalized': [],
     }
 
     case = models.ForeignKey(
@@ -46,6 +48,7 @@ class Document(models.Model):
     processed_html_path = models.TextField(blank=True, null=True, help_text='Storage path for validated HTML output')
     processed_json_path = models.TextField(blank=True, null=True, help_text='Storage path for consolidated JSON output')
     processed_report_path = models.TextField(blank=True, null=True, help_text='Storage path for validation report')
+    extracted_pdf_path = models.TextField(blank=True, null=True, help_text='Storage path for generated PDF from finalized HTML')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -62,6 +62,13 @@ export const documentsApi = {
     return response.data;
   },
 
+  generatePdf: async (id: string): Promise<{ ok: boolean; pdf_url: string; pdf_size: number; status: string }> => {
+    const response = await apiClient.post<{ ok: boolean; pdf_url: string; pdf_size: number; status: string }>(
+      `/v2/documents/${id}/generate-pdf/`,
+    );
+    return response.data;
+  },
+
   revertVersion: async (id: string, versionId: number): Promise<{ ok: boolean; reverted_to: number }> => {
     const response = await apiClient.post<{ ok: boolean; reverted_to: number }>(
       `/v2/documents/${id}/versions/${versionId}/revert/`,

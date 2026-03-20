@@ -21,6 +21,7 @@ urlpatterns = [
     path('<int:pk>/versions/finalize/', views_review.finalize_version, name='finalize-version'),
     path('<int:pk>/versions/save/', views_rag.save_version, name='save-version'),
     path('<int:pk>/versions/<int:version_id>/revert/', views_rag.revert_version, name='revert-version'),
+    path('<int:pk>/generate-pdf/', views_rag.generate_pdf, name='generate-pdf'),
     path('<int:pk>/finalize-rag/', views_rag.finalize_to_rag, name='finalize-rag'),
     path('<int:pk>/logs/', views_rag.processing_logs, name='processing-logs'),
 ]

@@ -67,23 +67,19 @@ def _relay_to_n8n(
 ) -> Optional[str]:
     """Forward the chat message to n8n.
 
-    Routes to the RAG webhook when a client is selected (client_name provided),
-    otherwise routes to the general chat webhook.
+    Always uses N8N_CHAT_WEBHOOK_URL for chat conversations.
+    Includes client_name and case_id in the payload for RAG context.
+    N8N_RAG_WEBHOOK_URL is reserved for document indexing only.
 
     Returns the AI response text, or None if the webhook is unavailable.
     """
-    # Choose webhook: RAG (client-scoped) or general chat
-    if client_name:
-        webhook_url = os.environ.get('N8N_RAG_WEBHOOK_URL', '')
-        if not webhook_url:
-            logger.warning("N8N_RAG_WEBHOOK_URL not configured — falling back to chat webhook")
-            webhook_url = os.environ.get('N8N_CHAT_WEBHOOK_URL', '')
-    else:
-        webhook_url = os.environ.get('N8N_CHAT_WEBHOOK_URL', '')
+    webhook_url = os.environ.get('N8N_CHAT_WEBHOOK_URL', '')
 
     if not webhook_url:
-        logger.warning("No n8n webhook URL configured — returning fallback response")
+        logger.warning("N8N_CHAT_WEBHOOK_URL not configured — returning fallback response")
         return None
+
+    logger.info("Using N8N_CHAT_WEBHOOK_URL: %s", webhook_url[:60])
 
     secret = os.environ.get('N8N_WEBHOOK_SECRET', '')
     headers = {}
@@ -96,17 +92,17 @@ def _relay_to_n8n(
         'conversation_id': str(conversation_id),
     }
 
+    if client_id:
+        payload['client_id'] = client_id
     if client_name:
         payload['client_name'] = client_name
-        payload['client_id'] = client_id
-        if case_id:
-            payload['case_id'] = case_id
-        logger.info("Routing to RAG webhook for client '%s' case=%s with message", client_name, case_id)
-    else:
-        payload['client_id'] = client_id
-        if case_id:
-            payload['case_id'] = case_id
-        logger.info("Routing to Chat webhook with message")
+    if case_id:
+        payload['case_id'] = case_id
+
+    logger.info(
+        "Sending chat to n8n: client_name=%s case_id=%s message_len=%d",
+        client_name, case_id, len(message),
+    )
 
     try:
         resp = requests.post(webhook_url, json=payload, headers=headers, timeout=30)

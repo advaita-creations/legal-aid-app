@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import {
   ArrowLeft, Image, File, Trash2, ArrowRight, Send,
-  ChevronDown, ChevronRight, Terminal, Activity, RotateCcw,
+  ChevronDown, ChevronRight, Terminal, Activity, RotateCcw, FileCheck,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -20,6 +20,7 @@ const statusColors: Record<DocumentStatus, string> = {
   ready_to_process: 'bg-amber-100 text-amber-700',
   in_progress: 'bg-blue-100 text-blue-700',
   processed: 'bg-blue-100 text-blue-700',
+  finalized: 'bg-emerald-100 text-emerald-700',
 };
 
 const statusLabels: Record<DocumentStatus, string> = {
@@ -27,6 +28,7 @@ const statusLabels: Record<DocumentStatus, string> = {
   ready_to_process: 'Ready to Process',
   in_progress: 'In Progress',
   processed: 'Processed',
+  finalized: 'Finalized',
 };
 
 const nextStatus: Partial<Record<DocumentStatus, DocumentStatus>> = {
@@ -180,7 +182,9 @@ export function DocumentDetail() {
   const fileUrl = doc.file_url ?? null;
   const isProcessing = doc.status === 'in_progress' || doc.status === 'ready_to_process';
   const isProcessed = doc.status === 'processed';
+  const isFinalized = doc.status === 'finalized';
   const hasProcessedHtml = !!doc.processed_html_url;
+  const hasExtractedPdf = !!doc.extracted_pdf_url;
 
   return (
     <div className="pb-16">
@@ -223,7 +227,7 @@ export function DocumentDetail() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Finalize button — only when processed */}
+          {/* Finalize button — only when processed (not finalized) */}
           {isProcessed && hasProcessedHtml && (
             <button
               className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:shadow-lg hover:brightness-110 transition-all"
@@ -237,7 +241,15 @@ export function DocumentDetail() {
             </button>
           )}
 
-          {/* Retry Processing — for stuck in_progress or re-processing */}
+          {/* Finalized badge */}
+          {isFinalized && (
+            <div className="flex items-center gap-2 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-2 text-sm font-semibold text-emerald-700">
+              <FileCheck className="w-4 h-4" />
+              Document Finalized
+            </div>
+          )}
+
+          {/* Retry Processing — disabled for finalized */}
           {(doc.status === 'in_progress' || doc.status === 'processed') && (
             <button
               onClick={async () => {
@@ -299,6 +311,72 @@ export function DocumentDetail() {
         {/* Processing animation when in_progress */}
         {isProcessing && (
           <ProcessingStatus status={doc.status} name={doc.name} />
+        )}
+
+        {/* Finalized view — extracted PDF on top, original below */}
+        {isFinalized && hasExtractedPdf && (
+          <div className="space-y-4">
+            {/* Extracted PDF — prominent */}
+            <div className="bg-white rounded-xl border-2 border-emerald-200 overflow-hidden shadow-sm">
+              <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-50 to-white border-b border-emerald-100">
+                <div className="flex items-center gap-2">
+                  <FileCheck className="w-4 h-4 text-emerald-600" />
+                  <span className="text-sm font-bold text-emerald-800">Extracted Document (PDF)</span>
+                  <span className="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-semibold">FINALIZED</span>
+                </div>
+                <a
+                  href={doc.extracted_pdf_url!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-800 font-medium transition-colors"
+                >
+                  <ArrowRight className="w-3.5 h-3.5" />
+                  Open PDF
+                </a>
+              </div>
+              <div className="h-[600px] bg-gray-100">
+                <iframe
+                  src={doc.extracted_pdf_url!}
+                  title="Extracted PDF"
+                  className="w-full h-full border-0"
+                />
+              </div>
+            </div>
+
+            {/* Original document — below */}
+            {fileUrl && (
+              <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+                <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <File className="w-4 h-4 text-gray-500" />
+                    <span className="text-sm font-semibold text-gray-700">Original Document</span>
+                  </div>
+                  <a
+                    href={fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 font-medium transition-colors"
+                  >
+                    <ArrowRight className="w-3.5 h-3.5" />
+                    Open Original
+                  </a>
+                </div>
+                <div className="h-[400px] bg-gray-100">
+                  {doc.file_type === 'image' ? (
+                    <div className="flex items-start justify-center p-4 h-full overflow-auto">
+                      <img src={fileUrl} alt={doc.name} className="max-w-full rounded shadow-sm" />
+                    </div>
+                  ) : (
+                    <iframe
+                      src={fileUrl}
+                      title={`Original: ${doc.name}`}
+                      className="w-full h-full border-0"
+                    />
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         )}
 
         {/* Full-width Diff View (original vs processed) with edit + save + finalize */}
@@ -363,7 +441,7 @@ export function DocumentDetail() {
             <div className="px-5 pb-5 border-t border-gray-100">
               {/* Status pipeline */}
               <div className="flex items-center gap-2 flex-wrap py-4">
-                {(['uploaded', 'ready_to_process', 'in_progress', 'processed'] as DocumentStatus[]).map((s, i, arr) => (
+                {(['uploaded', 'ready_to_process', 'in_progress', 'processed', 'finalized'] as DocumentStatus[]).map((s, i, arr) => (
                   <div key={s} className="flex items-center gap-1">
                     <span
                       className={cn(

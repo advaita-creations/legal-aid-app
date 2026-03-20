@@ -60,6 +60,7 @@ describe('DocumentList', () => {
         processed_html_url: null,
         processed_json_url: null,
         processed_report_url: null,
+        extracted_pdf_url: null,
         created_at: '2026-02-27T10:00:00Z',
         updated_at: '2026-02-27T10:00:00Z',
         status_history: [],
