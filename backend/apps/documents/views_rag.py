@@ -189,17 +189,10 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
             'version': str(version_number),
         }
 
-        if html_content:
-            files[f'{prefix}_v{version_number}_html'] = (
-                f'{prefix}_v{version_number}.html', html_content, 'text/html',
-            )
+        # Pinecone works best with txt files — only send report (txt), not HTML
         if report_content:
             files[f'{prefix}_v{version_number}_txt'] = (
                 f'{prefix}_v{version_number}.txt', report_content, 'text/plain',
-            )
-        if history_log:
-            files[f'{prefix}_history_log'] = (
-                f'{prefix}_history.log', history_log, 'text/plain',
             )
 
         # Log RAG file upload details

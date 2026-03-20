@@ -93,7 +93,7 @@ def _relay_to_n8n(
     payload: dict = {
         'message': message,
         'advocate_email': advocate_email,
-        'conversation_id': conversation_id,
+        'conversation_id': str(conversation_id),
     }
 
     if client_name:
@@ -101,11 +101,12 @@ def _relay_to_n8n(
         payload['client_id'] = client_id
         if case_id:
             payload['case_id'] = case_id
-        logger.info("Routing to RAG webhook for client '%s' case=%s", client_name, case_id)
+        logger.info("Routing to RAG webhook for client '%s' case=%s with message", client_name, case_id)
     else:
         payload['client_id'] = client_id
         if case_id:
             payload['case_id'] = case_id
+        logger.info("Routing to Chat webhook with message")
 
     try:
         resp = requests.post(webhook_url, json=payload, headers=headers, timeout=30)
