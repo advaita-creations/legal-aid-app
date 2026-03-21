@@ -114,7 +114,7 @@ def _relay_to_n8n(
     )
 
     try:
-        resp = requests.post(webhook_url, json=payload, headers=headers, timeout=30)
+        resp = requests.post(webhook_url, json=payload, headers=headers, timeout=120)
         resp.raise_for_status()
 
         ct = resp.headers.get('Content-Type', '')
