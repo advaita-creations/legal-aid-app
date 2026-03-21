@@ -23,7 +23,7 @@ export function ChatEmptyState({ onSuggestionClick }: ChatEmptyStateProps) {
         <Bot className="w-7 h-7 text-white" />
       </motion.div>
 
-      <h3 className="text-base font-semibold text-gray-900 mb-1">LIA - Your AI Assistant</h3>
+      <h3 className="text-base font-semibold text-gray-900 mb-1">LIA - Your Legal AI Assistant</h3>
       <p className="text-sm text-gray-500 text-center mb-8 max-w-[260px]">
         Ask me anything about your documents, cases, or legal research.
       </p>

@@ -52,7 +52,7 @@ export function ChatHeader({ onClose, selectedClientId, onClientChange, selected
             <Bot className="w-4 h-4 text-white" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-gray-900">LIA - Your AI Assistant</h3>
+            <h3 className="text-sm font-semibold text-gray-900">LIA - Your Legal AI Assistant</h3>
             <p className="text-[11px] text-gray-400">{contextLabel}</p>
           </div>
         </div>
