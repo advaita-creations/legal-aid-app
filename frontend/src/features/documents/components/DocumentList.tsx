@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { FileText, Plus, Image, File, Search } from 'lucide-react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { FileText, Plus, Image, File, Search, Zap } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
 
 import { documentsApi } from '../api/documentsApi';
+import { useToast } from '@/components/ui/toast';
 import { Pagination } from '@/components/ui/pagination';
 import { TableSkeleton } from '@/components/ui/table-skeleton';
 import type { DocumentStatus } from '../types';
@@ -36,9 +37,21 @@ function formatFileSize(bytes: number): string {
 
 export function DocumentList() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [page, setPage] = useState(1);
+
+  const markReadyMutation = useMutation({
+    mutationFn: (docId: string) =>
+      documentsApi.updateStatus(docId, { status: 'ready_to_process' }),
+    onSuccess: (_data, docId) => {
+      queryClient.invalidateQueries({ queryKey: ['documents'] });
+      toast('Document marked ready to process');
+      navigate(`/documents/${docId}`);
+    },
+  });
 
   const { data: documents, isLoading, error } = useQuery({
     queryKey: ['documents'],
@@ -115,6 +128,7 @@ export function DocumentList() {
             <option value="ready_to_process">Ready</option>
             <option value="in_progress">In Progress</option>
             <option value="processed">Processed</option>
+            <option value="finalized">Finalized</option>
           </select>
         </div>
       )}
@@ -138,11 +152,11 @@ export function DocumentList() {
             <thead>
               <tr className="border-b border-gray-200 bg-gray-50">
                 <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Document</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Case</th>
                 <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Case</th>
                 <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
                 <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -153,20 +167,17 @@ export function DocumentList() {
                   className="hover:bg-gray-50 transition-colors cursor-pointer"
                 >
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
+                    <Link to={`/documents/${doc.id}`} className="flex items-center gap-2 hover:underline">
                       {doc.file_type === 'image' ? (
                         <Image className="w-4 h-4 text-blue-500" />
                       ) : (
                         <File className="w-4 h-4 text-red-500" />
                       )}
                       <span className="text-sm font-medium text-gray-900">{doc.name}</span>
-                    </div>
+                    </Link>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-600">{doc.case_title}</td>
                   <td className="px-4 py-3 text-sm text-gray-600">{doc.client_name}</td>
-                  <td className="px-4 py-3">
-                    <span className="text-xs font-medium uppercase text-gray-500">{doc.file_type}</span>
-                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-600">{doc.case_title}</td>
                   <td className="px-4 py-3 text-sm text-gray-500">{formatFileSize(doc.file_size_bytes)}</td>
                   <td className="px-4 py-3">
                     <span
@@ -177,6 +188,29 @@ export function DocumentList() {
                     >
                       {statusLabels[doc.status]}
                     </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    {doc.status === 'uploaded' && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          markReadyMutation.mutate(doc.id);
+                        }}
+                        disabled={markReadyMutation.isPending}
+                        className="inline-flex items-center gap-1 rounded-md bg-amber-50 border border-amber-200 px-2.5 py-1 text-xs font-medium text-amber-700 hover:bg-amber-100 transition-colors disabled:opacity-50"
+                      >
+                        <Zap className="w-3 h-3" />
+                        Mark Ready
+                      </button>
+                    )}
+                    {doc.status === 'processed' && (
+                      <Link
+                        to={`/documents/${doc.id}`}
+                        className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:underline"
+                      >
+                        View Results
+                      </Link>
+                    )}
                   </td>
                 </tr>
               ))}

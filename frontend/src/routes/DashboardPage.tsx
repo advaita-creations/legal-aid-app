@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Users, Briefcase, FileText, Image, File, Clock, CheckCircle, AlertTriangle, Loader, Upload, X, Zap, Sparkles, ArrowRight, FileImage, FileScan } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -307,13 +307,16 @@ export function DashboardPage() {
     queryFn: () => documentsApi.getAll(),
   });
 
+  const navigate = useNavigate();
+
   const markReadyMutation = useMutation({
     mutationFn: (docId: string) =>
       documentsApi.updateStatus(docId, { status: 'ready_to_process' }),
-    onSuccess: () => {
+    onSuccess: (_data, docId) => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
       toast('Document marked ready to process');
+      navigate(`/documents/${docId}`);
     },
   });
 

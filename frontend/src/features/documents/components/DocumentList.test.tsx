@@ -4,10 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { DocumentList } from './DocumentList';
+import { ToastProvider } from '@/components/ui/toast';
 
 vi.mock('../api/documentsApi', () => ({
   documentsApi: {
     getAll: vi.fn(),
+    updateStatus: vi.fn(),
   },
 }));
 
@@ -19,7 +21,9 @@ function renderWithProviders(ui: React.ReactElement) {
   });
   return render(
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>{ui}</BrowserRouter>
+      <ToastProvider>
+        <BrowserRouter>{ui}</BrowserRouter>
+      </ToastProvider>
     </QueryClientProvider>,
   );
 }

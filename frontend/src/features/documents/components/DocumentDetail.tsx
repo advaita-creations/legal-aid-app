@@ -4,6 +4,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import {
   ArrowLeft, Image, File, Trash2, ArrowRight, Send,
   ChevronDown, ChevronRight, Terminal, Activity, RotateCcw, FileCheck,
+  Maximize2, Minimize2,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -131,6 +132,7 @@ export function DocumentDetail() {
   const { toast } = useToast();
   const { confirm } = useConfirm();
   const [statusExpanded, setStatusExpanded] = useState(false);
+  const [expandedDoc, setExpandedDoc] = useState<'original' | 'extracted' | null>(null);
 
   const { data: doc, isLoading, error } = useQuery({
     queryKey: ['documents', id],
@@ -313,17 +315,71 @@ export function DocumentDetail() {
           <ProcessingStatus status={doc.status} name={doc.name} />
         )}
 
-        {/* Finalized view — extracted PDF on top, original below */}
-        {isFinalized && hasExtractedPdf && (
-          <div className="space-y-4">
-            {/* Extracted PDF — prominent */}
-            <div className="bg-white rounded-xl border-2 border-emerald-200 overflow-hidden shadow-sm">
-              <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-50 to-white border-b border-emerald-100">
-                <div className="flex items-center gap-2">
-                  <FileCheck className="w-4 h-4 text-emerald-600" />
-                  <span className="text-sm font-bold text-emerald-800">Extracted Document (PDF)</span>
-                  <span className="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-semibold">FINALIZED</span>
+        {/* Fullscreen document viewer overlay */}
+        {expandedDoc && (
+          <div className="fixed inset-0 z-50 bg-black/90 flex flex-col">
+            <div className="flex items-center justify-between px-6 py-3 bg-gray-900 border-b border-gray-700">
+              <span className="text-sm font-semibold text-white">
+                {expandedDoc === 'extracted' ? 'Extracted Document (PDF)' : `Original: ${doc.name}`}
+              </span>
+              <div className="flex items-center gap-3">
+                <a
+                  href={(expandedDoc === 'extracted' ? doc.extracted_pdf_url : fileUrl) ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white font-medium transition-colors"
+                >
+                  <ArrowRight className="w-3.5 h-3.5" />
+                  Open in New Tab
+                </a>
+                <button
+                  onClick={() => setExpandedDoc(null)}
+                  className="flex items-center gap-1.5 rounded-lg bg-gray-700 hover:bg-gray-600 px-3 py-1.5 text-xs font-medium text-white transition-colors"
+                >
+                  <Minimize2 className="w-3.5 h-3.5" />
+                  Close
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-auto bg-gray-950 p-4">
+              {expandedDoc === 'extracted' && doc.extracted_pdf_url ? (
+                <iframe
+                  src={doc.extracted_pdf_url}
+                  title="Extracted PDF"
+                  className="w-full h-full min-h-[calc(100vh-80px)] border-0 rounded-lg bg-white"
+                />
+              ) : fileUrl && doc.file_type === 'image' ? (
+                <div className="flex justify-center">
+                  <img src={fileUrl} alt={doc.name} className="max-w-full rounded-lg shadow-lg" />
                 </div>
+              ) : fileUrl ? (
+                <iframe
+                  src={fileUrl}
+                  title={doc.name}
+                  className="w-full h-full min-h-[calc(100vh-80px)] border-0 rounded-lg bg-white"
+                />
+              ) : null}
+            </div>
+          </div>
+        )}
+
+        {/* Finalized view — extracted PDF on top */}
+        {isFinalized && hasExtractedPdf && (
+          <div className="bg-white rounded-xl border-2 border-emerald-200 overflow-hidden shadow-sm">
+            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-50 to-white border-b border-emerald-100">
+              <div className="flex items-center gap-2">
+                <FileCheck className="w-4 h-4 text-emerald-600" />
+                <span className="text-sm font-bold text-emerald-800">Extracted Document (PDF)</span>
+                <span className="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-semibold">FINALIZED</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setExpandedDoc('extracted')}
+                  className="flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-800 font-medium transition-colors"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  Expand
+                </button>
                 <a
                   href={doc.extracted_pdf_url!}
                   target="_blank"
@@ -334,48 +390,62 @@ export function DocumentDetail() {
                   Open PDF
                 </a>
               </div>
-              <div className="h-[600px] bg-gray-100">
-                <iframe
-                  src={doc.extracted_pdf_url!}
-                  title="Extracted PDF"
-                  className="w-full h-full border-0"
-                />
+            </div>
+            <div className="h-[600px] bg-gray-100">
+              <iframe
+                src={doc.extracted_pdf_url!}
+                title="Extracted PDF"
+                className="w-full h-full border-0"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Original document — always shown when file exists */}
+        {fileUrl && (
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+            <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+              <div className="flex items-center gap-2">
+                {doc.file_type === 'image' ? (
+                  <Image className="w-4 h-4 text-blue-500" />
+                ) : (
+                  <File className="w-4 h-4 text-red-500" />
+                )}
+                <span className="text-sm font-semibold text-gray-700">Original Document</span>
+                <span className="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-medium uppercase">{doc.file_type}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setExpandedDoc('original')}
+                  className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 font-medium transition-colors"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  Expand
+                </button>
+                <a
+                  href={fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 font-medium transition-colors"
+                >
+                  <ArrowRight className="w-3.5 h-3.5" />
+                  Open Original
+                </a>
               </div>
             </div>
-
-            {/* Original document — below */}
-            {fileUrl && (
-              <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-                <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
-                  <div className="flex items-center gap-2">
-                    <File className="w-4 h-4 text-gray-500" />
-                    <span className="text-sm font-semibold text-gray-700">Original Document</span>
-                  </div>
-                  <a
-                    href={fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 font-medium transition-colors"
-                  >
-                    <ArrowRight className="w-3.5 h-3.5" />
-                    Open Original
-                  </a>
+            <div className="h-[500px] bg-gray-100 overflow-auto">
+              {doc.file_type === 'image' ? (
+                <div className="flex items-start justify-center p-4 min-h-full">
+                  <img src={fileUrl} alt={doc.name} className="max-w-full rounded shadow-sm" />
                 </div>
-                <div className="h-[400px] bg-gray-100">
-                  {doc.file_type === 'image' ? (
-                    <div className="flex items-start justify-center p-4 h-full overflow-auto">
-                      <img src={fileUrl} alt={doc.name} className="max-w-full rounded shadow-sm" />
-                    </div>
-                  ) : (
-                    <iframe
-                      src={fileUrl}
-                      title={`Original: ${doc.name}`}
-                      className="w-full h-full border-0"
-                    />
-                  )}
-                </div>
-              </div>
-            )}
+              ) : (
+                <iframe
+                  src={fileUrl}
+                  title={`Original: ${doc.name}`}
+                  className="w-full h-full border-0"
+                />
+              )}
+            </div>
           </div>
         )}
 

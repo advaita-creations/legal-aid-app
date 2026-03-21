@@ -44,11 +44,17 @@ def save_version(request: Request, pk: int) -> Response:
     Stores the HTML in Supabase and updates the document's processed_html_path.
     """
     doc = _get_document_for_user(pk, request.user)
+    logger.info(
+        "[DOC_SAVE_VER] doc_id=%s name='%s' status=%s user=%s content_length=%d",
+        doc.id, doc.name, doc.status, request.user.email,
+        len(request.data.get('html_content', '')),
+    )
 
     html_content = request.data.get('html_content', '')
     notes = request.data.get('notes', '')
 
     if not html_content:
+        logger.warning("[DOC_SAVE_VER] REJECTED doc_id=%s empty html_content", doc.id)
         return Response(
             {'error': 'html_content is required.'},
             status=status.HTTP_400_BAD_REQUEST,
@@ -57,6 +63,7 @@ def save_version(request: Request, pk: int) -> Response:
     # Determine next version number
     latest = doc.versions.order_by('-version_number').first()
     next_number = (latest.version_number + 1) if latest else 1
+    logger.info("[DOC_SAVE_VER] doc_id=%s next_version=%d prev_version=%s", doc.id, next_number, latest.version_number if latest else 'none')
 
     # Store HTML in Supabase
     from utils.storage import get_storage_backend
@@ -71,8 +78,9 @@ def save_version(request: Request, pk: int) -> Response:
 
     try:
         stored_path = backend.upload(file_obj, relative_path)
+        logger.info("[DOC_SAVE_VER] doc_id=%s stored path=%s", doc.id, stored_path)
     except Exception:
-        logger.exception("Failed to store version %d for document %s", next_number, doc.id)
+        logger.exception("[DOC_SAVE_VER] FAILED doc_id=%s storage upload for v%d", doc.id, next_number)
         return Response(
             {'error': 'Failed to save version.'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -93,8 +101,8 @@ def save_version(request: Request, pk: int) -> Response:
     doc.save(update_fields=['processed_html_path', 'updated_at'])
 
     logger.info(
-        "Document %s: saved version v%d by %s (%d bytes)",
-        doc.id, next_number, request.user.email, len(html_content),
+        "[DOC_SAVE_VER] SUCCESS doc_id=%s v%d by %s (%d bytes) path=%s",
+        doc.id, next_number, request.user.email, len(html_content), stored_path,
     )
 
     return Response(
@@ -424,12 +432,17 @@ def revert_version(request: Request, pk: int, version_id: int) -> Response:
     """
     doc = _get_document_for_user(pk, request.user)
     version = get_object_or_404(DocumentVersion, document=doc, id=version_id)
+    logger.info(
+        "[DOC_REVERT] doc_id=%s reverting to version_id=%s (v%d) by %s old_path=%s new_path=%s",
+        doc.id, version_id, version.version_number, request.user.email,
+        doc.processed_html_path, version.html_path,
+    )
 
     doc.processed_html_path = version.html_path
     doc.save(update_fields=['processed_html_path', 'updated_at'])
 
     logger.info(
-        "Document %s: reverted to v%d by %s",
+        "[DOC_REVERT] SUCCESS doc_id=%s reverted to v%d by %s",
         doc.id, version.version_number, request.user.email,
     )
 

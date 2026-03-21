@@ -29,17 +29,16 @@ class Command(BaseCommand):
             Client.objects.all().delete()
             User.objects.filter(is_superuser=False).delete()
             # Keep superusers, but delete the seeded admin if re-running
-            User.objects.filter(username='admin@legalaid.dev').delete()
+            User.objects.filter(email='admin@legalaid.dev').delete()
 
         self.stdout.write('Seeding database...\n')
 
         # ── Admin user ──────────────────────────────────────────────
         admin, created = User.objects.get_or_create(
-            username='admin@legalaid.dev',
+            email='admin@legalaid.dev',
             defaults={
-                'email': 'admin@legalaid.dev',
-                'first_name': 'Priya',
-                'last_name': 'Sharma',
+                'full_name': 'Priya Sharma',
+                'role': 'admin',
                 'is_staff': True,
                 'is_superuser': True,
                 'is_active': True,
@@ -54,15 +53,18 @@ class Command(BaseCommand):
         else:
             self.stdout.write('  – Admin already exists, skipping.')
 
-        # ── Advocate users ──────────────────────────────────────────
+        # ── Advocate users (9 advocates = 10 total users with admin) ──
         advocates_data = [
-            {'username': 'rahul@legalaid.dev', 'email': 'rahul@legalaid.dev',
-             'first_name': 'Rahul', 'last_name': 'Mehta', 'password': 'Test@123456'},
-            {'username': 'anita@legalaid.dev', 'email': 'anita@legalaid.dev',
-             'first_name': 'Anita', 'last_name': 'Desai', 'password': 'Test@123456'},
-            {'username': 'vikram@legalaid.dev', 'email': 'vikram@legalaid.dev',
-             'first_name': 'Vikram', 'last_name': 'Patel', 'password': 'Test@123456',
+            {'email': 'rahul@legalaid.dev', 'full_name': 'Rahul Mehta', 'password': 'Test@123456'},
+            {'email': 'anita@legalaid.dev', 'full_name': 'Anita Desai', 'password': 'Test@123456'},
+            {'email': 'vikram@legalaid.dev', 'full_name': 'Vikram Patel', 'password': 'Test@123456',
              'is_active': False},
+            {'email': 'meera@legalaid.dev', 'full_name': 'Meera Iyer', 'password': 'Test@123456'},
+            {'email': 'sanjay@legalaid.dev', 'full_name': 'Sanjay Reddy', 'password': 'Test@123456'},
+            {'email': 'kavita@legalaid.dev', 'full_name': 'Kavita Jain', 'password': 'Test@123456'},
+            {'email': 'arun@legalaid.dev', 'full_name': 'Arun Bhat', 'password': 'Test@123456'},
+            {'email': 'nisha@legalaid.dev', 'full_name': 'Nisha Verma', 'password': 'Test@123456'},
+            {'email': 'rohit@legalaid.dev', 'full_name': 'Rohit Kapoor', 'password': 'Test@123456'},
         ]
 
         advocates = []
@@ -70,8 +72,8 @@ class Command(BaseCommand):
             pw = adv.pop('password')
             is_active = adv.pop('is_active', True)
             user, created = User.objects.get_or_create(
-                username=adv['username'],
-                defaults={**adv, 'is_active': is_active},
+                email=adv['email'],
+                defaults={'full_name': adv['full_name'], 'role': 'advocate', 'is_active': is_active},
             )
             if created:
                 user.set_password(pw)
@@ -84,11 +86,11 @@ class Command(BaseCommand):
                 self.stdout.write(f'  – Advocate {user.email} already exists, skipping.')
             advocates.append(user)
 
-        rahul, anita, vikram = advocates
+        rahul, anita, vikram, meera, sanjay, kavita, arun, nisha, rohit = advocates
 
-        # ── Clients ─────────────────────────────────────────────────
+        # ── Clients (20 clients across all advocates) ────────────────
         clients_data = [
-            # Rahul's clients
+            # Rahul's clients (4)
             {'advocate': rahul, 'full_name': 'Suresh Kumar', 'email': 'suresh.kumar@example.com',
              'phone': '+91 98765 43210', 'address': '45 MG Road, Bengaluru 560001',
              'notes': 'Land dispute case. Prefers communication in Kannada.'},
@@ -101,7 +103,7 @@ class Command(BaseCommand):
             {'advocate': rahul, 'full_name': 'Deepa Nair', 'email': 'deepa.nair@example.com',
              'phone': '+91 77665 54433', 'address': '33 Park Avenue, Kochi 682001',
              'notes': 'Referred by Suresh Kumar. Family property matter.'},
-            # Anita's clients
+            # Anita's clients (3)
             {'advocate': anita, 'full_name': 'Rajesh Gupta', 'email': 'rajesh.gupta@example.com',
              'phone': '+91 91234 56789', 'address': '101 Civil Lines, Delhi 110054',
              'notes': 'Rental agreement dispute with landlord.'},
@@ -115,6 +117,51 @@ class Command(BaseCommand):
             {'advocate': vikram, 'full_name': 'Neha Joshi', 'email': 'neha.joshi@example.com',
              'phone': '+91 70123 45678', 'address': '88 FC Road, Pune 411004',
              'notes': 'Vikram\'s client before account was deactivated.'},
+            # Meera's clients (3)
+            {'advocate': meera, 'full_name': 'Gopal Krishnan', 'email': 'gopal.k@example.com',
+             'phone': '+91 94432 11234', 'address': '15 Anna Salai, Chennai 600002',
+             'notes': 'Property registration dispute. Tamil-speaking client.'},
+            {'advocate': meera, 'full_name': 'Preethi Mohan', 'email': 'preethi.m@example.com',
+             'phone': '+91 98123 45567', 'address': '7 Nungambakkam High Road, Chennai 600034',
+             'notes': 'Divorce settlement documents. Requires confidentiality.'},
+            {'advocate': meera, 'full_name': 'Venkat Raman', 'email': 'venkat.r@example.com',
+             'phone': '+91 80567 89012', 'address': '42 ECR, Pondicherry 605001',
+             'notes': 'Ancestral property claim. Documents in French colonial format.'},
+            # Sanjay's clients (2)
+            {'advocate': sanjay, 'full_name': 'Ravi Teja', 'email': 'ravi.teja@example.com',
+             'phone': '+91 90876 54321', 'address': '88 Jubilee Hills, Hyderabad 500033',
+             'notes': 'Commercial property lease dispute with builder.'},
+            {'advocate': sanjay, 'full_name': 'Padma Lakshmi', 'email': 'padma.l@example.com',
+             'phone': '+91 81234 56789', 'address': '23 Banjara Hills, Hyderabad 500034',
+             'notes': 'Agricultural land conversion case.'},
+            # Kavita's clients (2)
+            {'advocate': kavita, 'full_name': 'Amit Saxena', 'email': 'amit.saxena@example.com',
+             'phone': '+91 95678 12345', 'address': '56 Vaishali Nagar, Jaipur 302021',
+             'notes': 'Business partnership dissolution. Multiple documents pending.'},
+            {'advocate': kavita, 'full_name': 'Sunita Devi', 'email': 'sunita.d@example.com',
+             'phone': '+91 78901 23456', 'address': '12 MI Road, Jaipur 302001',
+             'notes': 'Widow pension documents. Government handwritten records.'},
+            # Arun's clients (2)
+            {'advocate': arun, 'full_name': 'Ganesh Hegde', 'email': 'ganesh.h@example.com',
+             'phone': '+91 96789 01234', 'address': '34 KG Road, Bengaluru 560009',
+             'notes': 'Employment contract dispute. Bilingual documents (Kannada/English).'},
+            {'advocate': arun, 'full_name': 'Savitha Rao', 'email': 'savitha.r@example.com',
+             'phone': '+91 88901 23456', 'address': '67 Jayanagar, Bengaluru 560041',
+             'notes': 'Property inheritance. Multiple siblings involved.'},
+            # Nisha's clients (2)
+            {'advocate': nisha, 'full_name': 'Ramesh Pandey', 'email': 'ramesh.p@example.com',
+             'phone': '+91 91234 98765', 'address': '89 Gomti Nagar, Lucknow 226010',
+             'notes': 'Tenant eviction case. Old handwritten rental agreement.'},
+            {'advocate': nisha, 'full_name': 'Ayesha Khan', 'email': 'ayesha.k@example.com',
+             'phone': '+91 70987 65432', 'address': '14 Hazratganj, Lucknow 226001',
+             'notes': 'Family court documents. Urdu and Hindi mixed records.'},
+            # Rohit's clients (2)
+            {'advocate': rohit, 'full_name': 'Devendra Mishra', 'email': 'devendra.m@example.com',
+             'phone': '+91 85432 10987', 'address': '45 Arera Colony, Bhopal 462016',
+             'notes': 'Mining lease agreement. Government-stamped documents.'},
+            {'advocate': rohit, 'full_name': 'Pallavi Shukla', 'email': 'pallavi.s@example.com',
+             'phone': '+91 93210 87654', 'address': '22 New Market, Bhopal 462003',
+             'notes': 'Shop ownership transfer. Damaged deed requires OCR.'},
         ]
 
         clients = []
@@ -128,7 +175,9 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f'  ✓ Client: {client.full_name}'))
             clients.append(client)
 
-        suresh, lakshmi, irfan, deepa, rajesh, fatima, arjun, neha = clients
+        (suresh, lakshmi, irfan, deepa, rajesh, fatima, arjun, neha,
+         gopal, preethi, venkat, ravi_t, padma, amit, sunita,
+         ganesh, savitha, ramesh, ayesha, devendra, pallavi) = clients
 
         # ── Cases ───────────────────────────────────────────────────
         cases_data = [
@@ -280,15 +329,17 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('═' * 50))
         self.stdout.write('')
         self.stdout.write('  Login credentials:')
-        self.stdout.write(self.style.WARNING('  ┌─────────────────────────────────────────────┐'))
-        self.stdout.write(self.style.WARNING('  │ ADMIN                                       │'))
-        self.stdout.write(self.style.WARNING('  │   admin@legalaid.dev / Admin@123456          │'))
-        self.stdout.write(self.style.WARNING('  │                                             │'))
-        self.stdout.write(self.style.WARNING('  │ ADVOCATES                                   │'))
-        self.stdout.write(self.style.WARNING('  │   rahul@legalaid.dev / Test@123456           │'))
-        self.stdout.write(self.style.WARNING('  │   anita@legalaid.dev / Test@123456           │'))
-        self.stdout.write(self.style.WARNING('  │   vikram@legalaid.dev / Test@123456 (INACTIVE)│'))
-        self.stdout.write(self.style.WARNING('  └─────────────────────────────────────────────┘'))
+        self.stdout.write(self.style.WARNING('  ┌───────────────────────────────────────────────────┐'))
+        self.stdout.write(self.style.WARNING('  │ ADMIN                                             │'))
+        self.stdout.write(self.style.WARNING('  │   admin@legalaid.dev  / Admin@123456              │'))
+        self.stdout.write(self.style.WARNING('  │                                                   │'))
+        self.stdout.write(self.style.WARNING('  │ ADVOCATES (all use Test@123456)                   │'))
+        self.stdout.write(self.style.WARNING('  │   rahul@legalaid.dev   meera@legalaid.dev         │'))
+        self.stdout.write(self.style.WARNING('  │   anita@legalaid.dev   sanjay@legalaid.dev        │'))
+        self.stdout.write(self.style.WARNING('  │   kavita@legalaid.dev  arun@legalaid.dev          │'))
+        self.stdout.write(self.style.WARNING('  │   nisha@legalaid.dev   rohit@legalaid.dev         │'))
+        self.stdout.write(self.style.WARNING('  │   vikram@legalaid.dev  (INACTIVE)                 │'))
+        self.stdout.write(self.style.WARNING('  └───────────────────────────────────────────────────┘'))
         self.stdout.write('')
         self.stdout.write(f'  Clients: {Client.objects.count()}')
         self.stdout.write(f'  Cases:   {Case.objects.count()}')

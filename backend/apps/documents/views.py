@@ -50,11 +50,21 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """Create document with file upload and return full serialized response."""
+        logger.info(
+            "[DOC_CREATE] user=%s case_id=%s file=%s",
+            request.user.email,
+            request.data.get('case', '?'),
+            getattr(request.data.get('file'), 'name', '?'),
+        )
         context = self.get_serializer_context()
         context['advocate'] = request.user
         serializer = self.get_serializer(data=request.data, context=context)
         serializer.is_valid(raise_exception=True)
         doc = serializer.save()
+        logger.info(
+            "[DOC_CREATE] doc_id=%s name='%s' file_path=%s size=%s mime=%s advocate=%s",
+            doc.id, doc.name, doc.file_path, doc.file_size_bytes, doc.mime_type, request.user.email,
+        )
         DocumentStatusHistory.objects.create(
             document=doc,
             from_status=None,
@@ -77,8 +87,16 @@ class DocumentViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         new_status = serializer.validated_data['status']
+        logger.info(
+            "[DOC_STATUS] doc_id=%s name='%s' current=%s requested=%s user=%s",
+            document.id, document.name, document.status, new_status, request.user.email,
+        )
 
         if not document.can_transition_to(new_status):
+            logger.warning(
+                "[DOC_STATUS] BLOCKED doc_id=%s transition %s->%s not allowed",
+                document.id, document.status, new_status,
+            )
             return Response(
                 {'error': f'Cannot transition from {document.status} to {new_status}'},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -95,6 +113,10 @@ class DocumentViewSet(viewsets.ModelViewSet):
             changed_by=request.user,
             notes=serializer.validated_data.get('notes', ''),
         )
+        logger.info(
+            "[DOC_STATUS] SUCCESS doc_id=%s %s->%s user=%s",
+            document.id, old_status, new_status, request.user.email,
+        )
 
         if new_status == 'ready_to_process':
             # Clear stale processed paths on retry so files can be re-stored
@@ -107,6 +129,11 @@ class DocumentViewSet(viewsets.ModelViewSet):
                 ])
                 logger.info("Cleared processed paths for doc %s (retry from %s)", document.id, old_status)
 
+            logger.info(
+                "[DOC_N8N_SEND] doc_id=%s name='%s' file_path=%s case=%s client=%s",
+                document.id, document.name, document.file_path,
+                document.case.title, document.case.client.full_name if document.case.client else 'N/A',
+            )
             result = notify_n8n_ready_to_process(
                 document_id=document.id,
                 document_name=document.name,
@@ -118,9 +145,10 @@ class DocumentViewSet(viewsets.ModelViewSet):
             )
 
             logger.info(
-                "n8n OCR result for doc %s: %s",
+                "[DOC_N8N_RESULT] doc_id=%s result_type=%s keys=%s",
                 document.id,
-                result if result else 'None (timeout or error)',
+                type(result).__name__ if result else 'None',
+                list(result.keys()) if isinstance(result, dict) else 'N/A',
             )
 
             if result is not None:
@@ -169,13 +197,19 @@ class DocumentViewSet(viewsets.ModelViewSet):
     def download(self, request, pk=None):
         """Return a download URL for the document file."""
         document = self.get_object()
+        logger.info(
+            "[DOC_DOWNLOAD] doc_id=%s name='%s' file_path=%s user=%s",
+            document.id, document.name, document.file_path, request.user.email,
+        )
         backend = get_storage_backend()
         url = backend.get_url(document.file_path, request=request)
         if not url:
+            logger.warning("[DOC_DOWNLOAD] FAILED doc_id=%s file not available", document.id)
             return Response(
                 {'error': 'File not available'},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        logger.info("[DOC_DOWNLOAD] SUCCESS doc_id=%s url_length=%d", document.id, len(url))
         return Response({
             'url': url,
             'name': document.name,
