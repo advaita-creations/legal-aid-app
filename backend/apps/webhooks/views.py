@@ -64,56 +64,63 @@ def _store_bytes(content: bytes, content_type: str, document: Document, suffix: 
 
 def _modify_v1_html_for_webapp(html_content: str) -> str:
     """Modify v1 HTML to use postMessage instead of downloads for webapp integration.
-    
-    Replaces the download() function calls with postMessage to parent window.
+
+    Replaces the three download() calls at the end of saveAndExport() with
+    postMessage logic so v2 files are sent to the parent window instead of
+    triggering browser downloads.
     """
-    # Find the saveAndExport function and replace download calls with postMessage
-    replacement_code = '''
-  function download(content, filename, mime) {
-    // Send to parent window instead of downloading
-    if (window.parent !== window) {
-      if (!window._v2Files) window._v2Files = {};
-      window._v2Files[filename] = content;
-      
-      // Check if all 3 files are ready
-      const baseName = BASE_NAME;
-      const htmlKey = baseName + '_consolidated_v2.html';
-      const txtKey = baseName + '_consolidated_v2.txt';
-      const logKey = baseName + '_corrections_log.txt';
-      
-      if (window._v2Files[htmlKey] && window._v2Files[txtKey] && window._v2Files[logKey]) {
-        window.parent.postMessage({
-          type: 'v2_files_ready',
-          data: {
-            htmlV2: window._v2Files[htmlKey],
-            txtV2: window._v2Files[txtKey],
-            corrLogTxt: window._v2Files[logKey],
-            baseName: baseName
-          }
-        }, '*');
-        alert('✅ Files saved! The document has been updated in the system.');
-        window._v2Files = {};
-      }
-    } else {
-      // Fallback: original download behavior when not in iframe
-      const blob = new Blob([content], { type: mime });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    }
-  }'''
-    
-    # Replace the original download function
-    if 'function download(content, filename, mime)' in html_content:
-        # Find and replace the download function
-        import re
-        pattern = r'function download\(content, filename, mime\) \{[^}]*\}'
-        html_content = re.sub(pattern, replacement_code, html_content, flags=re.DOTALL)
-    
+    import re
+
+    # The replacement code that sends files to the parent window via postMessage
+    postmessage_code = (
+        "  // --- Webapp integration: postMessage instead of download ---\n"
+        "  if (window.parent !== window) {\n"
+        "    window.parent.postMessage({\n"
+        "      type: 'v2_files_ready',\n"
+        "      data: {\n"
+        "        htmlV2: htmlV2,\n"
+        "        txtV2: txtV2,\n"
+        "        corrLogTxt: corrLogTxt,\n"
+        "        baseName: BASE_NAME\n"
+        "      }\n"
+        "    }, '*');\n"
+        "    alert('Files saved! The document has been updated in the system.');\n"
+        "  } else {\n"
+        "    // Fallback: original download behavior when not in iframe\n"
+        "    function _dl(c, f, m) {\n"
+        "      var b = new Blob([c], { type: m });\n"
+        "      var a = document.createElement('a');\n"
+        "      a.href = URL.createObjectURL(b);\n"
+        "      a.download = f;\n"
+        "      document.body.appendChild(a);\n"
+        "      a.click();\n"
+        "      document.body.removeChild(a);\n"
+        "      setTimeout(function() { URL.revokeObjectURL(a.href); }, 1000);\n"
+        "    }\n"
+        "    _dl(htmlV2, BASE_NAME + '_consolidated_v2.html', 'text/html');\n"
+        "    _dl(txtV2, BASE_NAME + '_consolidated_v2.txt', 'text/plain');\n"
+        "    _dl(corrLogTxt, BASE_NAME + '_corrections_log.txt', 'text/plain');\n"
+        "  }"
+    )
+
+    # Strategy: replace the three download() calls with postMessage logic.
+    # Match: download(htmlV2, ...); download(txtV2, ...); download(corrLogTxt, ...);
+    pattern = (
+        r'download\(htmlV2,.*?;\s*'
+        r'download\(txtV2,.*?;\s*'
+        r'download\(corrLogTxt,.*?;'
+    )
+    match = re.search(pattern, html_content, re.DOTALL)
+    if match:
+        html_content = (
+            html_content[:match.start()] +
+            postmessage_code +
+            html_content[match.end():]
+        )
+        logger.info("_modify_v1_html_for_webapp: replaced 3 download() calls with postMessage")
+    else:
+        logger.warning("_modify_v1_html_for_webapp: could not find download() calls to replace")
+
     return html_content
 
 
