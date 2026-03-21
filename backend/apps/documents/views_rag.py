@@ -4,6 +4,7 @@ Supports the post-OCR workflow:
   - Save edited HTML as a new version (v{n})
   - Revert to a previous version
   - Finalize and push to RAG webhook for vector indexing
+  - Upload v2 files from interactive HTML Save & Export
   - Live processing / debug logs
 """
 import logging
