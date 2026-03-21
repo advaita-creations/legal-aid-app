@@ -82,11 +82,19 @@ export const documentsApi = {
   },
 
   uploadV2Files: async (id: string, formData: FormData): Promise<{ ok: boolean }> => {
-    const response = await apiClient.post<{ ok: boolean }>(
-      `/documents/${id}/upload-v2-files/`,
-      formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } },
-    );
-    return response.data;
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    try {
+      const response = await apiClient.post<{ ok: boolean }>(
+        `/documents/${id}/upload-v2-files/`, formData, config,
+      );
+      return response.data;
+    } catch (primaryErr) {
+      console.error('[uploadV2Files] primary URL failed:', primaryErr);
+      // Fallback to v2 URL
+      const response = await apiClient.post<{ ok: boolean }>(
+        `/v2/documents/${id}/upload-v2-files/`, formData, config,
+      );
+      return response.data;
+    }
   },
 };

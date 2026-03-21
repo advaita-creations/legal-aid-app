@@ -172,9 +172,12 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
           queryClient.invalidateQueries({ queryKey: ['full-html'] });
           toast('Document finalized! V2 files saved successfully.');
           setShowPreview(false);
-        } catch (error) {
-          console.error('Failed to upload v2 files:', error);
-          toast('Failed to save v2 files. Please try again.');
+        } catch (error: unknown) {
+          const axErr = error as { response?: { status?: number; data?: unknown }; message?: string };
+          const status = axErr?.response?.status;
+          const detail = JSON.stringify(axErr?.response?.data || axErr?.message || 'Unknown error');
+          console.error('[v2Upload] FAILED status=', status, 'detail=', detail, error);
+          toast(`Failed to save v2 files (${status || 'network'}): ${detail}`);
         }
       }
     };
