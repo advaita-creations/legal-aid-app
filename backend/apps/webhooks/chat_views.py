@@ -210,13 +210,12 @@ def chat_relay(request: Request) -> Response:
         case_name = _resolve_case_name(case_id, request.user)
 
     # Log chat routing
-    webhook_type = 'RAG' if client_name else 'Chat'
     logger.info(
-        "[CHAT_ROUTE] Routing chat to %s webhook: client_name=%s case_name=%s",
-        webhook_type, client_name, case_name,
+        "[CHAT_ROUTE] Routing chat to N8N_CHAT_WEBHOOK_URL: client_name=%s case_name=%s",
+        client_name, case_name,
     )
 
-    # Relay to n8n (RAG webhook if client selected, general chat otherwise)
+    # Relay to n8n chat webhook (always uses N8N_CHAT_WEBHOOK_URL)
     ai_response = _relay_to_n8n(
         message=message,
         advocate_email=request.user.email,
