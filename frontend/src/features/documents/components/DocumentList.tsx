@@ -51,6 +51,9 @@ export function DocumentList() {
       toast('Document marked ready to process');
       navigate(`/documents/${docId}`);
     },
+    onError: () => {
+      toast('Failed to mark document ready. Please try again.');
+    },
   });
 
   const { data: documents, isLoading, error } = useQuery({

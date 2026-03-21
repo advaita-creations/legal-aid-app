@@ -162,6 +162,9 @@ export function DocumentDetail() {
       queryClient.invalidateQueries({ queryKey: ['processing-logs', id] });
       toast('Document status updated');
     },
+    onError: () => {
+      toast('Failed to update status. Please try again.');
+    },
   });
 
   if (isLoading) {
