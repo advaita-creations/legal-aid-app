@@ -62,6 +62,61 @@ def _store_bytes(content: bytes, content_type: str, document: Document, suffix: 
     return _store_processed_file(file_obj, document, suffix)
 
 
+def _modify_v1_html_for_webapp(html_content: str) -> str:
+    """Modify v1 HTML to use postMessage instead of downloads for webapp integration.
+    
+    Replaces the download() function calls with postMessage to parent window.
+    """
+    # Find the saveAndExport function and replace download calls with postMessage
+    replacement_code = '''
+  function download(content, filename, mime) {
+    // Send to parent window instead of downloading
+    if (window.parent !== window) {
+      if (!window._v2Files) window._v2Files = {};
+      window._v2Files[filename] = content;
+      
+      // Check if all 3 files are ready
+      const baseName = BASE_NAME;
+      const htmlKey = baseName + '_consolidated_v2.html';
+      const txtKey = baseName + '_consolidated_v2.txt';
+      const logKey = baseName + '_corrections_log.txt';
+      
+      if (window._v2Files[htmlKey] && window._v2Files[txtKey] && window._v2Files[logKey]) {
+        window.parent.postMessage({
+          type: 'v2_files_ready',
+          data: {
+            htmlV2: window._v2Files[htmlKey],
+            txtV2: window._v2Files[txtKey],
+            corrLogTxt: window._v2Files[logKey],
+            baseName: baseName
+          }
+        }, '*');
+        alert('✅ Files saved! The document has been updated in the system.');
+        window._v2Files = {};
+      }
+    } else {
+      // Fallback: original download behavior when not in iframe
+      const blob = new Blob([content], { type: mime });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }
+  }'''
+    
+    # Replace the original download function
+    if 'function download(content, filename, mime)' in html_content:
+        # Find and replace the download function
+        import re
+        pattern = r'function download\(content, filename, mime\) \{[^}]*\}'
+        html_content = re.sub(pattern, replacement_code, html_content, flags=re.DOTALL)
+    
+    return html_content
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 @parser_classes([MultiPartParser, FormParser, JSONParser])
@@ -122,10 +177,20 @@ def n8n_webhook_view(request):
                 file_type = 'report'
 
         if file_type == 'html' and not document.processed_html_path:
-            path = _store_processed_file(file_obj, document, f'{prefix}_v1.html')
+            # Modify v1 HTML to use postMessage instead of downloads
+            file_obj.seek(0)
+            html_content = file_obj.read().decode('utf-8')
+            modified_html = _modify_v1_html_for_webapp(html_content)
+            modified_file = SimpleUploadedFile(
+                f'{prefix}_v1.html',
+                modified_html.encode('utf-8'),
+                content_type='text/html',
+            )
+            path = _store_processed_file(modified_file, document, f'{prefix}_v1.html')
             if path:
                 document.processed_html_path = path
                 stored_count += 1
+                logger.info("n8n webhook: modified v1 HTML for webapp integration")
         elif file_type == 'report' and not document.processed_report_path:
             path = _store_processed_file(file_obj, document, f'{prefix}_report.txt')
             if path:
