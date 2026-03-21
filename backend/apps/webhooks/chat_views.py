@@ -90,7 +90,7 @@ def _relay_to_n8n(
         logger.warning("N8N_CHAT_WEBHOOK_URL not configured — returning fallback response")
         return None
 
-    logger.info("Using N8N_CHAT_WEBHOOK_URL: %s", webhook_url[:60])
+    logger.info("Using N8N_CHAT_WEBHOOK_URL for chat: %s", webhook_url)
 
     secret = os.environ.get('N8N_WEBHOOK_SECRET', '')
     headers = {}
