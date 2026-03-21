@@ -1,0 +1,31 @@
+--------------------------------------------------
+DOCUMENT VALIDATION REPORT v1
+
+FILE INFORMATION
+File Name       : Kalpataru NOC - latest 3 - 16 - 2026.pdf
+File Size       : 364 kB
+File Type       : application/pdf
+Processing Mode : single_pass
+Total Chars     : 1,636
+Total Chunks    : 1
+
+OCR ENGINE DETAILS
+Mistral OCR     : 1,636 characters
+PDF Vector OCR  : 1,622 characters
+
+VALIDATION SUMMARY
+Paragraphs Compared : 13
+Exact Matches       : 11  (84.6%)
+Partial Matches     : 0
+Conflicts           : 2
+
+VALIDATION RESULT
+Agreement Level : 84.62%  (percentage of paragraphs where both OCR sources produced identical or near-identical text)
+Status          : REVIEW_REQUIRED
+Confidence      : MEDIUM
+Integrity Score : 87.77  (composite score 0-100 combining agreement rate, conflict penalty, and processing confidence)
+
+HITL SUMMARY
+Auto-Resolved   : 2
+Pending Review  : 0
+--------------------------------------------------

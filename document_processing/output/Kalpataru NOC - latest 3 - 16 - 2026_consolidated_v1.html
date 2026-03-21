@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalpataru Gardens Private Limited - Letter Confirming Conclusion of Re-development Negotiations</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.8; background: #f0f2f5; color: #000; }
+    #toolbar { position: sticky; top: 0; z-index: 1000; background: #1e293b; color: #fff; padding: 10px 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-family: Arial, sans-serif; font-size: 10pt; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+    #toolbar .doc-title { font-weight: bold; font-size: 11pt; white-space: nowrap; margin-right: 6px; color: #e2e8f0; }
+    #toolbar .separator { width: 1px; height: 24px; background: #334155; margin: 0 4px; }
+    #toolbar button { padding: 5px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 9pt; font-weight: bold; font-family: Arial, sans-serif; transition: opacity 0.15s; white-space: nowrap; }
+    #toolbar button:hover { opacity: 0.85; }
+    #btn-save  { background: #10b981; color: #fff; }
+    #btn-clear { background: #64748b; color: #fff; }
+    #mismatch-counts { display: flex; align-items: center; gap: 8px; margin-left: auto; font-family: Arial, sans-serif; }
+    .count-badge { padding: 3px 10px; border-radius: 12px; font-size: 8.5pt; font-weight: bold; white-space: nowrap; }
+    .count-hitl     { background: #dc2626; color: #fff; }
+    .count-auto     { background: #d97706; color: #fff; }
+    .count-resolved { background: #16a34a; color: #fff; }
+    #document-outer { max-width: 900px; margin: 24px auto 80px auto; padding: 0 20px; }
+    #document-body  { background: #fff; padding: 60px 70px; box-shadow: 0 2px 16px rgba(0,0,0,0.1); border-radius: 4px; }
+    #document-body p  { margin: 0.6em 0; }
+    #document-body h1 { font-size: 14pt; text-align: center; text-transform: uppercase; margin-bottom: 1.5em; }
+    #document-body h2 { font-size: 13pt; margin-top: 1.5em; margin-bottom: 0.5em; }
+    #document-body h3 { font-size: 12pt; margin-top: 1em; margin-bottom: 0.4em; }
+    #document-body ol { margin: 0.8em 0 0.8em 1.5em; }
+    #document-body ul { margin: 0.8em 0 0.8em 1.5em; }
+    #document-body li { margin: 0.4em 0; }
+    #document-body table { width: 100%; border-collapse: collapse; margin: 1.2em 0; font-size: 11pt; }
+    #document-body td, #document-body th { border: 1px solid #666; padding: 6px 10px; }
+    #document-body th { background: #f0f0f0; font-weight: bold; }
+    .page-break { text-align: center; margin: 2.5em 0 1em 0; padding: 4px 0; border-top: 1px dashed #bbb; border-bottom: 1px dashed #bbb; color: #888; font-size: 9pt; font-family: Arial, sans-serif; letter-spacing: 0.12em; }
+    .editable-para { border-radius: 3px; transition: background 0.15s; cursor: text; }
+    .editable-para:hover { background: #f8faff; outline: 1px dashed #bcd; }
+    .editable-para:focus { outline: 2px solid #3b82f6; background: #fff; cursor: text; }
+    .editable-para.edited { border-left: 3px solid #f59e0b; padding-left: 6px; }
+    .mismatch-block { font-family: Arial, sans-serif; font-size: 10pt; border-radius: 6px; margin: 10px 0; overflow: hidden; }
+    .mismatch-auto { border: 1px solid #fde68a; }
+    .mismatch-auto-strip { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; padding: 7px 12px; background: #fffbea; font-size: 9pt; line-height: 1.5; }
+    .auto-detail { color: #92400e; }
+    .auto-detail strong { color: #78350f; }
+    .auto-vs { color: #b45309; font-size: 8.5pt; }
+    .ai-comment-inline { color: #a16207; font-style: italic; font-size: 8.5pt; flex-basis: 100%; margin-top: 2px; }
+    .btn-accept-auto { margin-left: auto; padding: 4px 14px; background: #10b981; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 8.5pt; font-weight: bold; white-space: nowrap; }
+    .btn-accept-auto:hover { background: #059669; }
+    .mismatch-hitl { border: 1px solid #fca5a5; }
+    .mismatch-header { display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: #fff0f0; flex-wrap: wrap; }
+    .mismatch-body { padding: 12px 14px; background: #fff8f8; display: flex; flex-direction: column; gap: 10px; }
+    .badge { padding: 2px 10px; border-radius: 3px; font-size: 8.5pt; font-weight: bold; white-space: nowrap; }
+    .badge-hitl { background: #dc2626; color: #fff; }
+    .badge-auto { background: #d97706; color: #fff; }
+    .mismatch-id { font-family: monospace; font-weight: bold; font-size: 9pt; color: #374151; }
+    .mismatch-page { padding: 2px 8px; border-radius: 3px; font-size: 8pt; font-weight: bold; background: #e8f0fe; color: #1a56db; }
+    .ai-comment { font-size: 9pt; color: #6b7280; font-style: italic; padding: 6px 10px; background: #f9fafb; border-left: 3px solid #d1d5db; border-radius: 0 4px 4px 0; }
+    .mismatch-sources { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .source-box { border-radius: 4px; padding: 8px 10px; border: 1px solid #e5e7eb; }
+    .source-mistral { background: #eff6ff; border-color: #bfdbfe; }
+    .source-vector  { background: #f5f3ff; border-color: #ddd6fe; }
+    .source-label { font-size: 8pt; font-weight: bold; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .source-text { font-family: "Times New Roman", serif; font-size: 10.5pt; color: #111; line-height: 1.5; }
+    .hitl-step1, .hitl-step2 { display: flex; flex-direction: column; gap: 6px; }
+    .step-label { font-size: 8.5pt; font-weight: bold; color: #374151; text-transform: uppercase; letter-spacing: 0.05em; }
+    .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 9.5pt; color: #374151; }
+    .radio-option input { cursor: pointer; }
+    .radio-option code { background: #f3f4f6; padding: 1px 6px; border-radius: 3px; font-size: 9pt; color: #1f2937; word-break: break-all; }
+    .hitl-textarea { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: "Times New Roman", serif; font-size: 11pt; line-height: 1.6; resize: vertical; min-height: 64px; transition: border-color 0.15s; }
+    .hitl-textarea:focus { outline: none; border-color: #3b82f6; }
+    .mismatch-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-confirm { padding: 6px 18px; background: #10b981; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 9pt; font-weight: bold; font-family: Arial, sans-serif; }
+    .btn-confirm:hover { background: #059669; }
+    .btn-delete  { padding: 6px 18px; background: #ef4444; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 9pt; font-weight: bold; font-family: Arial, sans-serif; }
+    .btn-delete:hover  { background: #dc2626; }
+    @media print {
+      #toolbar { display: none !important; }
+      body { background: #fff; }
+      #document-outer { margin: 0; padding: 0; max-width: 100%; }
+      #document-body { box-shadow: none; padding: 20mm; border-radius: 0; }
+      .mismatch-block { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="toolbar">
+  <span class="doc-title">📄 Kalpataru Gardens Private Limited - Letter Confirming Conclusion of Re-development Negotiations</span>
+  <div class="separator"></div>
+  <button id="btn-save"  onclick="saveAndExport()">💾 Save &amp; Export</button>
+  <button id="btn-clear" onclick="clearSavedData()">🗑 Clear Saved</button>
+  <div id="mismatch-counts">
+    <span class="count-badge count-hitl"     id="count-hitl">🔴 0 pending</span>
+    <span class="count-badge count-auto"     id="count-auto">🟡 0 auto</span>
+    <span class="count-badge count-resolved" id="count-resolved">✅ 0 resolved</span>
+  </div>
+</div>
+
+<div id="document-outer">
+  <div id="document-body">
+    <div class="page-break"><strong>— Page 1 —</strong></div>
+<p>KALPA-TARU</p>
+<p>14th March, 2022</p>
+<p>To</p>
+<p>Jan Kalyan CHS Limited,<br>Bangur Nagar, Goregaon West,<br>Mumbai - 400 104.</p>
+<p><strong>Kind Attention: Hon. Chairman / Hon. Secretary.</strong></p>
+<p>Dear Sirs,</p>
+<p>Sub: Re-development of your Society Buildings.</p>
+<p>We have been intimated by your kind self that the Society’s General Body Meeting conducted on 29th August 2021 has not accepted our final offer as conveyed to you by our letter dated 17th August 2021.</p>
+<p>In view of this, the negotiations between us for the re-development of your Society buildings stands concluded and closed.</p>
+<p>Pursuant to our meeting and discussion to close and mutually conclude the same, we confirm having received back the earnest money deposited with you as per the Tender Requirement vide your cheque no. 346939 dated 14th March 2022 for Rs. 20,00,000/- (Rupees Twenty Lakhs Only) and cheque no. 346938 dated 14th March 2022 for Rs. 6,74,000/- (Rupees Six Lakhs Seventy Four Thousand Only) towards payment for CRZ Arial Mapping Fees.</p>
+<p>We hereby irrevocably confirm that both parties have no further claim/s whatsoever against each other.</p>
+<p>We take this opportunity to thank the Office Bearers and the entire Managing Committee for the cordial conducting of the negotiations and wish the Society all the very best in their future endeavors.</p>
+<p>Thanking you,</p>
+<p>Yours faithfully,<br>For Kalpataru Gardens Private Limited</p>
+<!-- [Handwritten/signature text omitted — page 1] -->
+<div class="mismatch-block mismatch-auto" id="block_MISMATCH_001"
+      data-id="MISMATCH_001"
+      data-page="1"
+      data-chosen="neither"
+      data-mistral=""
+      data-vector=""
+      data-resolved-text="">
+      <div class="mismatch-auto-strip">
+        <span class="badge badge-auto">🟡 AUTO-RESOLVED</span>
+        <span class="mismatch-id">MISMATCH_001</span>
+        <span class="mismatch-page">Page 1</span>
+        <span class="auto-detail">AI chose <strong>PDF Vector</strong>: &ldquo;&rdquo;</span>
+        <span class="auto-vs">vs <em>Mistral</em>: &ldquo;&rdquo;</span>
+        <span class="ai-comment-inline">— Handwritten/Devanagari content detected by pre-processor. Omitted from document body per Rule 3.</span>
+        <button class="btn-accept-auto" onclick="acceptAutoResolved('MISMATCH_001')">✓ Accept &amp; Remove</button>
+      </div>
+    </div>
+<p>For Jan-Kalyan CHS Limited</p>
+<!-- [Handwritten/signature text omitted — page 1] -->
+<div class="mismatch-block mismatch-auto" id="block_MISMATCH_002"
+      data-id="MISMATCH_002"
+      data-page="1"
+      data-chosen="neither"
+      data-mistral=""
+      data-vector=""
+      data-resolved-text="">
+      <div class="mismatch-auto-strip">
+        <span class="badge badge-auto">🟡 AUTO-RESOLVED</span>
+        <span class="mismatch-id">MISMATCH_002</span>
+        <span class="mismatch-page">Page 1</span>
+        <span class="auto-detail">AI chose <strong>PDF Vector</strong>: &ldquo;&rdquo;</span>
+        <span class="auto-vs">vs <em>Mistral</em>: &ldquo;&rdquo;</span>
+        <span class="ai-comment-inline">— Handwritten/Devanagari content detected by pre-processor. Omitted from document body per Rule 3.</span>
+        <button class="btn-accept-auto" onclick="acceptAutoResolved('MISMATCH_002')">✓ Accept &amp; Remove</button>
+      </div>
+    </div>
+<p>KALPATARU GARDENS PRIVATE LIMITED<br>CIN No : U99999MH1964PTC012833<br>101, Kalpataru Synergy, Opp. Grand Hyatt, Santacruz (E), Mumbai 400 055. India.<br>Tel +91 22 3064 5000 • Fax +91 22 3064 3131</p>
+  </div>
+</div>
+
+<script>
+const BASE_NAME  = "Kalpataru NOC - latest 3 - 16 - 2026";
+const DOC_KEY    = 'fve_' + BASE_NAME.replace(/[^a-z0-9]/gi, '_');
+const PAGE_TITLE = "Kalpataru Gardens Private Limited - Letter Confirming Conclusion of Re-development Negotiations";
+
+let corrections = {};
+let editHistory = {};
+
+try {
+  const saved = localStorage.getItem(DOC_KEY);
+  if (saved) { const s = JSON.parse(saved); corrections = s.corrections || {}; editHistory = s.editHistory || {}; }
+} catch(e) {}
+
+document.addEventListener('DOMContentLoaded', () => { initEditableText(); restoreState(); updateCounts(); });
+
+function initEditableText() {
+  const body = document.getElementById('document-body');
+  const tags = ['P','H1','H2','H3','H4','LI'];
+  const allEls = [];
+  tags.forEach(tag => { body.querySelectorAll(tag).forEach(el => { if (!el.closest('.mismatch-block')) allEls.push(el); }); });
+  body.querySelectorAll('td, th').forEach(el => { if (!el.closest('.mismatch-block')) allEls.push(el); });
+  allEls.forEach(el => {
+    const eid = 'edit_' + Math.random().toString(36).substr(2, 9);
+    el.dataset.editId = eid;
+    el.dataset.originalText = el.innerHTML;
+    el.classList.add('editable-para');
+    el.setAttribute('contenteditable', 'false');
+    el.setAttribute('spellcheck', 'true');
+    el.title = 'Double-click to edit';
+    if (editHistory[eid]) { el.innerHTML = editHistory[eid].after; el.classList.add('edited'); }
+    el.addEventListener('dblclick', () => { el.setAttribute('contenteditable', 'true'); el.focus(); el.title = 'Click outside to save'; });
+    el.addEventListener('blur', () => {
+      el.setAttribute('contenteditable', 'false');
+      el.title = 'Double-click to edit';
+      const newText = el.innerHTML;
+      const original = editHistory[eid] ? editHistory[eid].before : el.dataset.originalText;
+      if (newText !== el.dataset.originalText) {
+        editHistory[eid] = { editId: eid, tag: el.tagName, before: original, after: newText, ts: new Date().toISOString() };
+        el.classList.add('edited');
+        persistState();
+      }
+    });
+  });
+}
+
+function prefillHITL(id, text) { const ta = document.getElementById('textarea_' + id); if (ta) { ta.value = text; ta.focus(); } }
+
+function acceptAutoResolved(id) {
+  const block = document.getElementById('block_' + id); if (!block) return;
+  const resolvedText = block.dataset.resolvedText || '';
+  corrections[id] = { type: 'auto_accepted', marker_id: id, page: block.dataset.page, chosen_source: block.dataset.chosen || 'auto', mistral_text: block.dataset.mistral || '', vector_text: block.dataset.vector || '', final_text: resolvedText, modified: false, ts: new Date().toISOString() };
+  persistState(); block.remove(); updateCounts();
+}
+
+function confirmHITL(id) {
+  const block = document.getElementById('block_' + id);
+  const ta    = document.getElementById('textarea_' + id);
+  if (!block || !ta) return;
+  const finalText = ta.value.trim();
+  if (!finalText) { ta.style.borderColor = '#ef4444'; ta.focus(); return; }
+  const radios = block.querySelectorAll('input[type=radio]');
+  let startedWith = 'new';
+  radios.forEach(r => { if (r.checked) startedWith = r.value; });
+  const mistralText   = block.dataset.mistral || '';
+  const vectorText    = block.dataset.vector  || '';
+  const originalStart = startedWith === 'mistral' ? mistralText : startedWith === 'vector' ? vectorText : '';
+  const wasModified   = finalText !== originalStart;
+  corrections[id] = { type: 'hitl_confirmed', marker_id: id, page: block.dataset.page, started_with: startedWith, mistral_text: mistralText, vector_text: vectorText, final_text: finalText, modified: wasModified, ts: new Date().toISOString() };
+  const resolvedPara = document.createElement('p');
+  resolvedPara.textContent = finalText;
+  resolvedPara.classList.add('editable-para');
+  resolvedPara.dataset.editId = 'edit_resolved_' + id;
+  resolvedPara.dataset.originalText = finalText;
+  resolvedPara.setAttribute('contenteditable', 'false');
+  resolvedPara.setAttribute('spellcheck', 'true');
+  resolvedPara.title = 'Double-click to edit';
+  resolvedPara.addEventListener('dblclick', function() { this.setAttribute('contenteditable', 'true'); this.focus(); });
+  resolvedPara.addEventListener('blur', function() {
+    this.setAttribute('contenteditable', 'false');
+    editHistory['edit_resolved_' + id] = { editId: 'edit_resolved_' + id, tag: 'P', before: finalText, after: this.innerHTML, ts: new Date().toISOString() };
+    persistState();
+  });
+  block.parentNode.insertBefore(resolvedPara, block);
+  persistState(); block.remove(); updateCounts();
+}
+
+function deleteMismatch(id) {
+  const block = document.getElementById('block_' + id); if (!block) return;
+  corrections[id] = { type: 'hitl_deleted', marker_id: id, page: block.dataset.page, mistral_text: block.dataset.mistral || '', vector_text: block.dataset.vector || '', ts: new Date().toISOString() };
+  persistState(); block.remove(); updateCounts();
+}
+
+function updateCounts() {
+  const hitl     = document.querySelectorAll('.mismatch-hitl').length;
+  const auto     = document.querySelectorAll('.mismatch-auto').length;
+  const resolved = Object.keys(corrections).length;
+  document.getElementById('count-hitl').textContent     = '🔴 ' + hitl + ' pending';
+  document.getElementById('count-auto').textContent     = '🟡 ' + auto + ' auto';
+  document.getElementById('count-resolved').textContent = '✅ ' + resolved + ' resolved';
+}
+
+function persistState() {
+  try { localStorage.setItem(DOC_KEY, JSON.stringify({ corrections, editHistory })); } catch(e) {}
+}
+
+function restoreState() {
+  for (const [id, c] of Object.entries(corrections)) {
+    const block = document.getElementById('block_' + id);
+    if (!block) continue;
+    if (c.type === 'auto_accepted' || c.type === 'hitl_deleted') { block.remove(); continue; }
+    if (c.type === 'hitl_confirmed') {
+      const p = document.createElement('p');
+      p.textContent = c.final_text;
+      block.parentNode.insertBefore(p, block);
+      block.remove();
+    }
+  }
+  updateCounts();
+}
+
+function clearSavedData() {
+  if (!confirm('Clear all saved corrections and edits? This cannot be undone.')) return;
+  corrections = {}; editHistory = {};
+  localStorage.removeItem(DOC_KEY);
+  location.reload();
+}
+
+function saveAndExport() {
+  const exportedAt = new Date().toISOString();
+  const docBodyEl  = document.getElementById('document-body');
+  const cloneBody  = docBodyEl.cloneNode(true);
+
+  cloneBody.querySelectorAll('.mismatch-block').forEach(el => el.remove());
+  cloneBody.querySelectorAll('.editable-para').forEach(el => {
+    el.removeAttribute('contenteditable');
+    el.removeAttribute('title');
+    el.removeAttribute('spellcheck');
+    el.classList.remove('editable-para', 'edited');
+    delete el.dataset.editId;
+    delete el.dataset.originalText;
+  });
+
+  const cleanDocHTML = cloneBody.innerHTML;
+
+  const htmlV2 = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${PAGE_TITLE} — Final</title>
+  <style>
+    body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.8; max-width: 820px; margin: 40px auto; padding: 60px; color: #000; }
+    p  { margin: 0.6em 0; }
+    h1 { font-size: 14pt; text-align: center; text-transform: uppercase; margin-bottom: 1.5em; }
+    h2 { font-size: 13pt; margin-top: 1.5em; margin-bottom: 0.5em; }
+    h3 { font-size: 12pt; margin-top: 1em; }
+    ol, ul { margin: 0.8em 0 0.8em 1.5em; }
+    li { margin: 0.4em 0; }
+    table { width: 100%; border-collapse: collapse; margin: 1.2em 0; }
+    td, th { border: 1px solid #666; padding: 6px 10px; }
+    th { background: #f0f0f0; font-weight: bold; }
+    .page-break { text-align: center; margin: 2em 0; padding: 4px 0; border-top: 1px dashed #bbb; border-bottom: 1px dashed #bbb; color: #888; font-size: 9pt; letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+${cleanDocHTML}
+</body>
+</html>`;
+
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = cleanDocHTML;
+  tempDiv.querySelectorAll('.page-break').forEach(el => { el.replaceWith(document.createTextNode(`\n\n--- ${el.textContent.trim()} ---\n\n`)); });
+  tempDiv.querySelectorAll('tr').forEach(tr => {
+    const cells = [...tr.querySelectorAll('td,th')].map(c => c.textContent.trim()).join(' | ');
+    tr.replaceWith(document.createTextNode(cells + '\n'));
+  });
+  tempDiv.querySelectorAll('table').forEach(t => { t.replaceWith(document.createTextNode(t.textContent)); });
+  const txtV2 = tempDiv.textContent.replace(/\n{3,}/g, '\n\n').trim();
+
+  const allActions    = Object.values(corrections);
+  const autoAccepted  = allActions.filter(c => c.type === 'auto_accepted');
+  const hitlConfirmed = allActions.filter(c => c.type === 'hitl_confirmed');
+  const hitlDeleted   = allActions.filter(c => c.type === 'hitl_deleted');
+  const textEdits     = Object.values(editHistory);
+
+  let logLines = []; let counter = 1;
+  logLines.push('==================================================');
+  logLines.push('CORRECTIONS LOG');
+  logLines.push('Document  : ' + BASE_NAME);
+  logLines.push('Exported  : ' + exportedAt);
+  logLines.push('==================================================');
+  logLines.push('');
+  autoAccepted.forEach(c => {
+    logLines.push('[' + String(counter++).padStart(3,'0') + '] ' + c.marker_id + ' — AUTO-RESOLVED — ACCEPTED');
+    logLines.push('      Page         : ' + (c.page || '?'));
+    logLines.push('      AI Choice    : ' + (c.chosen_source || 'auto'));
+    logLines.push('      Mistral Text : ' + (c.mistral_text || ''));
+    logLines.push('      Vector Text  : ' + (c.vector_text  || ''));
+    logLines.push('      Final Text   : ' + c.final_text);
+    logLines.push('      Timestamp    : ' + c.ts);
+    logLines.push('');
+  });
+  hitlConfirmed.forEach(c => {
+    logLines.push('[' + String(counter++).padStart(3,'0') + '] ' + c.marker_id + ' — HITL — CONFIRMED');
+    logLines.push('      Page         : ' + (c.page || '?'));
+    logLines.push('      Started With : ' + c.started_with);
+    logLines.push('      Mistral Text : ' + (c.mistral_text || ''));
+    logLines.push('      Vector Text  : ' + (c.vector_text  || ''));
+    logLines.push('      Final Text   : ' + c.final_text);
+    logLines.push('      Modified     : ' + (c.modified ? 'YES — user changed the pre-filled text' : 'NO — used as-is'));
+    logLines.push('      Timestamp    : ' + c.ts);
+    logLines.push('');
+  });
+  hitlDeleted.forEach(c => {
+    logLines.push('[' + String(counter++).padStart(3,'0') + '] ' + c.marker_id + ' — HITL — DELETED');
+    logLines.push('      Page         : ' + (c.page || '?'));
+    logLines.push('      Mistral Text : ' + (c.mistral_text || ''));
+    logLines.push('      Vector Text  : ' + (c.vector_text  || ''));
+    logLines.push('      Reason       : Marked as not significant by reviewer');
+    logLines.push('      Timestamp    : ' + c.ts);
+    logLines.push('');
+  });
+  textEdits.forEach(e => {
+    logLines.push('[' + String(counter++).padStart(3,'0') + '] TEXT EDIT — ' + e.tag);
+    logLines.push('      Edit ID      : ' + e.editId);
+    logLines.push('      Before       : ' + e.before.replace(/<[^>]+>/g, '').trim());
+    logLines.push('      After        : ' + e.after.replace(/<[^>]+>/g, '').trim());
+    logLines.push('      Timestamp    : ' + e.ts);
+    logLines.push('');
+  });
+  logLines.push('==================================================');
+  logLines.push('SUMMARY');
+  logLines.push('Auto-Resolved Accepted : ' + autoAccepted.length);
+  logLines.push('HITL Confirmed         : ' + hitlConfirmed.length +
+    (hitlConfirmed.length ? ' (' + hitlConfirmed.filter(c => c.modified).length + ' modified, ' + hitlConfirmed.filter(c => !c.modified).length + ' as-is)' : ''));
+  logLines.push('HITL Deleted           : ' + hitlDeleted.length);
+  logLines.push('Text Edits             : ' + textEdits.length);
+  logLines.push('Total Actions          : ' + (autoAccepted.length + hitlConfirmed.length + hitlDeleted.length + textEdits.length));
+  logLines.push('==================================================');
+  const corrLogTxt = logLines.join('\n');
+
+  function download(content, filename, mime) {
+    const blob = new Blob([content], { type: mime });
+    const a    = document.createElement('a');
+    a.href     = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  download(htmlV2,     BASE_NAME + '_consolidated_v2.html', 'text/html');
+  download(txtV2,      BASE_NAME + '_consolidated_v2.txt',  'text/plain');
+  download(corrLogTxt, BASE_NAME + '_corrections_log.txt',  'text/plain');
+}
+</script>
+</body>
+</html>

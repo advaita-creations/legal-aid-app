@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Columns2, ZoomIn, ZoomOut, Download, Maximize2, Minimize2,
@@ -45,7 +45,167 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
     queryKey: ['full-html', htmlUrl],
     queryFn: async () => {
       const resp = await fetch(htmlUrl!);
-      return resp.text();
+      let html = await resp.text();
+      
+      // Inject script to intercept saveAndExport and send v2 files to parent
+      const injectedScript = `
+        <script>
+        (function() {
+          const originalSaveAndExport = window.saveAndExport;
+          window.saveAndExport = function() {
+            const exportedAt = new Date().toISOString();
+            const docBodyEl = document.getElementById('document-body');
+            const cloneBody = docBodyEl.cloneNode(true);
+            
+            cloneBody.querySelectorAll('.mismatch-block').forEach(el => el.remove());
+            cloneBody.querySelectorAll('.editable-para').forEach(el => {
+              el.removeAttribute('contenteditable');
+              el.removeAttribute('title');
+              el.removeAttribute('spellcheck');
+              el.classList.remove('editable-para', 'edited');
+              delete el.dataset.editId;
+              delete el.dataset.originalText;
+            });
+            
+            const cleanDocHTML = cloneBody.innerHTML;
+            const PAGE_TITLE = document.title;
+            const BASE_NAME = window.BASE_NAME || 'document';
+            
+            // Generate v2 HTML
+            const htmlV2 = \`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>\${PAGE_TITLE} — Final</title>
+  <style>
+    body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.8; max-width: 820px; margin: 40px auto; padding: 60px; color: #000; }
+    p  { margin: 0.6em 0; }
+    h1 { font-size: 14pt; text-align: center; text-transform: uppercase; margin-bottom: 1.5em; }
+    h2 { font-size: 13pt; margin-top: 1.5em; margin-bottom: 0.5em; }
+    h3 { font-size: 12pt; margin-top: 1em; }
+    ol, ul { margin: 0.8em 0 0.8em 1.5em; }
+    li { margin: 0.4em 0; }
+    table { width: 100%; border-collapse: collapse; margin: 1.2em 0; }
+    td, th { border: 1px solid #666; padding: 6px 10px; }
+    th { background: #f0f0f0; font-weight: bold; }
+    .page-break { text-align: center; margin: 2em 0; padding: 4px 0; border-top: 1px dashed #bbb; border-bottom: 1px dashed #bbb; color: #888; font-size: 9pt; letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+\${cleanDocHTML}
+</body>
+</html>\`;
+            
+            // Generate v2 TXT
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = cleanDocHTML;
+            tempDiv.querySelectorAll('.page-break').forEach(el => {
+              el.replaceWith(document.createTextNode(\`\n\n--- \${el.textContent.trim()} ---\n\n\`));
+            });
+            tempDiv.querySelectorAll('tr').forEach(tr => {
+              const cells = [...tr.querySelectorAll('td,th')].map(c => c.textContent.trim()).join(' | ');
+              tr.replaceWith(document.createTextNode(cells + '\n'));
+            });
+            tempDiv.querySelectorAll('table').forEach(t => {
+              t.replaceWith(document.createTextNode(t.textContent));
+            });
+            const txtV2 = tempDiv.textContent.replace(/\n{3,}/g, '\n\n').trim();
+            
+            // Generate corrections log
+            const corrections = window.corrections || {};
+            const editHistory = window.editHistory || {};
+            const allActions = Object.values(corrections);
+            const autoAccepted = allActions.filter(c => c.type === 'auto_accepted');
+            const hitlConfirmed = allActions.filter(c => c.type === 'hitl_confirmed');
+            const hitlDeleted = allActions.filter(c => c.type === 'hitl_deleted');
+            const textEdits = Object.values(editHistory);
+            
+            let logLines = [];
+            let counter = 1;
+            logLines.push('==================================================');
+            logLines.push('CORRECTIONS LOG');
+            logLines.push('Document  : ' + BASE_NAME);
+            logLines.push('Exported  : ' + exportedAt);
+            logLines.push('==================================================');
+            logLines.push('');
+            
+            autoAccepted.forEach(c => {
+              logLines.push('[' + String(counter++).padStart(3,'0') + '] ' + c.marker_id + ' — AUTO-RESOLVED — ACCEPTED');
+              logLines.push('      Page         : ' + (c.page || '?'));
+              logLines.push('      AI Choice    : ' + (c.chosen_source || 'auto'));
+              logLines.push('      Mistral Text : ' + (c.mistral_text || ''));
+              logLines.push('      Vector Text  : ' + (c.vector_text  || ''));
+              logLines.push('      Final Text   : ' + c.final_text);
+              logLines.push('      Timestamp    : ' + c.ts);
+              logLines.push('');
+            });
+            
+            hitlConfirmed.forEach(c => {
+              logLines.push('[' + String(counter++).padStart(3,'0') + '] ' + c.marker_id + ' — HITL — CONFIRMED');
+              logLines.push('      Page         : ' + (c.page || '?'));
+              logLines.push('      Started With : ' + c.started_with);
+              logLines.push('      Mistral Text : ' + (c.mistral_text || ''));
+              logLines.push('      Vector Text  : ' + (c.vector_text  || ''));
+              logLines.push('      Final Text   : ' + c.final_text);
+              logLines.push('      Modified     : ' + (c.modified ? 'YES — user changed the pre-filled text' : 'NO — used as-is'));
+              logLines.push('      Timestamp    : ' + c.ts);
+              logLines.push('');
+            });
+            
+            hitlDeleted.forEach(c => {
+              logLines.push('[' + String(counter++).padStart(3,'0') + '] ' + c.marker_id + ' — HITL — DELETED');
+              logLines.push('      Page         : ' + (c.page || '?'));
+              logLines.push('      Mistral Text : ' + (c.mistral_text || ''));
+              logLines.push('      Vector Text  : ' + (c.vector_text  || ''));
+              logLines.push('      Reason       : Marked as not significant by reviewer');
+              logLines.push('      Timestamp    : ' + c.ts);
+              logLines.push('');
+            });
+            
+            textEdits.forEach(e => {
+              logLines.push('[' + String(counter++).padStart(3,'0') + '] TEXT EDIT — ' + e.tag);
+              logLines.push('      Edit ID      : ' + e.editId);
+              logLines.push('      Before       : ' + e.before.replace(/<[^>]+>/g, '').trim());
+              logLines.push('      After        : ' + e.after.replace(/<[^>]+>/g, '').trim());
+              logLines.push('      Timestamp    : ' + e.ts);
+              logLines.push('');
+            });
+            
+            logLines.push('==================================================');
+            logLines.push('SUMMARY');
+            logLines.push('Auto-Resolved Accepted : ' + autoAccepted.length);
+            logLines.push('HITL Confirmed         : ' + hitlConfirmed.length +
+              (hitlConfirmed.length ? ' (' + hitlConfirmed.filter(c => c.modified).length + ' modified, ' + hitlConfirmed.filter(c => !c.modified).length + ' as-is)' : ''));
+            logLines.push('HITL Deleted           : ' + hitlDeleted.length);
+            logLines.push('Text Edits             : ' + textEdits.length);
+            logLines.push('Total Actions          : ' + (autoAccepted.length + hitlConfirmed.length + hitlDeleted.length + textEdits.length));
+            logLines.push('==================================================');
+            const corrLogTxt = logLines.join('\n');
+            
+            // Send to parent window instead of downloading
+            if (window.parent !== window) {
+              window.parent.postMessage({
+                type: 'v2_files_ready',
+                data: {
+                  htmlV2: htmlV2,
+                  txtV2: txtV2,
+                  corrLogTxt: corrLogTxt,
+                  baseName: BASE_NAME
+                }
+              }, '*');
+              alert('Files saved! The document has been updated.');
+            } else {
+              // Fallback to original download behavior
+              originalSaveAndExport();
+            }
+          };
+        })();
+        </script>
+      `;
+      
+      // Inject before closing body tag
+      html = html.replace('</body>', injectedScript + '</body>');
+      return html;
     },
     enabled: !!htmlUrl,
   });
@@ -135,6 +295,43 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
   const handleEditorInput = useCallback(() => {
     setHasUnsavedChanges(true);
   }, []);
+
+  // Listen for v2 files from iframe
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent) => {
+      if (event.data?.type === 'v2_files_ready') {
+        const { htmlV2, txtV2, corrLogTxt, baseName } = event.data.data;
+        
+        try {
+          // Upload v2 files to backend
+          const formData = new FormData();
+          formData.append('html_v2', new Blob([htmlV2], { type: 'text/html' }), `${baseName}_v2.html`);
+          formData.append('txt_v2', new Blob([txtV2], { type: 'text/plain' }), `${baseName}_v2.txt`);
+          formData.append('corrections_log', new Blob([corrLogTxt], { type: 'text/plain' }), `${baseName}_corrections_log.txt`);
+          
+          const response = await fetch(`/api/v2/documents/${doc.id}/upload-v2-files/`, {
+            method: 'POST',
+            body: formData,
+          });
+          
+          if (response.ok) {
+            queryClient.invalidateQueries({ queryKey: ['documents', doc.id] });
+            queryClient.invalidateQueries({ queryKey: ['document', doc.id] });
+            toast('Document finalized! V2 files saved successfully.');
+            setShowPreview(false);
+          } else {
+            throw new Error('Upload failed');
+          }
+        } catch (error) {
+          console.error('Failed to upload v2 files:', error);
+          toast('Failed to save v2 files. Please try again.');
+        }
+      }
+    };
+    
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [doc.id, queryClient, toast]);
 
   if (!fileUrl || !htmlUrl) return null;
 
@@ -472,7 +669,7 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
                   srcDoc={fullHtmlContent}
                   title="HTML Preview"
                   className="w-full h-full border-0"
-                  sandbox="allow-same-origin"
+                  sandbox="allow-scripts allow-same-origin allow-downloads"
                 />
               ) : (
                 <div className="flex items-center justify-center h-full">
