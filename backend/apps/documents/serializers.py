@@ -45,6 +45,9 @@ class DocumentSerializer(serializers.ModelSerializer):
     processed_json_url = serializers.SerializerMethodField()
     processed_report_url = serializers.SerializerMethodField()
     extracted_pdf_url = serializers.SerializerMethodField()
+    html_v2_url = serializers.SerializerMethodField()
+    txt_v2_url = serializers.SerializerMethodField()
+    corrections_log_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Document
@@ -73,6 +76,12 @@ class DocumentSerializer(serializers.ModelSerializer):
             'processed_report_url',
             'extracted_pdf_path',
             'extracted_pdf_url',
+            'html_v2_path',
+            'txt_v2_path',
+            'corrections_log_path',
+            'html_v2_url',
+            'txt_v2_url',
+            'corrections_log_url',
             'created_at',
             'updated_at',
             'status_history',
@@ -81,6 +90,7 @@ class DocumentSerializer(serializers.ModelSerializer):
             'id', 'advocate', 'case_id', 'case_title', 'client_name', 'client_id',
             'file_url', 'processed_html_url', 'processed_json_url',
             'processed_report_url', 'extracted_pdf_url',
+            'html_v2_url', 'txt_v2_url', 'corrections_log_url',
             'created_at', 'updated_at', 'status_history',
         ]
 
@@ -112,6 +122,18 @@ class DocumentSerializer(serializers.ModelSerializer):
     def get_extracted_pdf_url(self, obj) -> Optional[str]:
         """Build URL for the extracted/generated PDF."""
         return self._get_storage_url(obj.extracted_pdf_path)
+
+    def get_html_v2_url(self, obj) -> Optional[str]:
+        """Build URL for the v2 HTML (finalized, clean)."""
+        return self._get_storage_url(obj.html_v2_path)
+
+    def get_txt_v2_url(self, obj) -> Optional[str]:
+        """Build URL for the v2 TXT (for RAG indexing)."""
+        return self._get_storage_url(obj.txt_v2_path)
+
+    def get_corrections_log_url(self, obj) -> Optional[str]:
+        """Build URL for the corrections log."""
+        return self._get_storage_url(obj.corrections_log_path)
 
 
 class DocumentCreateSerializer(serializers.Serializer):

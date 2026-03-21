@@ -19,6 +19,9 @@ export interface Document {
   processed_json_url: string | null;
   processed_report_url: string | null;
   extracted_pdf_url: string | null;
+  html_v2_url: string | null;
+  txt_v2_url: string | null;
+  corrections_log_url: string | null;
   created_at: string;
   updated_at: string;
   status_history?: DocumentStatusEntry[];

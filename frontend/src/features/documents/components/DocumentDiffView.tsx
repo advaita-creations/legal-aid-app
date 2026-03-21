@@ -309,19 +309,14 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
           formData.append('txt_v2', new Blob([txtV2], { type: 'text/plain' }), `${baseName}_v2.txt`);
           formData.append('corrections_log', new Blob([corrLogTxt], { type: 'text/plain' }), `${baseName}_corrections_log.txt`);
           
-          const response = await fetch(`/api/v2/documents/${doc.id}/upload-v2-files/`, {
-            method: 'POST',
-            body: formData,
-          });
+          await documentsApi.uploadV2Files(doc.id, formData);
           
-          if (response.ok) {
-            queryClient.invalidateQueries({ queryKey: ['documents', doc.id] });
-            queryClient.invalidateQueries({ queryKey: ['document', doc.id] });
-            toast('Document finalized! V2 files saved successfully.');
-            setShowPreview(false);
-          } else {
-            throw new Error('Upload failed');
-          }
+          queryClient.invalidateQueries({ queryKey: ['documents', doc.id] });
+          queryClient.invalidateQueries({ queryKey: ['document', doc.id] });
+          queryClient.invalidateQueries({ queryKey: ['diff-html'] });
+          queryClient.invalidateQueries({ queryKey: ['full-html'] });
+          toast('Document finalized! V2 files saved successfully.');
+          setShowPreview(false);
         } catch (error) {
           console.error('Failed to upload v2 files:', error);
           toast('Failed to save v2 files. Please try again.');
