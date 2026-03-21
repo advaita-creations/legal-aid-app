@@ -41,6 +41,15 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
     enabled: !!htmlUrl,
   });
 
+  const { data: fullHtmlContent } = useQuery({
+    queryKey: ['full-html', htmlUrl],
+    queryFn: async () => {
+      const resp = await fetch(htmlUrl!);
+      return resp.text();
+    },
+    enabled: !!htmlUrl,
+  });
+
   const { data: versions } = useQuery({
     queryKey: ['doc-versions', doc.id],
     queryFn: () => documentsApi.getVersions(doc.id),
@@ -458,11 +467,18 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
               </button>
             </div>
             <div className="flex-1 overflow-hidden">
-              <iframe
-                src={htmlUrl}
-                title="HTML Preview"
-                className="w-full h-full border-0"
-              />
+              {fullHtmlContent ? (
+                <iframe
+                  srcDoc={fullHtmlContent}
+                  title="HTML Preview"
+                  className="w-full h-full border-0"
+                  sandbox="allow-same-origin"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  <Loader className="w-6 h-6 text-gray-400 animate-spin" />
+                </div>
+              )}
             </div>
           </div>
         </div>
