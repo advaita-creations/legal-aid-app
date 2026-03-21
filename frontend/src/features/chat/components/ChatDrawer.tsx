@@ -1,5 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { ChatHeader } from './ChatHeader';
 import { ChatMessages } from './ChatMessages';
@@ -20,6 +22,30 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
   const [suggestionText, setSuggestionText] = useState('');
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
   const [selectedCaseId, setSelectedCaseId] = useState<number | null>(null);
+  const [contextLoaded, setContextLoaded] = useState(false);
+
+  const location = useLocation();
+  const rqClient = useQueryClient();
+
+  // Pre-populate client/case from the currently viewed document
+  useEffect(() => {
+    if (contextLoaded) return;
+    const docMatch = location.pathname.match(/^\/documents\/(\d+)/);
+    if (!docMatch) return;
+    const docId = docMatch[1];
+    // Try to read from react-query cache first
+    const cached = rqClient.getQueryData<{ client_id: string | number; case_id: string | number }>(['documents', docId]);
+    if (cached?.client_id) {
+      setSelectedClientId(Number(cached.client_id));
+      if (cached.case_id) setSelectedCaseId(Number(cached.case_id));
+      setContextLoaded(true);
+    }
+  }, [location.pathname, rqClient, contextLoaded]);
+
+  // Reset context when drawer re-opens on a different page
+  useEffect(() => {
+    if (open) setContextLoaded(false);
+  }, [open]);
 
   const { data: historyMessages } = useChatHistory(conversationId);
   const sendMutation = useSendMessage(conversationId);
@@ -51,6 +77,21 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
             setLocalMessages((prev) => {
               const withoutTemp = prev.filter((m) => m.id !== tempUserMsg.id);
               return [...withoutTemp, data.user_message, data.assistant_message];
+            });
+          },
+          onError: () => {
+            // Remove the optimistic temp message and add an error message
+            setLocalMessages((prev) => {
+              const withoutTemp = prev.filter((m) => m.id !== tempUserMsg.id);
+              const errorMsg: ChatMessage = {
+                id: Date.now() + 1,
+                conversation_id: conversationId ?? '',
+                role: 'assistant',
+                content: 'Sorry, something went wrong. Please try sending your message again.',
+                client_id: null,
+                created_at: new Date().toISOString(),
+              };
+              return [...withoutTemp, tempUserMsg, errorMsg];
             });
           },
         },
