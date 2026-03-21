@@ -57,18 +57,29 @@ def _resolve_client_name(client_id: int, advocate) -> Optional[str]:
         return None
 
 
+def _resolve_case_name(case_id: int, advocate) -> Optional[str]:
+    """Look up a case's title by ID, scoped to the advocate."""
+    from apps.cases.models import Case
+
+    try:
+        case = Case.objects.get(id=case_id, advocate=advocate)
+        return case.title
+    except Case.DoesNotExist:
+        logger.warning("Case %s not found for advocate %s", case_id, advocate.email)
+        return None
+
+
 def _relay_to_n8n(
     message: str,
     advocate_email: str,
     conversation_id: str,
-    client_id: Optional[int] = None,
     client_name: Optional[str] = None,
-    case_id: Optional[int] = None,
+    case_name: Optional[str] = None,
 ) -> Optional[str]:
     """Forward the chat message to n8n.
 
     Always uses N8N_CHAT_WEBHOOK_URL for chat conversations.
-    Includes client_name and case_id in the payload for RAG context.
+    Includes client_name and case_name in the payload for RAG context.
     N8N_RAG_WEBHOOK_URL is reserved for document indexing only.
 
     Returns the AI response text, or None if the webhook is unavailable.
@@ -92,16 +103,14 @@ def _relay_to_n8n(
         'conversation_id': str(conversation_id),
     }
 
-    if client_id:
-        payload['client_id'] = client_id
     if client_name:
         payload['client_name'] = client_name
-    if case_id:
-        payload['case_id'] = case_id
+    if case_name:
+        payload['case_name'] = case_name
 
     logger.info(
-        "Sending chat to n8n: client_name=%s case_id=%s message_len=%d",
-        client_name, case_id, len(message),
+        "[CHAT_N8N] Sending chat to n8n: client_name=%s case_name=%s message_len=%d",
+        client_name, case_name, len(message),
     )
 
     try:
@@ -192,16 +201,19 @@ def chat_relay(request: Request) -> Response:
         conversation_id, request.user.email, client_id, len(message),
     )
 
-    # Resolve client name for RAG scoping
+    # Resolve client name and case name for RAG scoping
     client_name = None
+    case_name = None
     if client_id:
         client_name = _resolve_client_name(client_id, request.user)
+    if case_id:
+        case_name = _resolve_case_name(case_id, request.user)
 
     # Log chat routing
     webhook_type = 'RAG' if client_name else 'Chat'
     logger.info(
-        "Routing chat to %s webhook: client_name=%s case_id=%s",
-        webhook_type, client_name, case_id,
+        "[CHAT_ROUTE] Routing chat to %s webhook: client_name=%s case_name=%s",
+        webhook_type, client_name, case_name,
     )
 
     # Relay to n8n (RAG webhook if client selected, general chat otherwise)
@@ -209,9 +221,8 @@ def chat_relay(request: Request) -> Response:
         message=message,
         advocate_email=request.user.email,
         conversation_id=str(conversation_id),
-        client_id=client_id,
         client_name=client_name,
-        case_id=case_id,
+        case_name=case_name,
     )
 
     if ai_response is None:

@@ -320,6 +320,7 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
             )
 
         client_name = doc.case.client.full_name if doc.case and doc.case.client else ''
+        case_name = doc.case.title if doc.case else ''
         prefix = os.path.splitext(doc.name)[0].replace(' ', '_')
 
         secret = os.environ.get('N8N_WEBHOOK_SECRET', '')
@@ -330,7 +331,7 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
         files = {}
         form_data = {
             'client_name': client_name,
-            'case_id': str(doc.case_id),
+            'case_name': case_name,
             'document_id': str(doc.id),
             'version': str(version_number),
         }
@@ -344,8 +345,8 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
         # Log RAG file upload details
         file_details = ', '.join([f"{k}({len(v[1])} bytes)" for k, v in files.items()])
         logger.info(
-            "Sending RAG finalize for doc %s v%d (client=%s, case=%s, files=%s)",
-            doc.id, version_number, client_name, doc.case_id, file_details,
+            "[DOC_RAG] Sending RAG finalize for doc %s v%d (client_name=%s, case_name=%s, files=%s)",
+            doc.id, version_number, client_name, case_name, file_details,
         )
         
         # Record in status history for user visibility

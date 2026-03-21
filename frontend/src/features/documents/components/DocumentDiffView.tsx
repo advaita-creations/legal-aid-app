@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Columns2, ZoomIn, ZoomOut, Download, Maximize2, Minimize2,
   Save, CheckCircle, Loader, Pencil, Eye, Send, History, RotateCcw, FileOutput,
+  FileText, BarChart3, ChevronDown,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -23,6 +24,8 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [showReport, setShowReport] = useState(false);
 
   const fileUrl = doc.file_url ?? null;
   const htmlUrl = doc.processed_html_url ?? null;
@@ -41,6 +44,16 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
   const { data: versions } = useQuery({
     queryKey: ['doc-versions', doc.id],
     queryFn: () => documentsApi.getVersions(doc.id),
+  });
+
+  const { data: reportText } = useQuery({
+    queryKey: ['doc-report', doc.processed_report_url],
+    queryFn: async () => {
+      if (!doc.processed_report_url) return null;
+      const resp = await fetch(doc.processed_report_url);
+      return resp.text();
+    },
+    enabled: !!doc.processed_report_url,
   });
 
   const latestVersion = versions && versions.length > 0
@@ -254,15 +267,23 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
                 </span>
               )}
             </div>
-            <a
-              href={htmlUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-1 rounded hover:bg-blue-100 transition-colors"
-              title="Download processed HTML"
-            >
-              <Download className="w-3.5 h-3.5 text-blue-500" />
-            </a>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setShowPreview(true)}
+                className="p-1 rounded hover:bg-blue-100 transition-colors"
+                title="Preview processed HTML"
+              >
+                <Eye className="w-3.5 h-3.5 text-blue-500" />
+              </button>
+              <a
+                href={htmlUrl}
+                download
+                className="p-1 rounded hover:bg-blue-100 transition-colors"
+                title="Download HTML file"
+              >
+                <Download className="w-3.5 h-3.5 text-blue-500" />
+              </a>
+            </div>
           </div>
           <div className={cn('overflow-auto bg-white', panelH)}>
             {htmlLoading || !htmlContent ? (
@@ -419,6 +440,57 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
           </div>
         </div>
       </div>
+
+      {/* Preview Modal */}
+      {showPreview && htmlUrl && (
+        <div className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5 text-blue-600" />
+                <h3 className="text-lg font-semibold text-gray-900">Processed HTML Preview</h3>
+              </div>
+              <button
+                onClick={() => setShowPreview(false)}
+                className="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <iframe
+                src={htmlUrl}
+                title="HTML Preview"
+                className="w-full h-full border-0"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Accuracy Report Section */}
+      {reportText && (
+        <div className="border-t border-gray-200 bg-gray-50">
+          <button
+            onClick={() => setShowReport(!showReport)}
+            className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4 text-blue-600" />
+              <span className="text-sm font-semibold text-gray-900">Accuracy Report</span>
+              <span className="text-xs text-gray-500">(for reference)</span>
+            </div>
+            <ChevronDown className={cn('w-4 h-4 text-gray-400 transition-transform', showReport && 'rotate-180')} />
+          </button>
+          {showReport && (
+            <div className="px-4 pb-4">
+              <div className="bg-white rounded-lg border border-gray-200 p-4">
+                <pre className="text-xs text-gray-700 whitespace-pre-wrap font-mono">{reportText}</pre>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
