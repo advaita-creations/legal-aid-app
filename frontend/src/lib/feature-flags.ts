@@ -34,7 +34,7 @@ const DEV_DEFAULTS: Record<FeatureFlag, boolean> = {
 
 const PROD_DEFAULTS: Record<FeatureFlag, boolean> = {
   DOCUMENT_REVIEW: false,
-  CHAT: false,
+  CHAT: true,
   GLOBAL_SEARCH: false,
   WAITLIST: false,
   CASE_TIMELINE: false,
