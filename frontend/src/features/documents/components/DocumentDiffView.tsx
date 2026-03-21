@@ -32,53 +32,59 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
       const resp = await fetch(htmlUrl!);
       let html = await resp.text();
 
-      // Inject script that intercepts blob downloads and sends files to parent via postMessage.
-      // This overrides HTMLAnchorElement.prototype.click at the DOM level so it works
-      // regardless of the v1 HTML's internal JS structure.
-      const interceptScript = [
-        '<scr' + 'ipt>',
-        '(function(){',
-        '  if(window.parent===window)return;',
-        '  var _f={},_orig=HTMLAnchorElement.prototype.click;',
-        '  HTMLAnchorElement.prototype.click=function(){',
-        '    if(this.download&&this.href&&this.href.indexOf("blob:")===0){',
-        '      var fn=this.download,hr=this.href,self=this;',
-        '      fetch(hr).then(function(r){return r.text()}).then(function(c){',
-        '        _f[fn]=c;',
-        '        if(Object.keys(_f).length>=3){',
-        '          var h=null,t=null,l=null,bn="";',
-        '          Object.keys(_f).forEach(function(k){',
-        '            if(k.indexOf("v2.html")>=0)h=_f[k];',
-        '            else if(k.indexOf("v2.txt")>=0)t=_f[k];',
-        '            else if(k.indexOf("correction")>=0)l=_f[k];',
-        '            var i=k.indexOf("_consolidated");',
-        '            if(i>0&&!bn)bn=k.substring(0,i);',
-        '            i=k.indexOf("_corrections");',
-        '            if(i>0&&!bn)bn=k.substring(0,i);',
-        '          });',
-        '          if(h&&t&&l){',
-        '            window.parent.postMessage({type:"v2_files_ready",',
-        '              data:{htmlV2:h,txtV2:t,corrLogTxt:l,baseName:bn||"document"}',
-        '            },"*");',
-        '            alert("Files saved! The document has been updated in the system.");',
-        '            _f={};',
-        '          }',
-        '        }',
-        '      }).catch(function(){_orig.call(self)});',
-        '      return;',
-        '    }',
-        '    return _orig.call(this);',
-        '  };',
-        '})();',
-        '</scr' + 'ipt>',
-      ].join('\n');
-
-      // Inject before </body> (or append if no </body> found)
-      const bodyIdx = html.toLowerCase().indexOf('</body>');
-      if (bodyIdx >= 0) {
-        html = html.slice(0, bodyIdx) + interceptScript + html.slice(bodyIdx);
-      } else {
-        html += interceptScript;
+      // Replace the download() function body with postMessage logic.
+      // Uses bracket counting to reliably find the function's closing brace,
+      // handling nested {} like { type: mime } correctly.
+      const sig = 'function download(content, filename, mime) {';
+      const sigIdx = html.indexOf(sig);
+      if (sigIdx >= 0) {
+        const bodyStart = sigIdx + sig.length;
+        let depth = 1;
+        let i = bodyStart;
+        while (i < html.length && depth > 0) {
+          if (html[i] === '{') depth++;
+          if (html[i] === '}') depth--;
+          i++;
+        }
+        // i now points right after the closing }
+        const replacement = [
+          sig,
+          '    if (window.parent !== window) {',
+          '      if (!window._v2Files) window._v2Files = {};',
+          '      window._v2Files[filename] = content;',
+          '      var keys = Object.keys(window._v2Files);',
+          '      if (keys.length >= 3) {',
+          '        var h=null,t=null,l=null,bn="";',
+          '        keys.forEach(function(k){',
+          '          if(k.indexOf("v2.html")>=0) h=window._v2Files[k];',
+          '          else if(k.indexOf("v2.txt")>=0) t=window._v2Files[k];',
+          '          else if(k.indexOf("correction")>=0) l=window._v2Files[k];',
+          '          var ci=k.indexOf("_consolidated");',
+          '          if(ci>0&&!bn) bn=k.substring(0,ci);',
+          '          ci=k.indexOf("_corrections");',
+          '          if(ci>0&&!bn) bn=k.substring(0,ci);',
+          '        });',
+          '        if(h&&t&&l){',
+          '          window.parent.postMessage({type:"v2_files_ready",',
+          '            data:{htmlV2:h,txtV2:t,corrLogTxt:l,baseName:bn||"document"}',
+          '          },"*");',
+          '          alert("Files saved! The document has been updated in the system.");',
+          '          window._v2Files={};',
+          '        }',
+          '      }',
+          '    } else {',
+          '      var blob=new Blob([content],{type:mime});',
+          '      var a=document.createElement("a");',
+          '      a.href=URL.createObjectURL(blob);',
+          '      a.download=filename;',
+          '      document.body.appendChild(a);',
+          '      a.click();',
+          '      document.body.removeChild(a);',
+          '      setTimeout(function(){URL.revokeObjectURL(a.href)},1000);',
+          '    }',
+          '  }',
+        ].join('\n');
+        html = html.slice(0, sigIdx) + replacement + html.slice(i);
       }
 
       return html;
@@ -290,7 +296,7 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
                 srcDoc={fullHtmlContent}
                 title="V1 HTML Interactive Editor"
                 className="w-full h-full border-0"
-                sandbox="allow-scripts allow-same-origin allow-downloads allow-modals allow-forms"
+                sandbox="allow-scripts allow-same-origin allow-modals allow-forms"
               />
             )}
           </div>
@@ -445,7 +451,7 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
                   srcDoc={fullHtmlContent}
                   title="HTML Preview"
                   className="w-full h-full border-0"
-                  sandbox="allow-scripts allow-same-origin allow-downloads"
+                  sandbox="allow-scripts allow-same-origin"
                 />
               ) : (
                 <div className="flex items-center justify-center h-full">
