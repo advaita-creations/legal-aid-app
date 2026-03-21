@@ -31,9 +31,56 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
     queryFn: async () => {
       const resp = await fetch(htmlUrl!);
       let html = await resp.text();
-      
-      // Don't inject - let v1 HTML run as-is and intercept downloads via download attribute listener
-      // The v1 HTML already has all the logic built-in
+
+      // Inject script that intercepts blob downloads and sends files to parent via postMessage.
+      // This overrides HTMLAnchorElement.prototype.click at the DOM level so it works
+      // regardless of the v1 HTML's internal JS structure.
+      const interceptScript = [
+        '<scr' + 'ipt>',
+        '(function(){',
+        '  if(window.parent===window)return;',
+        '  var _f={},_orig=HTMLAnchorElement.prototype.click;',
+        '  HTMLAnchorElement.prototype.click=function(){',
+        '    if(this.download&&this.href&&this.href.indexOf("blob:")===0){',
+        '      var fn=this.download,hr=this.href,self=this;',
+        '      fetch(hr).then(function(r){return r.text()}).then(function(c){',
+        '        _f[fn]=c;',
+        '        if(Object.keys(_f).length>=3){',
+        '          var h=null,t=null,l=null,bn="";',
+        '          Object.keys(_f).forEach(function(k){',
+        '            if(k.indexOf("v2.html")>=0)h=_f[k];',
+        '            else if(k.indexOf("v2.txt")>=0)t=_f[k];',
+        '            else if(k.indexOf("correction")>=0)l=_f[k];',
+        '            var i=k.indexOf("_consolidated");',
+        '            if(i>0&&!bn)bn=k.substring(0,i);',
+        '            i=k.indexOf("_corrections");',
+        '            if(i>0&&!bn)bn=k.substring(0,i);',
+        '          });',
+        '          if(h&&t&&l){',
+        '            window.parent.postMessage({type:"v2_files_ready",',
+        '              data:{htmlV2:h,txtV2:t,corrLogTxt:l,baseName:bn||"document"}',
+        '            },"*");',
+        '            alert("Files saved! The document has been updated in the system.");',
+        '            _f={};',
+        '          }',
+        '        }',
+        '      }).catch(function(){_orig.call(self)});',
+        '      return;',
+        '    }',
+        '    return _orig.call(this);',
+        '  };',
+        '})();',
+        '</scr' + 'ipt>',
+      ].join('\n');
+
+      // Inject before </body> (or append if no </body> found)
+      const bodyIdx = html.toLowerCase().indexOf('</body>');
+      if (bodyIdx >= 0) {
+        html = html.slice(0, bodyIdx) + interceptScript + html.slice(bodyIdx);
+      } else {
+        html += interceptScript;
+      }
+
       return html;
     },
     enabled: !!htmlUrl,
