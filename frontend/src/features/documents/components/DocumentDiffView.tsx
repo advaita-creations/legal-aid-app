@@ -158,33 +158,56 @@ export function DocumentDiffView({ doc }: DocumentDiffViewProps) {
         const { htmlV2, txtV2, corrLogTxt, baseName } = event.data.data;
         
         try {
-          // Upload v2 files to backend
-          const formData = new FormData();
-          formData.append('html_v2', new Blob([htmlV2], { type: 'text/html' }), `${baseName}_v2.html`);
-          formData.append('txt_v2', new Blob([txtV2], { type: 'text/plain' }), `${baseName}_v2.txt`);
-          formData.append('corrections_log', new Blob([corrLogTxt], { type: 'text/plain' }), `${baseName}_corrections_log.txt`);
-          
-          await documentsApi.uploadV2Files(doc.id, formData);
-          
+          // 1) Save v2 HTML as a new version via existing save_version endpoint
+          await documentsApi.saveVersion(doc.id, {
+            html_content: htmlV2,
+            notes: `V2 from Save & Export (${baseName})`,
+          });
+
+          // 2) Upload txt_v2 and corrections_log directly to Supabase Storage
+          const { supabase } = await import('@/lib/supabase');
+          const safeName = baseName.replace(/\s+/g, '_');
+          const storagePath = `${doc.client_id}/${doc.case_id}/processed/${doc.id}`;
+
+          const [txtResult, logResult] = await Promise.allSettled([
+            supabase.storage.from('documents').upload(
+              `${storagePath}_${safeName}_v2.txt`,
+              new Blob([txtV2], { type: 'text/plain' }),
+              { upsert: true },
+            ),
+            supabase.storage.from('documents').upload(
+              `${storagePath}_${safeName}_corrections_log.txt`,
+              new Blob([corrLogTxt], { type: 'text/plain' }),
+              { upsert: true },
+            ),
+          ]);
+
+          const txtOk = txtResult.status === 'fulfilled' && !txtResult.value.error;
+          const logOk = logResult.status === 'fulfilled' && !logResult.value.error;
+          if (!txtOk || !logOk) {
+            console.warn('[v2Upload] secondary files partial:', { txtOk, logOk });
+          }
+
           queryClient.invalidateQueries({ queryKey: ['documents', doc.id] });
           queryClient.invalidateQueries({ queryKey: ['document', doc.id] });
+          queryClient.invalidateQueries({ queryKey: ['doc-versions', doc.id] });
           queryClient.invalidateQueries({ queryKey: ['diff-html'] });
           queryClient.invalidateQueries({ queryKey: ['full-html'] });
           toast('Document finalized! V2 files saved successfully.');
           setShowPreview(false);
         } catch (error: unknown) {
           const axErr = error as { response?: { status?: number; data?: unknown }; message?: string };
-          const status = axErr?.response?.status;
+          const errStatus = axErr?.response?.status;
           const detail = JSON.stringify(axErr?.response?.data || axErr?.message || 'Unknown error');
-          console.error('[v2Upload] FAILED status=', status, 'detail=', detail, error);
-          toast(`Failed to save v2 files (${status || 'network'}): ${detail}`);
+          console.error('[v2Upload] FAILED status=', errStatus, 'detail=', detail, error);
+          toast(`Failed to save v2 files (${errStatus || 'network'}): ${detail}`);
         }
       }
     };
     
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [doc.id, queryClient, toast]);
+  }, [doc.id, doc.client_id, doc.case_id, queryClient, toast]);
 
   if (!fileUrl || !htmlUrl) return null;
 
