@@ -20,7 +20,7 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from apps.documents.models import Document, DocumentStatusHistory
+from apps.documents.models import Document, DocumentActivityLog, DocumentStatusHistory
 
 logger = logging.getLogger(__name__)
 
@@ -288,6 +288,30 @@ def n8n_webhook_view(request):
         to_status=new_status,
         changed_by=None,
         notes=f'n8n callback: {stored_count} file(s) stored',
+    )
+
+    # Activity logs for user-facing tracking
+    if document.processed_html_path:
+        DocumentActivityLog.objects.create(
+            document=document,
+            event_type='v1_html_received',
+            message='V1 HTML received from n8n OCR pipeline',
+            detail=document.processed_html_path.split('/')[-1],
+            actor='n8n',
+        )
+    if document.processed_report_path:
+        DocumentActivityLog.objects.create(
+            document=document,
+            event_type='v1_html_received',
+            message='Validation report received from n8n',
+            detail=document.processed_report_path.split('/')[-1],
+            actor='n8n',
+        )
+    DocumentActivityLog.objects.create(
+        document=document,
+        event_type='processing_complete',
+        message=f'Processing complete — {stored_count} file(s) received, status: {new_status}',
+        actor='n8n',
     )
 
     logger.info(

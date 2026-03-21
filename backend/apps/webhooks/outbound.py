@@ -335,6 +335,17 @@ def notify_n8n_ready_to_process(
                 'Sending OCR request to n8n for doc %s (client=%s, case=%s, file=%s, %d bytes)',
                 document_id, client_name, case_id, filename, len(content),
             )
+            try:
+                doc_obj = Document.objects.get(id=document_id)
+                DocumentActivityLog.objects.create(
+                    document=doc_obj,
+                    event_type='processing_started',
+                    message=f'Document sent to n8n OCR pipeline ({len(content):,} bytes)',
+                    detail=f'Client: {client_name}, Case: {case_title}',
+                    actor=advocate_email,
+                )
+            except Exception:
+                pass
             response = requests.post(url, data=form_data, files=files, headers=headers, timeout=120)
         else:
             logger.warning('No file downloaded, sending metadata only for document %s', document_id)
@@ -348,7 +359,7 @@ def notify_n8n_ready_to_process(
         response.raise_for_status()
 
         # Extract returned files from the response
-        from apps.documents.models import Document
+        from apps.documents.models import Document, DocumentActivityLog, DocumentStatusHistory
         document = Document.objects.get(id=document_id)
 
         returned_files = _extract_response_files(response, prefix)

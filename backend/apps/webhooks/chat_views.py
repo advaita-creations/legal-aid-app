@@ -15,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from apps.documents.models import Document, DocumentActivityLog
 from .models import ChatMessage
 
 logger = logging.getLogger(__name__)
@@ -247,6 +248,24 @@ def chat_relay(request: Request) -> Response:
         content=ai_response,
         client_id=client_id,
     )
+
+    # Log chat interactions to relevant documents for activity tracking
+    if case_id:
+        docs = Document.objects.filter(case_id=case_id, advocate=request.user)
+        for doc in docs[:5]:
+            DocumentActivityLog.objects.create(
+                document=doc,
+                event_type='chat_sent',
+                message=f'Chat: {message[:100]}{"..." if len(message) > 100 else ""}',
+                detail=f'Client: {client_name or "—"}, Case: {case_name or "—"}',
+                actor=request.user.email,
+            )
+            DocumentActivityLog.objects.create(
+                document=doc,
+                event_type='chat_received',
+                message=f'LIA: {ai_response[:100]}{"..." if len(ai_response) > 100 else ""}',
+                actor='LIA',
+            )
 
     return Response({
         'user_message': ChatMessageSerializer(user_msg).data,

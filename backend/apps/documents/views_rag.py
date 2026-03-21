@@ -19,10 +19,30 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .models import Document, DocumentStatusHistory, DocumentVersion
+from .models import Document, DocumentActivityLog, DocumentStatusHistory, DocumentVersion
 from .serializers_review import DocumentVersionSerializer
 
 logger = logging.getLogger(__name__)
+
+
+def _log_activity(
+    doc: Document,
+    event_type: str,
+    message: str,
+    detail: str = '',
+    actor: str = 'system',
+) -> None:
+    """Create a high-level activity log entry for user tracking."""
+    try:
+        DocumentActivityLog.objects.create(
+            document=doc,
+            event_type=event_type,
+            message=message,
+            detail=detail,
+            actor=actor,
+        )
+    except Exception:
+        logger.exception("Failed to create activity log for doc %s", doc.id)
 
 
 def _get_document_for_user(pk: int, user) -> Document:
@@ -104,6 +124,13 @@ def save_version(request: Request, pk: int) -> Response:
     logger.info(
         "[DOC_SAVE_VER] SUCCESS doc_id=%s v%d by %s (%d bytes) path=%s",
         doc.id, next_number, request.user.email, len(html_content), stored_path,
+    )
+
+    _log_activity(
+        doc, 'version_saved',
+        f'Version v{next_number} saved ({len(html_content):,} bytes)',
+        detail=notes or f'HTML content saved to storage',
+        actor=request.user.email,
     )
 
     return Response(
@@ -229,6 +256,13 @@ mark {{ background-color: #ffeb3b; padding: 1px 3px; }}
         logger.info(
             "Document %s finalized: PDF stored at %s (%d bytes) by %s",
             doc.id, stored_path, len(pdf_bytes), request.user.email,
+        )
+
+        _log_activity(
+            doc, 'pdf_generated',
+            f'PDF generated ({len(pdf_bytes):,} bytes) and document finalized',
+            detail=pdf_filename,
+            actor=request.user.email,
         )
 
         # Return the PDF URL
@@ -400,6 +434,18 @@ def finalize_to_rag(request: Request, pk: int) -> Response:
 
         logger.info("RAG finalize result: %s", rag_message)
 
+        _log_activity(
+            doc, 'rag_push',
+            f'Document pushed to RAG (v{version_number}, {len(files)} files)',
+            detail=f'Files: {file_details}',
+            actor=request.user.email,
+        )
+        _log_activity(
+            doc, 'rag_response',
+            f'RAG response: {rag_message[:200]}',
+            actor='n8n',
+        )
+
         return Response({
             'ok': True,
             'version': version_number,
@@ -443,6 +489,12 @@ def revert_version(request: Request, pk: int, version_id: int) -> Response:
     logger.info(
         "[DOC_REVERT] SUCCESS doc_id=%s reverted to v%d by %s",
         doc.id, version.version_number, request.user.email,
+    )
+
+    _log_activity(
+        doc, 'version_reverted',
+        f'Reverted to version v{version.version_number}',
+        actor=request.user.email,
     )
 
     return Response({
@@ -531,6 +583,14 @@ def upload_v2_files(request: Request, pk: int) -> Response:
             doc.id,
         )
 
+        total_bytes = html_v2_file.size + txt_v2_file.size + corrections_log_file.size
+        _log_activity(
+            doc, 'save_export',
+            f'Save & Export completed ({total_bytes:,} bytes across 3 files)',
+            detail='Files: v2 HTML, v2 TXT (for RAG), corrections log',
+            actor=request.user.email,
+        )
+
         return Response({
             'ok': True,
             'html_v2_path': html_v2_path,
@@ -588,8 +648,8 @@ def processing_logs(request: Request, pk: int) -> Response:
             'timestamp': doc.updated_at.isoformat(),
             'type': 'file',
             'level': 'success',
-            'message': f'Processed HTML stored: {doc.processed_html_path.split("/")[-1]}',
-            'detail': doc.processed_html_path,
+            'message': f'V1 HTML received from n8n',
+            'detail': doc.processed_html_path.split('/')[-1],
             'actor': 'n8n',
         })
     if doc.processed_report_path:
@@ -597,9 +657,64 @@ def processing_logs(request: Request, pk: int) -> Response:
             'timestamp': doc.updated_at.isoformat(),
             'type': 'file',
             'level': 'success',
-            'message': f'Report stored: {doc.processed_report_path.split("/")[-1]}',
-            'detail': doc.processed_report_path,
+            'message': f'Validation report received',
+            'detail': doc.processed_report_path.split('/')[-1],
             'actor': 'n8n',
+        })
+    if doc.html_v2_path:
+        entries.append({
+            'timestamp': doc.updated_at.isoformat(),
+            'type': 'file',
+            'level': 'success',
+            'message': 'V2 HTML saved (finalized)',
+            'detail': doc.html_v2_path.split('/')[-1],
+            'actor': 'user',
+        })
+    if doc.txt_v2_path:
+        entries.append({
+            'timestamp': doc.updated_at.isoformat(),
+            'type': 'file',
+            'level': 'success',
+            'message': 'V2 TXT saved (for RAG indexing)',
+            'detail': doc.txt_v2_path.split('/')[-1],
+            'actor': 'user',
+        })
+
+    # Activity logs (high-level user-facing events)
+    for al in doc.activity_logs.order_by('created_at'):
+        # Map event types to log types for frontend display
+        type_map = {
+            'v1_html_received': 'file',
+            'v1_html_modified': 'file',
+            'version_saved': 'version',
+            'version_reverted': 'version',
+            'save_export': 'file',
+            'pdf_generated': 'file',
+            'rag_push': 'status',
+            'rag_response': 'status',
+            'chat_sent': 'status',
+            'chat_received': 'status',
+            'status_change': 'status',
+            'processing_started': 'status',
+            'processing_complete': 'status',
+        }
+        level_map = {
+            'rag_push': 'success',
+            'rag_response': 'success',
+            'save_export': 'success',
+            'pdf_generated': 'success',
+            'chat_sent': 'info',
+            'chat_received': 'info',
+            'version_saved': 'success',
+            'processing_complete': 'success',
+        }
+        entries.append({
+            'timestamp': al.created_at.isoformat(),
+            'type': type_map.get(al.event_type, 'status'),
+            'level': level_map.get(al.event_type, 'info'),
+            'message': al.message,
+            'detail': al.detail,
+            'actor': al.actor,
         })
 
     # Sort by timestamp

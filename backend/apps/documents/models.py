@@ -201,3 +201,47 @@ class DocumentMismatch(models.Model):
 
     def __str__(self) -> str:
         return f"{self.document.name} — {self.mismatch_id} ({self.status})"
+
+
+class DocumentActivityLog(models.Model):
+    """High-level activity log for user-facing tracking.
+
+    Tracks events like: V1 HTML received, Save & Export, Push to RAG,
+    Chat interactions, PDF generation, version reverts, etc.
+    """
+
+    EVENT_TYPES = [
+        ('v1_html_received', 'V1 HTML Received'),
+        ('v1_html_modified', 'V1 HTML Modified'),
+        ('version_saved', 'Version Saved'),
+        ('version_reverted', 'Version Reverted'),
+        ('save_export', 'Save & Export'),
+        ('pdf_generated', 'PDF Generated'),
+        ('rag_push', 'Pushed to RAG'),
+        ('rag_response', 'RAG Response'),
+        ('chat_sent', 'Chat Message Sent'),
+        ('chat_received', 'Chat Response Received'),
+        ('status_change', 'Status Changed'),
+        ('processing_started', 'Processing Started'),
+        ('processing_complete', 'Processing Complete'),
+    ]
+
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+        related_name='activity_logs',
+    )
+    event_type = models.CharField(max_length=30, choices=EVENT_TYPES)
+    message = models.TextField()
+    detail = models.TextField(blank=True)
+    actor = models.CharField(max_length=255, default='system')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['document', '-created_at']),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.document.name} — {self.event_type}: {self.message[:60]}"
