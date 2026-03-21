@@ -17,7 +17,7 @@ function getCookie(name: string): string | null {
 
 export const apiClient = axios.create({
   baseURL: apiBaseUrl,
-  timeout: 30000,
+  timeout: 120000,
   headers: {
     'Content-Type': 'application/json',
   },
